@@ -1,6 +1,7 @@
 package io.github.hyuck9.hanimani.viewmodel
 
 import android.app.Application
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.github.hyuck9.hanimani.livedata.LiveDataTestObserver
@@ -18,10 +19,13 @@ import org.mockito.junit.MockitoRule
 
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
-internal class ViewModelTest {
+internal abstract class ViewModelTest {
 
 	@get:Rule
 	val mockitoRule: MockitoRule = MockitoJUnit.rule()
+
+	@get: Rule
+	var instantExecutorRule = InstantTaskExecutorRule()
 
 	@Mock
 	private lateinit var context: Application
