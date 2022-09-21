@@ -17,16 +17,14 @@ import org.junit.Test
 /**
  * [DetailViewModel]을 테스트하기 위한 Unit Test Class
  *
- * 1. initData()
- * 2. test viewModel fetch
- * 3. test Item Delete
- * 4. test Item Update
+ * 1. test viewModel fetch
+ * 2. test Item Insert
  *
  */
 @ExperimentalCoroutinesApi
-internal class DetailViewModelTest: ViewModelTest() {
+internal class DetailViewModelForWriteTest: ViewModelTest() {
 
-	private val id = 1L
+	private val id = 0L
 
 	private lateinit var detailViewModel: DetailViewModel
 	private lateinit var listViewModel: ListViewModel
@@ -53,9 +51,8 @@ internal class DetailViewModelTest: ViewModelTest() {
 	}
 
 	private fun initData() = runTest {
-		detailViewModel = DetailViewModel(DetailMode.DETAIL, id, getToDoItemUseCase, deleteToDoItemUseCase, updateToDoItemUseCase, insertToDoItemUseCase)
+		detailViewModel = DetailViewModel(DetailMode.WRITE, id, getToDoItemUseCase, deleteToDoItemUseCase, updateToDoItemUseCase, insertToDoItemUseCase)
 		listViewModel = ListViewModel(getToDoListUseCase, updateToDoItemUseCase, deleteAllToDoListUseCase)
-		insertToDoItemUseCase(todo)
 	}
 
 	@Test
@@ -65,57 +62,41 @@ internal class DetailViewModelTest: ViewModelTest() {
 		testObservable.assertValueSequence(
 			listOf(
 				ToDoDetailState.UnInitialized,
-				ToDoDetailState.Loading,
-				ToDoDetailState.Success(todo)
+				ToDoDetailState.Write
 			)
 		)
 	}
 
 	@Test
-	fun `test Item Delete`(): Unit = runTest {
+	fun `test Item Insert`(): Unit = runTest {
 		val detailTestObservable = detailViewModel.toDoDetailLiveData.test()
-		detailViewModel.deleteToDo()
+		val listTestObservable = listViewModel.toDoListLiveData.test()
+
+		detailViewModel.writeToDo(
+			title = todo.title,
+			description = todo.description
+		)
+
 		detailTestObservable.assertValueSequence(
 			listOf(
 				ToDoDetailState.UnInitialized,
 				ToDoDetailState.Loading,
-				ToDoDetailState.Delete
+				ToDoDetailState.Success(todo)
 			)
 		)
+		assert(detailViewModel.detailMode == DetailMode.DETAIL)
+		assert(detailViewModel.id == id)
 
-		// 상세화면에서 Delete를 하면 더이상 데이터가 없기때문에 나가졌을때 데이터가 없는걸 보여주기 위해 리스트도 테스트
-		val listTestObservable = listViewModel.toDoListLiveData.test()
 		listViewModel.fetchData()
 		listTestObservable.assertValueSequence(
 			listOf(
 				ToDoListState.UnInitialized,
 				ToDoListState.Loading,
-				ToDoListState.Success(listOf())
-			)
-		)
-	}
-
-	@Test
-	fun `test Item Update`(): Unit = runTest {
-		val testObservable = detailViewModel.toDoDetailLiveData.test()
-
-		val updateTitle = "title 1 update"
-		val updateDescription = "description 1 update"
-		val updateToDo = todo.copy(
-			title = updateTitle,
-			description = updateDescription
-		)
-
-		detailViewModel.writeToDo(
-			title = updateTitle,
-			description = updateDescription
-		)
-
-		testObservable.assertValueSequence(
-			listOf(
-				ToDoDetailState.UnInitialized,
-				ToDoDetailState.Loading,
-				ToDoDetailState.Success(updateToDo)
+				ToDoListState.Success(
+					listOf(
+						todo
+					)
+				)
 			)
 		)
 	}
