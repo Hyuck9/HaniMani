@@ -9,7 +9,7 @@ import io.github.hyuck9.hanimani.domain.todo.DeleteToDoItemUseCase
 import io.github.hyuck9.hanimani.domain.todo.GetToDoItemUseCase
 import io.github.hyuck9.hanimani.domain.todo.InsertToDoItemUseCase
 import io.github.hyuck9.hanimani.domain.todo.UpdateToDoItemUseCase
-import io.github.hyuck9.hanimani.presentation.BaselViewModel
+import io.github.hyuck9.hanimani.presentation.BaseViewModel
 import io.github.hyuck9.hanimani.presentation.detail.DetailViewModel.AssistedFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,7 +28,7 @@ internal class DetailViewModel @AssistedInject constructor(
 	private val deleteToDoItemUseCase: DeleteToDoItemUseCase,
 	private val updateToDoItemUseCase: UpdateToDoItemUseCase,
 	private val insertToDoItemUseCase: InsertToDoItemUseCase
-): BaselViewModel() {
+): BaseViewModel() {
 
 	private val _toDoDetailLiveData = MutableLiveData<ToDoDetailState>(ToDoDetailState.UnInitialized)
 	val toDoDetailLiveData: LiveData<ToDoDetailState> = _toDoDetailLiveData
@@ -57,12 +57,8 @@ internal class DetailViewModel @AssistedInject constructor(
 	fun deleteToDo() = viewModelScope.launch {
 		_toDoDetailLiveData.postValue(ToDoDetailState.Loading)
 		try {
-			val success = deleteToDoItemUseCase(id)
-			if (success) {
-				_toDoDetailLiveData.postValue(ToDoDetailState.Delete)
-			} else {
-				_toDoDetailLiveData.postValue(ToDoDetailState.Error)
-			}
+			deleteToDoItemUseCase(id)
+			_toDoDetailLiveData.postValue(ToDoDetailState.Delete)
 		} catch (e: Exception) {
 			e.printStackTrace()
 			_toDoDetailLiveData.postValue(ToDoDetailState.Error)

@@ -8,7 +8,7 @@ import io.github.hyuck9.hanimani.data.entity.ToDoEntity
 import io.github.hyuck9.hanimani.domain.todo.DeleteAllToDoListUseCase
 import io.github.hyuck9.hanimani.domain.todo.GetToDoListUseCase
 import io.github.hyuck9.hanimani.domain.todo.UpdateToDoItemUseCase
-import io.github.hyuck9.hanimani.presentation.BaselViewModel
+import io.github.hyuck9.hanimani.presentation.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +24,7 @@ internal class ListViewModel @Inject constructor(
 	private val getToDoListUseCase: GetToDoListUseCase,
 	private val updateToDoItemUseCase: UpdateToDoItemUseCase,
 	private val deleteAllToDoListUseCase: DeleteAllToDoListUseCase,
-): BaselViewModel() {
+): BaseViewModel() {
 
 	private val _toDoListLiveData = MutableLiveData<ToDoListState>(ToDoListState.UnInitialized)
 	val toDoListLiveData: LiveData<ToDoListState> = _toDoListLiveData

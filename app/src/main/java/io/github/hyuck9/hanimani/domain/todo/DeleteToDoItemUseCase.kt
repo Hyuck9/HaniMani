@@ -9,7 +9,7 @@ internal class DeleteToDoItemUseCase @Inject constructor(
 	private val toDoRepository: ToDoRepository
 ): UseCase {
 
-	suspend operator fun invoke(itemId: Long): Boolean {
+	suspend operator fun invoke(itemId: Long) {
 		return toDoRepository.deleteToDoItem(itemId)
 	}
 
