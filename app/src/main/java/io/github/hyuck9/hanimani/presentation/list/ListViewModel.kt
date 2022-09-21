@@ -2,42 +2,45 @@ package io.github.hyuck9.hanimani.presentation.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.hyuck9.hanimani.data.entity.ToDoEntity
-import io.github.hyuck9.hanimani.domain.todo.DeleteAllToDoItemUseCase
+import io.github.hyuck9.hanimani.domain.todo.DeleteAllToDoListUseCase
 import io.github.hyuck9.hanimani.domain.todo.GetToDoListUseCase
-import io.github.hyuck9.hanimani.domain.todo.UpdateToDoUseCase
+import io.github.hyuck9.hanimani.domain.todo.UpdateToDoItemUseCase
+import io.github.hyuck9.hanimani.presentation.BaselViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * 필요한 UseCase
  * 1. [GetToDoListUseCase]
- * 2. [UpdateToDoUseCase]
- * 3. [DeleteAllToDoItemUseCase]
+ * 2. [UpdateToDoItemUseCase]
+ * 3. [DeleteAllToDoListUseCase]
  */
-internal class ListViewModel(
+@HiltViewModel
+internal class ListViewModel @Inject constructor(
 	private val getToDoListUseCase: GetToDoListUseCase,
-	private val updateToDoUseCase: UpdateToDoUseCase,
-	private val deleteAllToDoItemUseCase: DeleteAllToDoItemUseCase,
-): ViewModel() {
+	private val updateToDoItemUseCase: UpdateToDoItemUseCase,
+	private val deleteAllToDoListUseCase: DeleteAllToDoListUseCase,
+): BaselViewModel() {
 
 	private val _toDoListLiveData = MutableLiveData<ToDoListState>(ToDoListState.UnInitialized)
 	val toDoListLiveData: LiveData<ToDoListState> = _toDoListLiveData
 
-	fun fetchData(): Job = viewModelScope.launch {
+	override fun fetchData(): Job = viewModelScope.launch {
 		_toDoListLiveData.postValue(ToDoListState.Loading)
 		_toDoListLiveData.postValue(ToDoListState.Success(getToDoListUseCase()))
 	}
 
 	fun updateEntity(toDoEntity: ToDoEntity) = viewModelScope.launch {
-		updateToDoUseCase(toDoEntity)
+		updateToDoItemUseCase(toDoEntity)
 	}
 
 	fun deleteAll() = viewModelScope.launch {
 		_toDoListLiveData.postValue(ToDoListState.Loading)
-		deleteAllToDoItemUseCase()
+		deleteAllToDoListUseCase()
 		_toDoListLiveData.postValue(ToDoListState.Success(getToDoListUseCase()))
 	}
 }

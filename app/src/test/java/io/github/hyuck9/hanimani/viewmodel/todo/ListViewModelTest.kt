@@ -17,7 +17,7 @@ import org.junit.Test
  * 1. initData()
  * 2. test viewModel fetch
  * 3. test Item Update
- * 4. test Item Delete
+ * 4. test Item Delete All
  *
  */
 @ExperimentalCoroutinesApi
@@ -31,8 +31,8 @@ internal class ListViewModelTest: ViewModelTest() {
 	private val getToDoItemUseCase = GetToDoItemUseCase(testToDoRepository)
 
 	private val getToDoListUseCase = GetToDoListUseCase(testToDoRepository)
-	private val updateToDoUseCase = UpdateToDoUseCase(testToDoRepository)
-	private val deleteAllToDoItemUseCase = DeleteAllToDoItemUseCase(testToDoRepository)
+	private val updateToDoItemUseCase = UpdateToDoItemUseCase(testToDoRepository)
+	private val deleteAllToDoListUseCase = DeleteAllToDoListUseCase(testToDoRepository)
 
 	private val mockList = (0 until 10).map {
 		ToDoEntity(
@@ -55,7 +55,7 @@ internal class ListViewModelTest: ViewModelTest() {
 	}
 
 	private fun initData() = runTest {
-		viewModel = ListViewModel(getToDoListUseCase, updateToDoUseCase, deleteAllToDoItemUseCase)
+		viewModel = ListViewModel(getToDoListUseCase, updateToDoItemUseCase, deleteAllToDoListUseCase)
 		insertToDoListUseCase(mockList)
 	}
 

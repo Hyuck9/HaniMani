@@ -10,6 +10,10 @@ class TestToDoRepository: ToDoRepository {
 		return toDoList
 	}
 
+	override suspend fun insertToDoItem(toDoItem: ToDoEntity) {
+		toDoList.add(toDoItem)
+	}
+
 	override suspend fun insertToDoList(toDoList: List<ToDoEntity>) {
 		this.toDoList.addAll(toDoList)
 	}
@@ -30,5 +34,15 @@ class TestToDoRepository: ToDoRepository {
 
 	override suspend fun deleteAll() {
 		toDoList.clear()
+	}
+
+	override suspend fun deleteToDoItem(itemId: Long): Boolean {
+		val foundToDoEntity = toDoList.find { it.id == itemId }
+		return if (foundToDoEntity == null) {
+			false
+		} else {
+			this.toDoList.removeAt(toDoList.indexOf(foundToDoEntity))
+			true
+		}
 	}
 }
