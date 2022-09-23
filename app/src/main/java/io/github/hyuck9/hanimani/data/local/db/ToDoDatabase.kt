@@ -2,17 +2,17 @@ package io.github.hyuck9.hanimani.data.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
-import io.github.hyuck9.hanimani.data.local.db.dao.ToDoDao
+import io.github.hyuck9.hanimani.data.entity.Task
+import io.github.hyuck9.hanimani.data.local.db.dao.TaskDao
 
 @Database(
-	entities = [ToDoEntity::class],
+	entities = [Task::class],
 	version = 1,
 	exportSchema = false
 )
 abstract class ToDoDatabase: RoomDatabase() {
 
-	abstract fun toDoDao(): ToDoDao
+	abstract fun taskDao(): TaskDao
 
 	companion object {
 		const val DATABASE_NAME = "HaniMani.db"

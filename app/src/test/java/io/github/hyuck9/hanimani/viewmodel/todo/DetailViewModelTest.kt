@@ -1,6 +1,6 @@
 package io.github.hyuck9.hanimani.viewmodel.todo
 
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
+import io.github.hyuck9.hanimani.data.entity.Task
 import io.github.hyuck9.hanimani.data.repository.TestToDoRepository
 import io.github.hyuck9.hanimani.domain.todo.*
 import io.github.hyuck9.hanimani.presentation.detail.DetailMode
@@ -40,11 +40,11 @@ internal class DetailViewModelTest: ViewModelTest() {
 	private val getToDoListUseCase = GetToDoListUseCase(testToDoRepository)
 	private val deleteAllToDoListUseCase = DeleteAllToDoListUseCase(testToDoRepository)
 
-	private val todo = ToDoEntity(
+	private val todo = Task(
 		id = id,
 		title = "title $id",
 		description = "description $id",
-		hasCompleted = false
+		isCompleted = false
 	)
 
 	@Before

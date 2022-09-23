@@ -8,7 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.github.hyuck9.hanimani.data.local.db.ToDoDatabase
-import io.github.hyuck9.hanimani.data.local.db.dao.ToDoDao
+import io.github.hyuck9.hanimani.data.local.db.dao.TaskDao
 import javax.inject.Singleton
 
 @Module
@@ -26,6 +26,6 @@ object PersistenceModule {
 
 	@Provides
 	@Singleton
-	fun provideToDoDao(toDoDatabase: ToDoDatabase): ToDoDao = toDoDatabase.toDoDao()
+	fun provideToDoDao(toDoDatabase: ToDoDatabase): TaskDao = toDoDatabase.taskDao()
 
 }

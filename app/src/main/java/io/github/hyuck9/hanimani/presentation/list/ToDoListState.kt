@@ -1,6 +1,6 @@
 package io.github.hyuck9.hanimani.presentation.list
 
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
+import io.github.hyuck9.hanimani.data.entity.Task
 
 sealed class ToDoListState {
 
@@ -9,7 +9,7 @@ sealed class ToDoListState {
 	object Loading: ToDoListState()
 
 	data class Success(
-		val toDoList: List<ToDoEntity>
+		val toDoList: List<Task>
 	): ToDoListState()
 
 	object Error: ToDoListState()

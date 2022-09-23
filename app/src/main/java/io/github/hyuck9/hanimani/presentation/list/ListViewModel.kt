@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
+import io.github.hyuck9.hanimani.data.entity.Task
 import io.github.hyuck9.hanimani.domain.todo.DeleteAllToDoListUseCase
 import io.github.hyuck9.hanimani.domain.todo.GetToDoListUseCase
 import io.github.hyuck9.hanimani.domain.todo.UpdateToDoItemUseCase
@@ -34,8 +34,8 @@ internal class ListViewModel @Inject constructor(
 		_toDoListLiveData.postValue(ToDoListState.Success(getToDoListUseCase()))
 	}
 
-	fun updateEntity(toDoEntity: ToDoEntity) = viewModelScope.launch {
-		updateToDoItemUseCase(toDoEntity)
+	fun updateEntity(task: Task) = viewModelScope.launch {
+		updateToDoItemUseCase(task)
 	}
 
 	fun deleteAll() = viewModelScope.launch {

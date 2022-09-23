@@ -1,6 +1,6 @@
 package io.github.hyuck9.hanimani.presentation.detail
 
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
+import io.github.hyuck9.hanimani.data.entity.Task
 
 sealed class ToDoDetailState {
 
@@ -9,7 +9,7 @@ sealed class ToDoDetailState {
 	object Loading: ToDoDetailState()
 
 	data class Success(
-		val toDoItem: ToDoEntity
+		val toDoItem: Task
 	): ToDoDetailState()
 
 	object Delete: ToDoDetailState()

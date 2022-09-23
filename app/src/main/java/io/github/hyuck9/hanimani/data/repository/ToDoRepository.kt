@@ -1,6 +1,6 @@
 package io.github.hyuck9.hanimani.data.repository
 
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
+import io.github.hyuck9.hanimani.data.entity.Task
 
 /**
  * 1. insertToDoList
@@ -9,15 +9,15 @@ import io.github.hyuck9.hanimani.data.entity.ToDoEntity
  */
 interface ToDoRepository {
 
-	suspend fun getToDoList(): List<ToDoEntity>
+	suspend fun getToDoList(): List<Task>
 
-	suspend fun insertToDoItem(toDoItem: ToDoEntity): Long
+	suspend fun insertToDoItem(toDoItem: Task): Long
 
-	suspend fun insertToDoList(toDoList: List<ToDoEntity>)
+	suspend fun insertToDoList(toDoList: List<Task>)
 
-	suspend fun updateToDoItem(toDoItem: ToDoEntity)
+	suspend fun updateToDoItem(toDoItem: Task)
 
-	suspend fun getToItem(itemId: Long): ToDoEntity?
+	suspend fun getToItem(itemId: Long): Task?
 
 	suspend fun deleteToDoItem(itemId: Long)
 

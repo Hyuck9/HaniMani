@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
+import io.github.hyuck9.hanimani.data.entity.Task
 import io.github.hyuck9.hanimani.domain.todo.DeleteToDoItemUseCase
 import io.github.hyuck9.hanimani.domain.todo.GetToDoItemUseCase
 import io.github.hyuck9.hanimani.domain.todo.InsertToDoItemUseCase
@@ -74,12 +74,12 @@ internal class DetailViewModel @AssistedInject constructor(
 		when (detailMode) {
 			DetailMode.WRITE -> {
 				try {
-					val toDoEntity = ToDoEntity(
+					val task = Task(
 						title = title,
 						description = description
 					)
-					id = insertToDoItemUseCase(toDoEntity)
-					_toDoDetailLiveData.postValue(ToDoDetailState.Success(toDoEntity))
+					id = insertToDoItemUseCase(task)
+					_toDoDetailLiveData.postValue(ToDoDetailState.Success(task))
 					detailMode = DetailMode.DETAIL
 				} catch (e: Exception) {
 					e.printStackTrace()

@@ -1,6 +1,6 @@
 package io.github.hyuck9.hanimani.viewmodel.todo
 
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
+import io.github.hyuck9.hanimani.data.entity.Task
 import io.github.hyuck9.hanimani.data.repository.TestToDoRepository
 import io.github.hyuck9.hanimani.domain.todo.*
 import io.github.hyuck9.hanimani.presentation.list.ListViewModel
@@ -35,11 +35,11 @@ internal class ListViewModelTest: ViewModelTest() {
 	private val deleteAllToDoListUseCase = DeleteAllToDoListUseCase(testToDoRepository)
 
 	private val mockList = (0 until 10).map {
-		ToDoEntity(
+		Task(
 			id = it.toLong(),
 			title = "title $it",
 			description = "description $it",
-			hasCompleted = false
+			isCompleted = false
 		)
 	}
 
@@ -70,14 +70,14 @@ internal class ListViewModelTest: ViewModelTest() {
 	// Test : 데이터를 업데이트 했을 때 잘 반영되는가
 	@Test
 	fun `test Item Update`(): Unit = runTest {
-		val todo = ToDoEntity(
+		val todo = Task(
 			id = 1,
 			title = "title 1",
 			description = "description 1",
-			hasCompleted = true
+			isCompleted = true
 		)
 		viewModel.updateEntity(todo)
-		assert((getToDoItemUseCase(todo.id)?.hasCompleted ?: false) == todo.hasCompleted)
+		assert((getToDoItemUseCase(todo.id)?.isCompleted ?: false) == todo.isCompleted)
 	}
 
 	// Test : 데이터를 다 날렸을 때 빈상태로 보여지는가

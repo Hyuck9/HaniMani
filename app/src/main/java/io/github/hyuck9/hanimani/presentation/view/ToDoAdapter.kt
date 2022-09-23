@@ -5,29 +5,29 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import io.github.hyuck9.hanimani.R
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
+import io.github.hyuck9.hanimani.data.entity.Task
 import io.github.hyuck9.hanimani.databinding.ItemTodoBinding
 
 class ToDoAdapter : RecyclerView.Adapter<ToDoAdapter.ToDoItemViewHolder>() {
 
-	private var toDoList: List<ToDoEntity> = listOf()
-	private lateinit var toDoItemClickListener: (ToDoEntity) -> Unit
-	private lateinit var toDoCheckListener: (ToDoEntity) -> Unit
+	private var toDoList: List<Task> = listOf()
+	private lateinit var toDoItemClickListener: (Task) -> Unit
+	private lateinit var toDoCheckListener: (Task) -> Unit
 
 	inner class ToDoItemViewHolder(
 		private val binding: ItemTodoBinding,
-		val toDoItemClickListener: (ToDoEntity) -> Unit
+		val toDoItemClickListener: (Task) -> Unit
 	) : RecyclerView.ViewHolder(binding.root) {
 
-		fun bindData(data: ToDoEntity) = with(binding) {
+		fun bindData(data: Task) = with(binding) {
 			checkBox.text = data.title
-			checkToDoComplete(data.hasCompleted)
+			checkToDoComplete(data.isCompleted)
 		}
 
-		fun bindViews(data: ToDoEntity) {
+		fun bindViews(data: Task) {
 			binding.checkBox.setOnClickListener {
 				toDoCheckListener(
-					data.copy(hasCompleted = binding.checkBox.isChecked)
+					data.copy(isCompleted = binding.checkBox.isChecked)
 				)
 				checkToDoComplete(binding.checkBox.isChecked)
 			}
@@ -61,9 +61,9 @@ class ToDoAdapter : RecyclerView.Adapter<ToDoAdapter.ToDoItemViewHolder>() {
 	override fun getItemCount(): Int = toDoList.size
 
 	fun setToDoList(
-		toDoList: List<ToDoEntity>,
-		toDoItemClickListener: (ToDoEntity) -> Unit,
-		toDoCheckListener: (ToDoEntity) -> Unit
+		toDoList: List<Task>,
+		toDoItemClickListener: (Task) -> Unit,
+		toDoCheckListener: (Task) -> Unit
 	) {
 		this.toDoList = toDoList
 		this.toDoItemClickListener = toDoItemClickListener

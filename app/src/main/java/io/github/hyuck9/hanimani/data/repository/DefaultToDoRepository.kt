@@ -1,41 +1,41 @@
 package io.github.hyuck9.hanimani.data.repository
 
-import io.github.hyuck9.hanimani.data.entity.ToDoEntity
-import io.github.hyuck9.hanimani.data.local.db.dao.ToDoDao
+import io.github.hyuck9.hanimani.data.entity.Task
+import io.github.hyuck9.hanimani.data.local.db.dao.TaskDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DefaultToDoRepository @Inject constructor(
-	private val toDoDao: ToDoDao,
+	private val taskDao: TaskDao,
 	private val ioDispatcher: CoroutineDispatcher
 ): ToDoRepository {
 
-	override suspend fun getToDoList(): List<ToDoEntity> = withContext(ioDispatcher) {
-		toDoDao.getAll()
+	override suspend fun getToDoList(): List<Task> = withContext(ioDispatcher) {
+		taskDao.getAll()
 	}
 
-	override suspend fun getToItem(itemId: Long): ToDoEntity? = withContext(ioDispatcher) {
-		toDoDao.getById(itemId)
+	override suspend fun getToItem(itemId: Long): Task? = withContext(ioDispatcher) {
+		taskDao.getById(itemId)
 	}
 
-	override suspend fun insertToDoItem(toDoItem: ToDoEntity): Long = withContext(ioDispatcher) {
-		toDoDao.insert(toDoItem)
+	override suspend fun insertToDoItem(toDoItem: Task): Long = withContext(ioDispatcher) {
+		taskDao.insert(toDoItem)
 	}
 
-	override suspend fun insertToDoList(toDoList: List<ToDoEntity>) = withContext(ioDispatcher) {
-		toDoDao.insert(toDoList)
+	override suspend fun insertToDoList(toDoList: List<Task>) = withContext(ioDispatcher) {
+		taskDao.insert(toDoList)
 	}
 
-	override suspend fun updateToDoItem(toDoItem: ToDoEntity) = withContext(ioDispatcher) {
-		toDoDao.update(toDoItem)
+	override suspend fun updateToDoItem(toDoItem: Task) = withContext(ioDispatcher) {
+		taskDao.update(toDoItem)
 	}
 
 	override suspend fun deleteAll() {
-		toDoDao.deleteAll()
+		taskDao.deleteAll()
 	}
 
 	override suspend fun deleteToDoItem(itemId: Long) = withContext(ioDispatcher) {
-		toDoDao.delete(itemId)
+		taskDao.delete(itemId)
 	}
 }
