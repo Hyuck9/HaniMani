@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 @Entity(tableName = "tasks")
-data class Task(
+data class TaskEntity(
 	@PrimaryKey
 	@ColumnInfo(name = "taskId")
 	val id: String = UUID.randomUUID().toString(),
