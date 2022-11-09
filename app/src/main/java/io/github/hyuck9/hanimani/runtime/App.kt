@@ -1,7 +1,8 @@
-package io.github.hyuck9.hanimani
+package io.github.hyuck9.hanimani.runtime
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
+import io.github.hyuck9.hanimani.BuildConfig
 import timber.log.Timber
 
 @HiltAndroidApp

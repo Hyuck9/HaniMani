@@ -1,4 +1,4 @@
-package io.github.hyuck9.hanimani
+package io.github.hyuck9.hanimani.runtime
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import io.github.hyuck9.hanimani.ui.theme.HaniManiTheme
+import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {

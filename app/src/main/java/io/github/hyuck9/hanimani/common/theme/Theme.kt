@@ -1,4 +1,4 @@
-package io.github.hyuck9.hanimani.ui.theme
+package io.github.hyuck9.hanimani.common.theme
 
 import android.app.Activity
 import android.os.Build

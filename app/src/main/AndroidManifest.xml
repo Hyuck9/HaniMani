@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <application
-        android:name=".App"
+        android:name="io.github.hyuck9.hanimani.runtime.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,9 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HaniMani"
-        tools:targetApi="31" >
+        tools:targetApi="33" >
         <activity
-            android:name=".MainActivity"
+            android:name="io.github.hyuck9.hanimani.runtime.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.HaniMani" >
             <intent-filter>
