@@ -5,10 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import io.github.hyuck9.hanimani.common.data.local.model.TaskEntity
+import io.github.hyuck9.hanimani.common.data.local.model.Task
 
 @Database(
-	entities = [TaskEntity::class],
+	entities = [Task::class],
 	version = 1,
 	exportSchema = false
 )
