@@ -27,12 +27,14 @@ import androidx.compose.ui.unit.dp
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.common.theme.Purple40
+import io.github.hyuck9.hanimani.runtime.navigation.SettingsFlow
 
 @Composable
 fun HaniManiTabBar(
-	tabPage: TabPage,
+	currentRoute: String,
 	onTabSelected: (TabPage) -> Unit
 ) {
+	val tabPage = getTabPage(currentRoute)
 	TabRow(
 		selectedTabIndex = tabPage.ordinal,
 		indicator = { tabPositions ->
@@ -49,6 +51,14 @@ fun HaniManiTabBar(
 			title = stringResource(id = R.string.tab_title_settings),
 			onClick = { onTabSelected(TabPage.Settings) }
 		)
+	}
+}
+
+private fun getTabPage(currentRoute: String): TabPage {
+	return if (currentRoute == SettingsFlow.Settings.route) {
+		TabPage.Settings
+	} else {
+		TabPage.Tasks
 	}
 }
 
@@ -140,7 +150,7 @@ fun HaniManiTabPreview() {
 fun TabBarPreview() {
 	HaniManiTheme {
 		HaniManiTabBar(
-			tabPage = TabPage.Tasks,
+			currentRoute = TabPage.Tasks.name,
 			onTabSelected = {}
 		)
 	}
