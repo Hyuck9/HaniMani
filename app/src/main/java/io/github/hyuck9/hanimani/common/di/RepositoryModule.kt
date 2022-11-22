@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.github.hyuck9.hanimani.common.data.local.TasksDao
 import io.github.hyuck9.hanimani.common.data.repository.DefaultTasksRepository
+import io.github.hyuck9.hanimani.common.data.repository.TasksRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
@@ -18,8 +19,6 @@ object RepositoryModule {
 	fun provideTasksRepository(
 		tasksDao: TasksDao,
 		coroutineDispatcher: CoroutineDispatcher
-	): DefaultTasksRepository {
-		return DefaultTasksRepository(tasksDao, coroutineDispatcher)
-	}
+	): TasksRepository = DefaultTasksRepository(tasksDao, coroutineDispatcher)
 
 }
