@@ -16,7 +16,7 @@
         <activity
             android:name="io.github.hyuck9.hanimani.runtime.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.HaniMani" >
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -8,6 +8,10 @@ sealed class TasksFlow(val name: String) {
 	object TasksScreen : TasksFlow("tasks-screen") {
 		val route = name
 	}
+
+	object CreateTask : TasksFlow("create-task-screen") {
+		val route = name
+	}
 }
 
 sealed class SettingsFlow(val name: String) {

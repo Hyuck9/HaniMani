@@ -1,5 +1,6 @@
 package io.github.hyuck9.hanimani.features.tasks.ui
 
+import androidx.compose.ui.text.TextRange
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.hyuck9.hanimani.common.base.BaseViewModel
@@ -20,7 +21,16 @@ class TasksViewModel @Inject constructor(
 
 	override fun dispatch(action: TasksAction) {
 		when(action) {
-			else -> {}
+			is TasksAction.OnShow -> {
+				viewModelScope.launch {
+					setState { copy(taskName = taskName.copy(selection = TextRange(taskName.text.length))) }
+				}
+			}
+			is TasksAction.ChangeTaskName -> {
+				viewModelScope.launch {
+					setState { copy(taskName = action.name) }
+				}
+			}
 		}
 	}
 

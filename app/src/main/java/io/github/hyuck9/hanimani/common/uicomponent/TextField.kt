@@ -84,7 +84,7 @@ fun HmTextField(
 }
 
 @Composable
-fun TaskCreator(
+fun HmTodoCreator(
 	modifier: Modifier = Modifier,
 	value: TextFieldValue,
 	isValid: Boolean,
@@ -181,9 +181,9 @@ private fun HmTextFieldPreview(@PreviewParameter(SampleBooleanProvider::class) i
 
 @Preview(showBackground = true)
 @Composable
-private fun TaskCreatorPreview() {
+private fun HmTodoCreatorPreview() {
 	HaniManiTheme {
-		TaskCreator(
+		HmTodoCreator(
 			value = TextFieldValue(),
 			isValid = true,
 			placeholder = stringResource(id = R.string.hint_add_task),

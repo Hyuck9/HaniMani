@@ -1,9 +1,7 @@
 package io.github.hyuck9.hanimani.features.tasks.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -13,6 +11,8 @@ import androidx.compose.material.icons.filled.AddTask
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -22,29 +22,28 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.extension.identifier
 import io.github.hyuck9.hanimani.common.extension.isScrollingUp
+import io.github.hyuck9.hanimani.common.extension.requestFocusImeAware
 import io.github.hyuck9.hanimani.common.preview.SampleBooleanProvider
+import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.common.uicomponent.EmptyTaskTipText
+import io.github.hyuck9.hanimani.common.uicomponent.HmTodoCreator
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
 @Composable
 fun TasksScreen(
-	viewModel: TasksViewModel
+	viewModel: TasksViewModel,
+	onAddTaskClick: () -> Unit,
 ) {
 	val state by viewModel.state.collectAsStateWithLifecycle()
 	val lazyListState = rememberLazyListState()
-	val coroutineScope = rememberCoroutineScope()
 
 	Scaffold(
 		floatingActionButton = {
 			AddTaskButton(
 				extended = lazyListState.isScrollingUp(),
-				onClick = {
-					coroutineScope.launch {
-						// TODO: 할일 추가
-					}
-				}
+				onClick = onAddTaskClick
 			)
 		}
 	) { padding ->
@@ -75,7 +74,8 @@ fun TasksContent(
 		if (tasks.isEmpty()) {
 			item {
 				EmptyTaskTipText(
-					modifier = Modifier.fillParentMaxHeight()
+					modifier = Modifier
+						.fillParentMaxHeight()
 						.padding(bottom = 100.dp)
 				)
 			}
@@ -124,14 +124,38 @@ private fun AddTaskButton(
 	}
 }
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
+@Composable
+fun TaskCreator(
+	viewModel: TasksViewModel
+) {
+	val focusRequest = remember { FocusRequester() }
+	val state by viewModel.state.collectAsStateWithLifecycle()
+
+	LaunchedEffect(Unit) {
+		launch { focusRequest.requestFocusImeAware() }
+		 viewModel.dispatch(TasksAction.OnShow)
+	}
+
+	HmTodoCreator(
+		value = state.taskName,
+		modifier = Modifier.focusRequester(focusRequest),
+		isValid = state.validTaskName,
+		placeholder = stringResource(id = R.string.hint_add_task),
+		onValueChange = { viewModel.dispatch(TasksAction.ChangeTaskName(it)) },
+		onSubmit = {}
+	)
+}
 
 
 
 @Preview(showBackground = true)
 @Composable
 private fun AddTaskButtonPreview(@PreviewParameter(SampleBooleanProvider::class) extended: Boolean) {
-	AddTaskButton(
-		extended = extended,
-		onClick = {}
-	)
+	HaniManiTheme {
+		AddTaskButton(
+			extended = extended,
+			onClick = {}
+		)
+	}
 }
