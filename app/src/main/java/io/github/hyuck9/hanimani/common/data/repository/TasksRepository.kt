@@ -1,17 +1,17 @@
 package io.github.hyuck9.hanimani.common.data.repository
 
-import io.github.hyuck9.hanimani.common.data.local.model.TaskEntity
 import io.github.hyuck9.hanimani.common.data.local.model.Result
+import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.flow.Flow
 
 interface TasksRepository {
 
-	fun getTasksStream(): Flow<Result<List<TaskEntity>>>
+	fun getTasksStream(): Flow<Result<List<ToDoTask>>>
 
-	suspend fun getTasks(): Result<List<TaskEntity>>
+	suspend fun getTasks(): Result<List<ToDoTask>>
 
-	fun getTaskStream(taskId: String): Flow<Result<TaskEntity>>
+	fun getTaskStream(taskId: String): Flow<Result<ToDoTask>>
 
-	suspend fun getTask(taskId: String): Result<TaskEntity>
+	suspend fun getTask(taskId: String): Result<ToDoTask>
 
 }
