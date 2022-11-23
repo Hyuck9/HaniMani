@@ -4,6 +4,8 @@
     <string name="tab_title_tasks">할일</string>
     <string name="tab_title_settings">설정</string>
 
+    <string name="button_add_task">할일추가</string>
+
     <string name="empty_history_text">추가한 태스크가 없습니다.</string>
     <string name="title">제목</string>
     <string name="description">할일을 입력해주세요.</string>
