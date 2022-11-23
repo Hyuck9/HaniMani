@@ -9,20 +9,20 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddTask
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.extension.identifier
 import io.github.hyuck9.hanimani.common.extension.isScrollingUp
+import io.github.hyuck9.hanimani.common.preview.SampleBooleanProvider
 import io.github.hyuck9.hanimani.common.uicomponent.EmptyTaskTipText
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.launch
@@ -110,7 +110,7 @@ private fun AddTaskButton(
 			modifier = Modifier.padding(horizontal = 16.dp)
 		) {
 			Icon(
-				imageVector = Icons.Default.Add,
+				imageVector = Icons.Default.AddTask,
 				contentDescription = stringResource(id = R.string.button_add_task)
 			)
 
@@ -129,13 +129,9 @@ private fun AddTaskButton(
 
 @Preview(showBackground = true)
 @Composable
-fun AddTaskButtonPreview(@PreviewParameter(SampleExtendedProvider::class) extended: Boolean) {
+private fun AddTaskButtonPreview(@PreviewParameter(SampleBooleanProvider::class) extended: Boolean) {
 	AddTaskButton(
 		extended = extended,
 		onClick = {}
 	)
-}
-
-private class SampleExtendedProvider : PreviewParameterProvider<Boolean> {
-	override val values: Sequence<Boolean> = sequenceOf(true, false)
 }
