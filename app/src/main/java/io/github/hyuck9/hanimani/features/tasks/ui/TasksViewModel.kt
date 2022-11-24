@@ -1,6 +1,7 @@
 package io.github.hyuck9.hanimani.features.tasks.ui
 
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.hyuck9.hanimani.common.base.BaseViewModel
@@ -11,11 +12,13 @@ import javax.inject.Inject
 @HiltViewModel
 class TasksViewModel @Inject constructor(
 	tasksEnvironment: ITasksEnvironment
-) : BaseViewModel<TasksState, Unit, TasksAction, ITasksEnvironment>(TasksState(), tasksEnvironment) {
+) : BaseViewModel<TasksState, TasksEffect, TasksAction, ITasksEnvironment>(TasksState(), tasksEnvironment) {
 
 	init {
 		viewModelScope.launch {
-
+			environment.getTaskList().collect {
+				setState { copy(items = it) }
+			}
 		}
 	}
 
@@ -24,6 +27,17 @@ class TasksViewModel @Inject constructor(
 			is TasksAction.OnShow -> {
 				viewModelScope.launch {
 					setState { copy(taskName = taskName.copy(selection = TextRange(taskName.text.length))) }
+				}
+			}
+			is TasksAction.ClickSubmit -> {
+				viewModelScope.launch {
+					if (state.value.validTaskName) {
+						environment.createTask(state.value.taskName.text.trim())
+						setState { copy(taskName = TextFieldValue()) }
+
+						val lastIndexProgressItem = state.value.toDoTaskItems.filterIsInstance<ToDoTaskItem.InProgress>().size
+						setEffect( TasksEffect.ScrollTo(lastIndexProgressItem) )
+					}
 				}
 			}
 			is TasksAction.ChangeTaskName -> {

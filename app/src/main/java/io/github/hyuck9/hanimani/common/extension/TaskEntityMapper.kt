@@ -14,6 +14,17 @@ fun TaskEntity.toToDoTask(): ToDoTask {
 	)
 }
 
+fun ToDoTask.toTaskEntity(): TaskEntity {
+	return TaskEntity(
+		id = id,
+		name = name,
+		status = status,
+		completedAt = completedAt,
+		createdAt = createdAt,
+		updatedAt = updatedAt
+	)
+}
+
 fun List<TaskEntity>.toToDoTasks(): List<ToDoTask> {
 	return map { it.toToDoTask() }
 }

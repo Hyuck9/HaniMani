@@ -4,6 +4,7 @@ import io.github.hyuck9.hanimani.common.data.local.TasksDao
 import io.github.hyuck9.hanimani.common.data.local.model.Result
 import io.github.hyuck9.hanimani.common.data.local.model.Result.Error
 import io.github.hyuck9.hanimani.common.data.local.model.Result.Success
+import io.github.hyuck9.hanimani.common.extension.toTaskEntity
 import io.github.hyuck9.hanimani.common.extension.toToDoTask
 import io.github.hyuck9.hanimani.common.extension.toToDoTasks
 import io.github.hyuck9.hanimani.model.ToDoTask
@@ -17,9 +18,9 @@ class DefaultTasksRepository(
 	private val ioDispatcher: CoroutineDispatcher
 ) : TasksRepository {
 
-	override fun getTasksStream(): Flow<Result<List<ToDoTask>>> {
+	override fun getTasksStream(): Flow<List<ToDoTask>> {
 		return tasksDao.observeTasks().map {
-			Success(it.toToDoTasks())
+			it.toToDoTasks()
 		}
 	}
 
@@ -48,5 +49,9 @@ class DefaultTasksRepository(
 		} catch (e: Exception) {
 			Error(e)
 		}
+	}
+
+	override suspend fun saveTask(task: ToDoTask) = withContext(ioDispatcher) {
+		tasksDao.saveTask(taskEntity = task.toTaskEntity())
 	}
 }

@@ -4,5 +4,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 
 sealed class TasksAction {
 	object OnShow : TasksAction()
+	object ClickSubmit : TasksAction()
 	data class ChangeTaskName(val name: TextFieldValue) : TasksAction()
 }

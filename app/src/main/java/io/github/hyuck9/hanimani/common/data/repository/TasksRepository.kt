@@ -6,12 +6,14 @@ import kotlinx.coroutines.flow.Flow
 
 interface TasksRepository {
 
-	fun getTasksStream(): Flow<Result<List<ToDoTask>>>
+	fun getTasksStream(): Flow<List<ToDoTask>>
 
 	suspend fun getTasks(): Result<List<ToDoTask>>
 
 	fun getTaskStream(taskId: String): Flow<Result<ToDoTask>>
 
 	suspend fun getTask(taskId: String): Result<ToDoTask>
+
+	suspend fun saveTask(task: ToDoTask)
 
 }
