@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface ITasksEnvironment {
 	fun getTaskList(): Flow<List<ToDoTask>>
 	suspend fun createTask(taskName: String)
+	suspend fun toggleTaskStatus(task: ToDoTask)
+	suspend fun deleteTask(task: ToDoTask)
 }

@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -30,11 +31,14 @@ import io.github.hyuck9.hanimani.common.extension.identifier
 import io.github.hyuck9.hanimani.common.extension.isScrollingUp
 import io.github.hyuck9.hanimani.common.extension.requestFocusImeAware
 import io.github.hyuck9.hanimani.common.preview.SampleBooleanProvider
+import io.github.hyuck9.hanimani.common.theme.AlphaDisabled
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.common.uicomponent.EmptyTaskTipText
 import io.github.hyuck9.hanimani.common.uicomponent.HmToDoItemCell
 import io.github.hyuck9.hanimani.common.uicomponent.HmTodoCreator
 import io.github.hyuck9.hanimani.model.ToDoTask
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
@@ -67,8 +71,8 @@ fun TasksScreen(
 			modifier = Modifier.padding(padding),
 			tasks = state.toDoTaskItems,
 			onClick = {},
-			onCheckClick = {},
-			onSwipeToDelete = {},
+			onCheckboxClick = { viewModel.dispatch(TasksAction.OnToggleStatus(it)) },
+			onSwipeToDelete = { viewModel.dispatch(TasksAction.Delete(it)) },
 			listState = lazyListState
 		)
 	}
@@ -80,10 +84,13 @@ fun TasksContent(
 	modifier: Modifier,
 	tasks: List<ToDoTaskItem>,
 	onClick: (ToDoTask) -> Unit,
-	onCheckClick: (ToDoTask) -> Unit,
+	onCheckboxClick: (ToDoTask) -> Unit,
 	onSwipeToDelete: (ToDoTask) -> Unit,
+	color: Color = MaterialTheme.colorScheme.primary,
 	listState: LazyListState
 ) {
+	val coroutineScope = rememberCoroutineScope()
+
 	LazyColumn(
 		modifier = modifier.fillMaxSize(),
 		state = listState
@@ -103,19 +110,41 @@ fun TasksContent(
 			) { item ->
 				when (item) {
 					is ToDoTaskItem.CompleteHeader -> {
-						// TODO: 완료 헤더
+						Spacer(Modifier.height(16.dp))
+						Row(
+							verticalAlignment = Alignment.CenterVertically,
+							modifier = Modifier.padding(horizontal = 16.dp)
+								.fillMaxWidth()
+								.height(32.dp)
+						) {
+							Text(
+								text = stringResource(R.string.header_task_completed),
+								style = MaterialTheme.typography.titleSmall,
+								color = color
+							)
+						}
 					}
 					is ToDoTaskItem.Complete -> {
-						// TODO: 완료한 할일
+						HmToDoItemCell(
+							modifier = Modifier.animateItemPlacement(),
+							name = item.toDoTask.name,
+							checkboxColor = color.copy(alpha = AlphaDisabled),
+							contentPaddingValues = PaddingValues(all = 8.dp),
+							leftIcon = Icons.Rounded.CheckCircle,
+							textDecoration = TextDecoration.LineThrough,
+							onClick = { onClick(item.toDoTask) },
+							onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
+							onCheckboxClick = { onCheckboxClick(item.toDoTask) }
+						)
 					}
 					is ToDoTaskItem.InProgress -> {
-						// TODO: 진행중인 할일
 						var isChecked by remember { mutableStateOf(false) }
+						var debounceJob: Job? by remember { mutableStateOf(null) }
 
 						HmToDoItemCell(
 							modifier = Modifier.animateItemPlacement(),
 							name = item.toDoTask.name,
-							checkboxColor = Color.LightGray,
+							checkboxColor = color,
 							contentPaddingValues = PaddingValues(all = 8.dp),
 							leftIcon = if (isChecked) {
 								Icons.Rounded.CheckCircle
@@ -123,8 +152,18 @@ fun TasksContent(
 								Icons.Rounded.RadioButtonUnchecked
 							},
 							textDecoration = TextDecoration.None,
-							onClick = { /*TODO*/ },
-							onCheckboxClick = { isChecked = !isChecked }
+							onClick = { onClick(item.toDoTask) },
+							onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
+							onCheckboxClick = {
+								isChecked = !isChecked
+								debounceJob?.cancel()
+								if (isChecked) {
+									debounceJob = coroutineScope.launch {
+										delay(1000)
+										onCheckboxClick(item.toDoTask)
+									}
+								}
+							}
 						)
 					}
 				}

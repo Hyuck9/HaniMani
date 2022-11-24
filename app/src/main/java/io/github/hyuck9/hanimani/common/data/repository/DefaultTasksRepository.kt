@@ -7,11 +7,13 @@ import io.github.hyuck9.hanimani.common.data.local.model.Result.Success
 import io.github.hyuck9.hanimani.common.extension.toTaskEntity
 import io.github.hyuck9.hanimani.common.extension.toToDoTask
 import io.github.hyuck9.hanimani.common.extension.toToDoTasks
+import io.github.hyuck9.hanimani.model.ToDoStatus
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
 
 class DefaultTasksRepository(
 	private val tasksDao: TasksDao,
@@ -53,5 +55,17 @@ class DefaultTasksRepository(
 
 	override suspend fun saveTask(task: ToDoTask) = withContext(ioDispatcher) {
 		tasksDao.saveTask(taskEntity = task.toTaskEntity())
+	}
+
+	override suspend fun updateTaskStatus(taskId: String, status: ToDoStatus, completedAt: LocalDateTime?, updatedAt: LocalDateTime) = withContext(ioDispatcher) {
+		tasksDao.updateTaskStatus(taskId, status, completedAt, updatedAt)
+	}
+
+	override suspend fun deleteTaskById(taskId: String) = withContext(ioDispatcher) {
+		tasksDao.deleteTaskById(taskId)
+	}
+
+	override suspend fun deleteAllTasks() = withContext(ioDispatcher) {
+		tasksDao.deleteAllTasks()
 	}
 }

@@ -45,6 +45,16 @@ class TasksViewModel @Inject constructor(
 					setState { copy(taskName = action.name) }
 				}
 			}
+			is TasksAction.OnToggleStatus -> {
+				viewModelScope.launch {
+					environment.toggleTaskStatus(action.task)
+				}
+			}
+			is TasksAction.Delete -> {
+				viewModelScope.launch {
+					environment.deleteTask(action.task)
+				}
+			}
 		}
 	}
 

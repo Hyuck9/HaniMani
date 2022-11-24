@@ -28,6 +28,7 @@ fun HmToDoItemCell(
 	leftIcon: ImageVector,
 	textDecoration: TextDecoration?,
 	onClick: () -> Unit,
+	onSwipeToDelete: () -> Unit,
 	onCheckboxClick: () -> Unit
 ) {
 	Surface(
@@ -77,6 +78,7 @@ private fun HmToDoItemCellPreview() {
 			leftIcon = Icons.Rounded.CheckCircle,
 			textDecoration = TextDecoration.None,
 			onClick = {},
+			onSwipeToDelete = {},
 			onCheckboxClick = {}
 		)
 	}
