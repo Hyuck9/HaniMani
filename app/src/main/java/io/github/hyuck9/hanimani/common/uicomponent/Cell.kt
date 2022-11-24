@@ -41,37 +41,55 @@ fun HmToDoItemCell(
 					.fillMaxWidth()
 					.clickable(onClick = onClick)
 			) {
-				Column {
-					Row(
-						verticalAlignment = Alignment.CenterVertically,
-						modifier = Modifier.padding(contentPaddingValues)
-					) {
-						HmIconButton(
-							onClick = onCheckboxClick,
-							color = Color.Transparent
-						) {
-							HmIcon(
-								imageVector = leftIcon,
-								tint = checkboxColor
-							)
-						}
-
-						Text(
-							text = name,
-							style = MaterialTheme.typography.titleSmall.copy(textDecoration = textDecoration),
-						)
-					}
-					Divider(
-						color = MaterialTheme.colorScheme.onSurface.copy(alpha = DividerAlpha)
-					)
-				}
+				ContentRow(
+					contentPaddingValues = contentPaddingValues,
+					onCheckboxClick = onCheckboxClick,
+					leftIcon = leftIcon,
+					checkboxColor = checkboxColor,
+					name = name,
+					textDecoration = textDecoration
+				)
 			}
 		},
-		onDismiss = { onSwipeToDelete() }
+		onDismiss = { onSwipeToDelete() },
+		onComplete = onCheckboxClick
 	)
 }
 
+@Composable
+private fun ContentRow(
+	contentPaddingValues: PaddingValues,
+	onCheckboxClick: () -> Unit,
+	leftIcon: ImageVector,
+	checkboxColor: Color,
+	name: String,
+	textDecoration: TextDecoration?
+) {
+	Column {
+		Row(
+			verticalAlignment = Alignment.CenterVertically,
+			modifier = Modifier.padding(contentPaddingValues)
+		) {
+			HmIconButton(
+				onClick = onCheckboxClick,
+				color = Color.Transparent
+			) {
+				HmIcon(
+					imageVector = leftIcon,
+					tint = checkboxColor
+				)
+			}
 
+			Text(
+				text = name,
+				style = MaterialTheme.typography.titleSmall.copy(textDecoration = textDecoration),
+			)
+		}
+		Divider(
+			color = MaterialTheme.colorScheme.onSurface.copy(alpha = DividerAlpha)
+		)
+	}
+}
 
 
 @Preview(showBackground = true)

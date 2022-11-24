@@ -91,7 +91,6 @@ dependencies {
     // Lottie
     implementation "com.airbnb.android:lottie-compose:$composeLottie"
 
-
     // Logging
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
