@@ -5,13 +5,14 @@
     <string name="tab_title_settings">설정</string>
 
     <string name="button_add_task">할일추가</string>
+    <string name="button_all_completed_task">완료항목 삭제</string>
 
     <string name="message_default_tip_title">[도움말]</string>
     <string name="message_default_tip_content">등록 : 할일추가 버튼 클릭\n수정 : 할일 클릭\n삭제 : 할일 옆으로 밀기\n완료 : 할일 좌측 체크박스 선택\n종료 : 스마트폰 취소 버튼</string>
 
     <string name="hint_add_task">할일을 입력하세요!</string>
 
-    <string name="header_task_completed">할일 완료!</string>
+    <string name="header_task_completed">완료한 일들!</string>
 
     <string name="empty_history_text">추가한 태스크가 없습니다.</string>
     <string name="title">제목</string>

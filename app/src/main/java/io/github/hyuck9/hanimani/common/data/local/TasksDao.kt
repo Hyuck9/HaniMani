@@ -39,4 +39,7 @@ interface TasksDao {
 	@Query("DELETE FROM tasks")
 	suspend fun deleteAllTasks()
 
+	@Query("DELETE FROM tasks WHERE taskStatus = :status")
+	suspend fun deleteTasksByStatus(status: ToDoStatus)
+
 }

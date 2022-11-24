@@ -32,4 +32,8 @@ class TasksEnvironment @Inject constructor(
 		tasksRepository.deleteTaskById(task.id)
 	}
 
+	override suspend fun deleteCompleteTasks() {
+		tasksRepository.deleteCompletedTasks()
+	}
+
 }
