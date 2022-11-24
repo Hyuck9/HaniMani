@@ -61,11 +61,13 @@ fun SwipeDismiss(
 
 			val circleFraction by animateFloatAsState(
 				targetValue = if (wouldCompleteOnRelease) ContentVisibility.visible else ContentVisibility.hidden,
-				animationSpec = tween(durationMillis = 500)
+				animationSpec = tween(durationMillis = 600)
 			)
 			val bounceInOut by animateFloatAsState(
 				targetValue = if (bounceState) 4f else 3f
 			)
+
+			val maxRadius = hypot(iconCenter.x.toDouble(), iconCenter.y.toDouble())
 
 			LaunchedEffect(wouldCompleteOnRelease) {
 				if (wouldCompleteOnRelease) {
@@ -105,7 +107,7 @@ fun SwipeDismiss(
 							center = iconCenter,
 							radius = lerp(
 								startValue = 0f,
-								endValue = 1000f,
+								endValue = maxRadius.toFloat(),
 								fraction = FastOutLinearInEasing.transform(circleFraction)
 							)
 						)
@@ -113,7 +115,7 @@ fun SwipeDismiss(
 
 				Box(
 					Modifier
-						.align(Alignment.CenterStart)
+						.align(Alignment.CenterEnd)
 						.padding(horizontal = 16.dp)
 						.onPositionInParentChanged { iconCenter = it.boundsInParent().center }
 				) {
@@ -138,7 +140,7 @@ fun SwipeDismiss(
 	modifier: Modifier = Modifier,
 	background: @Composable (isDismissed: Boolean, fraction: Float) -> Unit,
 	content: @Composable (isDismissed: Boolean) -> Unit,
-	directions: Set<DismissDirection> = setOf(DismissDirection.StartToEnd),
+	directions: Set<DismissDirection> = setOf(DismissDirection.EndToStart),
 	enter: EnterTransition = expandVertically(),
 	exit: ExitTransition = shrinkVertically(
 		animationSpec = tween(
@@ -149,13 +151,13 @@ fun SwipeDismiss(
 ) {
 	val dismissState = rememberDismissState(
 		confirmStateChange = {
-			it != DismissValue.DismissedToStart
+			it != DismissValue.DismissedToEnd
 		}
 	)
-	val isDismissed = dismissState.isDismissed(DismissDirection.StartToEnd)
+	val isDismissed = dismissState.isDismissed(DismissDirection.EndToStart)
 
 	LaunchedEffect(dismissState.currentValue) {
-		if (dismissState.currentValue == DismissValue.DismissedToEnd) {
+		if (dismissState.currentValue == DismissValue.DismissedToStart) {
 			delay(600)
 			onDismiss()
 		}
