@@ -1,5 +1,6 @@
 package io.github.hyuck9.hanimani.common.uicomponent
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -31,36 +32,43 @@ fun HmToDoItemCell(
 	onSwipeToDelete: () -> Unit,
 	onCheckboxClick: () -> Unit
 ) {
-	Surface(
-		modifier = modifier
-			.fillMaxWidth()
-			.clickable(onClick = onClick)
-	) {
-		Column {
-			Row(
-				verticalAlignment = Alignment.CenterVertically,
-				modifier = Modifier.padding(contentPaddingValues)
+	SwipeDismiss(
+		modifier = modifier,
+		backgroundModifier = Modifier.background(MaterialTheme.colorScheme.secondary),
+		content = {
+			Surface(
+				modifier = Modifier
+					.fillMaxWidth()
+					.clickable(onClick = onClick)
 			) {
-				HmIconButton(
-					onClick = onCheckboxClick,
-					color = Color.Transparent
-				) {
-					HmIcon(
-						imageVector = leftIcon,
-						tint = checkboxColor
+				Column {
+					Row(
+						verticalAlignment = Alignment.CenterVertically,
+						modifier = Modifier.padding(contentPaddingValues)
+					) {
+						HmIconButton(
+							onClick = onCheckboxClick,
+							color = Color.Transparent
+						) {
+							HmIcon(
+								imageVector = leftIcon,
+								tint = checkboxColor
+							)
+						}
+
+						Text(
+							text = name,
+							style = MaterialTheme.typography.titleSmall.copy(textDecoration = textDecoration),
+						)
+					}
+					Divider(
+						color = MaterialTheme.colorScheme.onSurface.copy(alpha = DividerAlpha)
 					)
 				}
-
-				Text(
-					text = name,
-					style = MaterialTheme.typography.titleSmall.copy(textDecoration = textDecoration),
-				)
 			}
-			Divider(
-				color = MaterialTheme.colorScheme.onSurface.copy(alpha = DividerAlpha)
-			)
-		}
-	}
+		},
+		onDismiss = { onSwipeToDelete() }
+	)
 }
 
 
