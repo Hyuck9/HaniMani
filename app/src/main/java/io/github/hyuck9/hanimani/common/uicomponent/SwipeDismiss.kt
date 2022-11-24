@@ -46,29 +46,26 @@ fun SwipeDismiss(
 	onDismiss: () -> Unit,
 	onComplete: () -> Unit
 ) {
-	var isStartToEnd by remember { mutableStateOf(false) }
 	val dismissState = rememberDismissState(
 		confirmStateChange = { dismissValue ->
 			when (dismissValue) {
 				DismissValue.Default -> {
-					isStartToEnd = false
 					false
 				}
 				DismissValue.DismissedToStart -> {
-					isStartToEnd = false
 					true
 				}
 				DismissValue.DismissedToEnd -> {
-					isStartToEnd = true
 					true
 				}
 			}
 		}
 	)
+
 	SwipeDismiss(
 		modifier = modifier,
-		background = { _, fraction ->
-			Background(fraction, backgroundModifier, backgroundSecondaryModifier, isStartToEnd)
+		background = { direction, fraction ->
+			Background(fraction, backgroundModifier, backgroundSecondaryModifier, direction)
 		},
 		content = content,
 		dismissState = dismissState,
@@ -81,19 +78,17 @@ fun SwipeDismiss(
 private fun Background(
 	fraction: Float,
 	modifier: Modifier = Modifier,
-	backgroundSecondaryModifier: Modifier,
-	isStartToEnd: Boolean,
+	backgroundSecondaryModifier: Modifier = Modifier,
+	direction: DismissDirection,
 ) {
 
 	val wouldCompleteOnRelease = fraction.absoluteValue >= dismissFraction
 	val iconVisible = fraction.absoluteValue >= iconShownFraction
-
 	var bounceState by remember { mutableStateOf(false) }
 	val lottieIcon by rememberLottieComposition(
-		if (isStartToEnd) {
-			LottieCompositionSpec.RawRes(R.raw.lottie_complete)
-		} else {
-			LottieCompositionSpec.RawRes(R.raw.lottie_delete)
+		when (direction) {
+			DismissDirection.EndToStart -> LottieCompositionSpec.RawRes(R.raw.lottie_delete)
+			DismissDirection.StartToEnd -> LottieCompositionSpec.RawRes(R.raw.lottie_complete)
 		}
 	)
 	val lottieAnimatable = rememberLottieAnimatable()
@@ -106,8 +101,20 @@ private fun Background(
 	val bounceInOut by animateFloatAsState(
 		targetValue = if (bounceState) 4f else 3f
 	)
-
-	val maxRadius = if (isStartToEnd) 1000.0 else hypot(iconCenter.x.toDouble(), iconCenter.y.toDouble())
+	val circleColor by animateColorAsState(
+		when (direction) {
+			DismissDirection.StartToEnd -> MaterialTheme.colorScheme.primary // -> 방향 스와이프 (수정)
+			DismissDirection.EndToStart -> MaterialTheme.colorScheme.error // <- 방향 스와이프 (삭제)
+		}
+	)
+	val alignment = when (direction) {
+		DismissDirection.EndToStart -> Alignment.CenterEnd
+		DismissDirection.StartToEnd -> Alignment.CenterStart
+	}
+	val maxRadius = when (direction) {
+		DismissDirection.EndToStart -> hypot(iconCenter.x.toDouble(), iconCenter.y.toDouble())
+		DismissDirection.StartToEnd -> 1000.0
+	}
 
 	LaunchedEffect(wouldCompleteOnRelease) {
 		if (wouldCompleteOnRelease) {
@@ -137,7 +144,7 @@ private fun Background(
 			modifier = backgroundSecondaryModifier
 				.fillMaxSize()
 				.drawGrowingCircle(
-					color = if (isStartToEnd) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
+					color = circleColor,
 					center = iconCenter,
 					radius = lerp(
 						startValue = 0f,
@@ -149,7 +156,7 @@ private fun Background(
 
 		Box(
 			Modifier
-				.align(if (isStartToEnd) Alignment.CenterStart else Alignment.CenterEnd)
+				.align(alignment)
 				.padding(horizontal = 16.dp)
 				.onPositionInParentChanged { iconCenter = it.boundsInParent().center }
 		) {
@@ -168,7 +175,7 @@ private fun Background(
 @Composable
 fun SwipeDismiss(
 	modifier: Modifier = Modifier,
-	background: @Composable (isDismissed: Boolean, fraction: Float) -> Unit,
+	background: @Composable (direction: DismissDirection, fraction: Float) -> Unit,
 	content: @Composable (isDismissed: Boolean) -> Unit,
 	directions: Set<DismissDirection> = setOf(DismissDirection.EndToStart, DismissDirection.StartToEnd),
 	enter: EnterTransition = expandVertically(),
@@ -205,7 +212,7 @@ fun SwipeDismiss(
 			background = {
 				if (dismissState.dismissDirection != null && dismissState.dismissDirection in directions) {
 					val fraction = dismissState.progress.fraction
-					background(isDismissed, fraction)
+					background(dismissState.dismissDirection!!, fraction)
 				}
 			},
 			dismissContent = { content(isDismissed) },
