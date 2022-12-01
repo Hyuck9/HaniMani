@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddTask
 import androidx.compose.material.icons.rounded.CheckCircle
@@ -19,6 +20,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -73,6 +75,7 @@ fun TasksScreen(
 			onClick = {},
 			onCheckboxClick = { viewModel.dispatch(TasksAction.OnToggleStatus(it)) },
 			onSwipeToDelete = { viewModel.dispatch(TasksAction.Delete(it)) },
+			onAllCompleteTasksDelete = { viewModel.dispatch(TasksAction.OnCompletedTasksDelete) },
 			listState = lazyListState
 		)
 	}
@@ -86,6 +89,7 @@ fun TasksContent(
 	onClick: (ToDoTask) -> Unit,
 	onCheckboxClick: (ToDoTask) -> Unit,
 	onSwipeToDelete: (ToDoTask) -> Unit,
+	onAllCompleteTasksDelete: () -> Unit,
 	color: Color = MaterialTheme.colorScheme.primary,
 	listState: LazyListState
 ) {
@@ -113,15 +117,28 @@ fun TasksContent(
 						Spacer(Modifier.height(16.dp))
 						Row(
 							verticalAlignment = Alignment.CenterVertically,
-							modifier = Modifier.padding(horizontal = 16.dp)
+							horizontalArrangement = Arrangement.SpaceBetween,
+							modifier = Modifier
+								.padding(horizontal = 16.dp)
 								.fillMaxWidth()
-								.height(32.dp)
 						) {
 							Text(
 								text = stringResource(R.string.header_task_completed),
-								style = MaterialTheme.typography.titleSmall,
+								style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
 								color = color
 							)
+
+							TextButton(
+								onClick = { onAllCompleteTasksDelete() },
+								shape = CircleShape,
+								colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+							) {
+								Text(
+									text = stringResource(R.string.button_all_completed_task),
+									style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+									color = MaterialTheme.colorScheme.error
+								)
+							}
 						}
 					}
 					is ToDoTaskItem.Complete -> {

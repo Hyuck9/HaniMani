@@ -2,6 +2,7 @@ package io.github.hyuck9.hanimani.common.uicomponent
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
@@ -58,7 +59,6 @@ fun HmTextField(
 			)
 		},
 		modifier = modifier
-			.height(56.dp)
 			.background(
 				color = MaterialTheme.colorScheme.secondary,
 				shape = shape
@@ -70,7 +70,6 @@ fun HmTextField(
 		isError = isError,
 		keyboardOptions = keyboardOptions,
 		keyboardActions = keyboardActions,
-		singleLine = true,
 		colors = TextFieldDefaults.outlinedTextFieldColors(
 			focusedBorderColor = Color.Transparent,
 			unfocusedBorderColor = Color.Transparent,
@@ -106,7 +105,7 @@ fun HmTodoCreator(
 				capitalization = KeyboardCapitalization.Sentences
 			),
 			modifier = modifier
-				.height(50.dp)
+				.heightIn(min = 50.dp, max = 150.dp)
 				.weight(0.6f),
 			trailingIcon = {
 				HmIconButton(

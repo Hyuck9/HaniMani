@@ -8,4 +8,5 @@ interface ITasksEnvironment {
 	suspend fun createTask(taskName: String)
 	suspend fun toggleTaskStatus(task: ToDoTask)
 	suspend fun deleteTask(task: ToDoTask)
+	suspend fun deleteCompleteTasks()
 }

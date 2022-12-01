@@ -68,4 +68,8 @@ class DefaultTasksRepository(
 	override suspend fun deleteAllTasks() = withContext(ioDispatcher) {
 		tasksDao.deleteAllTasks()
 	}
+
+	override suspend fun deleteCompletedTasks() = withContext(ioDispatcher) {
+		tasksDao.deleteTasksByStatus(ToDoStatus.COMPLETE)
+	}
 }

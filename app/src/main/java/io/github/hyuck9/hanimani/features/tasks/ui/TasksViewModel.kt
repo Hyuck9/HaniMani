@@ -55,6 +55,11 @@ class TasksViewModel @Inject constructor(
 					environment.deleteTask(action.task)
 				}
 			}
+			is TasksAction.OnCompletedTasksDelete -> {
+				viewModelScope.launch {
+					environment.deleteCompleteTasks()
+				}
+			}
 		}
 	}
 
