@@ -63,7 +63,7 @@ fun TasksScreen(
 		}
 	) { padding ->
 		TasksContent(
-			modifier = Modifier.padding(padding),
+			modifier = Modifier.padding(bottom = padding.calculateBottomPadding()),
 			tasks = state.toDoTaskItems,
 			onClick = {},
 			onCheckboxClick = { viewModel.dispatch(TasksAction.OnToggleStatus(it)) },
