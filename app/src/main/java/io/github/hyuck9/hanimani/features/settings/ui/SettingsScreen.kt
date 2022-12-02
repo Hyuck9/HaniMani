@@ -16,19 +16,21 @@ import io.github.hyuck9.hanimani.common.theme.MediumRadius
 
 @Composable
 fun SettingsScreen(
+	onClickTheme: () -> Unit,
 ) {
 	Column(
 		modifier = Modifier
 			.padding(16.dp)
 	) {
-		DesignCard()
+		DesignCard(onClickTheme = onClickTheme)
 	}
 }
 
 
 @Composable
 fun DesignCard(
-	modifier: Modifier = Modifier
+	modifier: Modifier = Modifier,
+	onClickTheme: () -> Unit
 ) {
 	Column(
 		modifier = modifier
@@ -42,11 +44,9 @@ fun DesignCard(
 		SettingsRow(
 			settingName = stringResource(id = R.string.setting_theme),
 			shape = RoundedCornerShape(topStart = MediumRadius, topEnd = MediumRadius),
-			onClick = {}
+			onClick = onClickTheme
 		)
-		Spacer(Modifier.height(1.dp))
 		SettingsRow(settingName = stringResource(id = R.string.setting_font_size), onClick = {})
-		Spacer(Modifier.height(1.dp))
 		SettingsRow(
 			settingName = stringResource(id = R.string.setting_font_align),
 			shape = RoundedCornerShape(bottomStart = MediumRadius, bottomEnd = MediumRadius),
@@ -64,7 +64,8 @@ private fun SettingsRow(
 ) {
 	Surface(
 		modifier = Modifier
-			.fillMaxWidth(),
+			.fillMaxWidth()
+			.padding(bottom = 1.dp),
 		shadowElevation = 5.dp,
 		shape = shape,
 		onClick = onClick
@@ -98,6 +99,6 @@ private fun SettingsRowPreview() {
 @Composable
 private fun DesignCardPreview() {
 	HaniManiTheme {
-		SettingsScreen()
+		SettingsScreen(onClickTheme = {})
 	}
 }

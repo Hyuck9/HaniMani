@@ -23,8 +23,16 @@
     <string name="delete_all">Delete All</string>
     <string name="title_activity_main">MainActivity</string>
 
+
     <string name="setting_title_design">Design</string>
+
     <string name="setting_theme">Themes</string>
+    <string name="setting_theme_automatic">Automatic</string>
+    <string name="setting_theme_wallpaper" translatable="false">Wallpaper</string>
+    <string name="setting_theme_light">Daylight</string>
+    <string name="setting_theme_night">Midnight</string>
+
     <string name="setting_font_size">글자 크기</string>
+
     <string name="setting_font_align">글자 정렬</string>
 </resources>

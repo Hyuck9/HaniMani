@@ -65,7 +65,7 @@ private fun HaniManiNavHost(
 			modifier = Modifier.padding(innerPadding)
 		) {
 			TasksNavHost(navController, bottomSheetConfig)
-			SettingsNavHost(navController)
+			SettingsNavHost(navController, bottomSheetConfig)
 		}
 	}
 }

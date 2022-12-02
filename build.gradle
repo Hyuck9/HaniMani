@@ -38,7 +38,7 @@ ext {
     truthVersion = '1.1.2'
     dataStoreVersion = '1.0.0'
     googleMaterialVersion = '1.7.0'
-    protobufVersion = '3.21.9'
-    composeLottie = "5.2.0"
+    protobufVersion = '4.0.0-rc-2'
+    composeLottieVersion = "5.2.0"
 
 }
