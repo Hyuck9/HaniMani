@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.runtime.navigation.SettingsFlow
+import io.github.hyuck9.hanimani.runtime.navigation.TasksFlow
 
 @Composable
 fun HaniManiTabBar(
@@ -51,10 +52,14 @@ fun HaniManiTabBar(
 }
 
 private fun getTabPage(currentRoute: String): TabPage {
-	return if (currentRoute == SettingsFlow.Settings.route) {
-		TabPage.Settings
-	} else {
-		TabPage.Tasks
+	return when (currentRoute) {
+		TasksFlow.TasksScreen.route,
+		TasksFlow.CreateTask.route -> {
+			TabPage.Tasks
+		}
+		else -> {
+			TabPage.Settings
+		}
 	}
 }
 
