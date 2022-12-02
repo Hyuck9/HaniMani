@@ -12,10 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.TaskAlt
-import androidx.compose.material3.Icon
-import androidx.compose.material3.TabPosition
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -26,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
-import io.github.hyuck9.hanimani.common.theme.Purple40
 import io.github.hyuck9.hanimani.runtime.navigation.SettingsFlow
 
 @Composable
@@ -124,7 +120,7 @@ private fun HaniManiTabIndicator(
 			.padding(4.dp)
 			.fillMaxSize()
 			.border(
-				BorderStroke(2.dp, Purple40),
+				BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
 				RoundedCornerShape(4.dp)
 			)
 	)

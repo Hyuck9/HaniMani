@@ -10,6 +10,10 @@ data class TasksState(
 ) {
 	val toDoTaskItems = items.toToDoTaskItems()
 	val validTaskName = taskName.text.isNotBlank()
+
+	val maxOrder = items.maxWithOrNull(Comparator.comparingInt { lastTask ->
+		lastTask.order
+	})?.order ?: 0
 }
 
 sealed class ToDoTaskItem {

@@ -8,7 +8,7 @@
     <string name="button_all_completed_task">완료항목 삭제</string>
 
     <string name="message_default_tip_title">[도움말]</string>
-    <string name="message_default_tip_content">등록 : 할일추가 버튼 클릭\n수정 : 할일 클릭\n삭제 : 할일 옆으로 밀기\n완료 : 할일 좌측 체크박스 선택\n종료 : 스마트폰 취소 버튼</string>
+    <string name="message_default_tip_content">등록 : 할일추가 버튼 클릭\n수정 : 할일 클릭\n삭제 : 할일 왼쪽으로 밀기\n완료 : 할일 좌측 체크박스 선택\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;또는 할일 오른쪽으로 밀기\n종료 : 스마트폰 취소 버튼</string>
 
     <string name="hint_add_task">할일을 입력하세요!</string>
 
@@ -22,4 +22,9 @@
     <string name="update">저장</string>
     <string name="delete_all">Delete All</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="setting_title_design">Design</string>
+    <string name="setting_theme">Themes</string>
+    <string name="setting_font_size">글자 크기</string>
+    <string name="setting_font_align">글자 정렬</string>
 </resources>

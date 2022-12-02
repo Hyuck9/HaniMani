@@ -4,6 +4,7 @@ import io.github.hyuck9.hanimani.common.data.local.TasksDao
 import io.github.hyuck9.hanimani.common.data.local.model.Result
 import io.github.hyuck9.hanimani.common.data.local.model.Result.Error
 import io.github.hyuck9.hanimani.common.data.local.model.Result.Success
+import io.github.hyuck9.hanimani.common.data.local.model.TaskEntity
 import io.github.hyuck9.hanimani.common.extension.toTaskEntity
 import io.github.hyuck9.hanimani.common.extension.toToDoTask
 import io.github.hyuck9.hanimani.common.extension.toToDoTasks
@@ -59,6 +60,14 @@ class DefaultTasksRepository(
 
 	override suspend fun updateTaskStatus(taskId: String, status: ToDoStatus, completedAt: LocalDateTime?, updatedAt: LocalDateTime) = withContext(ioDispatcher) {
 		tasksDao.updateTaskStatus(taskId, status, completedAt, updatedAt)
+	}
+
+	override suspend fun updateOrder(taskId: String, order: Int, updatedAt: LocalDateTime) = withContext(ioDispatcher) {
+		tasksDao.updateOrder(taskId, order, updatedAt)
+	}
+
+	override suspend fun updateTasks(tasks: List<TaskEntity>) = withContext(ioDispatcher) {
+		tasksDao.updateTasks(tasks)
 	}
 
 	override suspend fun deleteTaskById(taskId: String) = withContext(ioDispatcher) {

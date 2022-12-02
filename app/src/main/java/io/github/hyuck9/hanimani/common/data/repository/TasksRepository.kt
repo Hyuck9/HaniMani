@@ -1,6 +1,7 @@
 package io.github.hyuck9.hanimani.common.data.repository
 
 import io.github.hyuck9.hanimani.common.data.local.model.Result
+import io.github.hyuck9.hanimani.common.data.local.model.TaskEntity
 import io.github.hyuck9.hanimani.model.ToDoStatus
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.flow.Flow
@@ -24,6 +25,13 @@ interface TasksRepository {
 		completedAt: LocalDateTime?,
 		updatedAt: LocalDateTime
 	)
+
+	suspend fun updateOrder(
+		taskId: String,
+		order: Int,
+		updatedAt: LocalDateTime
+	)
+	suspend fun updateTasks(tasks: List<TaskEntity>)
 
 	suspend fun deleteTaskById(taskId: String)
 	suspend fun deleteAllTasks()

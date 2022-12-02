@@ -2,11 +2,9 @@ package io.github.hyuck9.hanimani.features.tasks.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddTask
@@ -28,16 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.hyuck9.hanimani.R
-import io.github.hyuck9.hanimani.common.extension.HandleEffect
-import io.github.hyuck9.hanimani.common.extension.identifier
-import io.github.hyuck9.hanimani.common.extension.isScrollingUp
-import io.github.hyuck9.hanimani.common.extension.requestFocusImeAware
+import io.github.hyuck9.hanimani.common.extension.*
 import io.github.hyuck9.hanimani.common.preview.SampleBooleanProvider
 import io.github.hyuck9.hanimani.common.theme.AlphaDisabled
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
-import io.github.hyuck9.hanimani.common.uicomponent.EmptyTaskTipText
-import io.github.hyuck9.hanimani.common.uicomponent.HmToDoItemCell
-import io.github.hyuck9.hanimani.common.uicomponent.HmTodoCreator
+import io.github.hyuck9.hanimani.common.uicomponent.*
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -81,6 +74,7 @@ fun TasksScreen(
 	}
 }
 
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TasksContent(
@@ -96,7 +90,8 @@ fun TasksContent(
 	val coroutineScope = rememberCoroutineScope()
 
 	LazyColumn(
-		modifier = modifier.fillMaxSize(),
+		modifier = modifier.fillMaxSize()
+			.background(MaterialTheme.colorScheme.secondary),
 		state = listState
 	) {
 		if (tasks.isEmpty()) {
@@ -114,32 +109,10 @@ fun TasksContent(
 			) { item ->
 				when (item) {
 					is ToDoTaskItem.CompleteHeader -> {
-						Spacer(Modifier.height(16.dp))
-						Row(
-							verticalAlignment = Alignment.CenterVertically,
-							horizontalArrangement = Arrangement.SpaceBetween,
-							modifier = Modifier
-								.padding(horizontal = 16.dp)
-								.fillMaxWidth()
-						) {
-							Text(
-								text = stringResource(R.string.header_task_completed),
-								style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-								color = color
-							)
-
-							TextButton(
-								onClick = { onAllCompleteTasksDelete() },
-								shape = CircleShape,
-								colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
-							) {
-								Text(
-									text = stringResource(R.string.button_all_completed_task),
-									style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-									color = MaterialTheme.colorScheme.error
-								)
-							}
-						}
+						CompleteHeader(
+							color = color,
+							onAllCompleteTasksDelete = onAllCompleteTasksDelete
+						)
 					}
 					is ToDoTaskItem.Complete -> {
 						HmToDoItemCell(
@@ -185,6 +158,40 @@ fun TasksContent(
 					}
 				}
 			}
+		}
+	}
+}
+
+@Composable
+private fun CompleteHeader(
+	modifier: Modifier = Modifier,
+	onAllCompleteTasksDelete: () -> Unit,
+	color: Color = MaterialTheme.colorScheme.primary
+) {
+	Spacer(Modifier.height(16.dp))
+	Row(
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.SpaceBetween,
+		modifier = modifier
+			.padding(horizontal = 16.dp)
+			.fillMaxWidth()
+	) {
+		Text(
+			text = stringResource(R.string.header_task_completed),
+			style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+			color = color
+		)
+
+		TextButton(
+			onClick = { onAllCompleteTasksDelete() },
+			shape = CircleShape,
+			colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+		) {
+			Text(
+				text = stringResource(R.string.button_all_completed_task),
+				style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+				color = MaterialTheme.colorScheme.error
+			)
 		}
 	}
 }

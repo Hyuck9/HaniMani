@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 @Dao
 interface TasksDao {
 
-	@Query("SELECT * FROM Tasks")
+	@Query("SELECT * FROM Tasks ORDER BY taskStatus DESC, taskOrder")
 	fun observeTasks(): Flow<List<TaskEntity>>
 
 	@Query("SELECT * FROM Tasks WHERE taskId = :taskId")
@@ -32,6 +32,12 @@ interface TasksDao {
 
 	@Query("UPDATE Tasks SET taskStatus = :status, completedAt = :completedAt, updatedAt = :updatedAt WHERE taskId = :taskId")
 	suspend fun updateTaskStatus(taskId: String, status: ToDoStatus, completedAt: LocalDateTime?, updatedAt: LocalDateTime)
+
+	@Query("UPDATE Tasks SET taskOrder = :order, updatedAt = :updatedAt WHERE taskId = :taskId")
+	suspend fun updateOrder(taskId: String, order: Int, updatedAt: LocalDateTime)
+
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
+	suspend fun updateTasks(tasks: List<TaskEntity>)
 
 	@Query("DELETE FROM Tasks WHERE taskId = :taskId")
 	suspend fun deleteTaskById(taskId: String)

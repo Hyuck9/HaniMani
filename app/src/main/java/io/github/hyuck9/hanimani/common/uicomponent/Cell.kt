@@ -58,6 +58,7 @@ fun HmToDoItemCell(
 
 @Composable
 private fun ContentRow(
+	modifier: Modifier = Modifier,
 	contentPaddingValues: PaddingValues,
 	onCheckboxClick: () -> Unit,
 	leftIcon: ImageVector,
@@ -65,7 +66,10 @@ private fun ContentRow(
 	name: String,
 	textDecoration: TextDecoration?
 ) {
-	Column {
+	Column(
+		modifier = modifier
+			.background(MaterialTheme.colorScheme.surface)
+	) {
 		Row(
 			verticalAlignment = Alignment.CenterVertically,
 			modifier = Modifier.padding(contentPaddingValues)

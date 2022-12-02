@@ -11,7 +11,6 @@ fun List<ToDoTask>.toToDoTaskItems(): List<ToDoTaskItem> {
 			ToDoStatus.IN_PROGRESS -> ToDoTaskItem.InProgress(it)
 		}
 	}
-		.sortedBy { it is ToDoTaskItem.Complete }
 		.toMutableList()
 
 	val firstCompleteIndex = tasks.indexOfFirst { it is ToDoTaskItem.Complete }
