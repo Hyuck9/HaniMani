@@ -91,7 +91,7 @@ fun TasksContent(
 
 	LazyColumn(
 		modifier = modifier.fillMaxSize()
-			.background(MaterialTheme.colorScheme.secondary),
+			.background(MaterialTheme.colorScheme.background),
 		state = listState
 	) {
 		if (tasks.isEmpty()) {
