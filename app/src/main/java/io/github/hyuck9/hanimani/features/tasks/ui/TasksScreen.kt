@@ -135,7 +135,7 @@ fun TasksContent(
 							modifier = Modifier.animateItemPlacement(),
 							name = item.toDoTask.name,
 							checkboxColor = color,
-							contentPaddingValues = PaddingValues(all = 8.dp),
+							contentPaddingValues = PaddingValues(vertical = 24.dp, horizontal = 8.dp),
 							leftIcon = if (isChecked) {
 								Icons.Rounded.CheckCircle
 							} else {
@@ -149,7 +149,7 @@ fun TasksContent(
 								debounceJob?.cancel()
 								if (isChecked) {
 									debounceJob = coroutineScope.launch {
-										delay(1000)
+										delay(300)
 										onCheckboxClick(item.toDoTask)
 									}
 								}

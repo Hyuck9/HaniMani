@@ -1,7 +1,6 @@
 package io.github.hyuck9.hanimani.common.uicomponent
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,11 +45,9 @@ fun HmModalBackHeader(
 @Composable
 private fun HmModalBackHeaderPreview() {
 	HaniManiTheme {
-		Surface {
-			HmModalBackHeader(
-				text = "Themes",
-				onClickBack = {}
-			)
-		}
+		HmModalBackHeader(
+			text = "Themes",
+			onClickBack = {}
+		)
 	}
 }

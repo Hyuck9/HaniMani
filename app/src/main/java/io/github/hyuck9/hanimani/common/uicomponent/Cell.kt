@@ -179,12 +179,10 @@ private fun ContentRow(
 @Composable
 private fun HmModalCellPreview() {
 	HaniManiTheme {
-		Surface {
-			HmModalCell(
-				onClick = {},
-				text = "테스트"
-			)
-		}
+		HmModalCell(
+			onClick = {},
+			text = "테스트"
+		)
 	}
 }
 
