@@ -16,6 +16,8 @@ data class TaskEntity(
 	val name: String = "",
 	@ColumnInfo(name = "taskStatus")
 	val status: ToDoStatus,
+	@ColumnInfo(name = "taskOrder")
+	val order: Int = 0,
 	@ColumnInfo(name = "completedAt")
 	val completedAt: LocalDateTime? = null,
 	@ColumnInfo(name = "createdAt")

@@ -8,6 +8,7 @@ fun TaskEntity.toToDoTask(): ToDoTask {
 		id = id,
 		name = name,
 		status = status,
+		order = order,
 		completedAt = completedAt,
 		createdAt = createdAt,
 		updatedAt = updatedAt
@@ -19,6 +20,7 @@ fun ToDoTask.toTaskEntity(): TaskEntity {
 		id = id,
 		name = name,
 		status = status,
+		order = order,
 		completedAt = completedAt,
 		createdAt = createdAt,
 		updatedAt = updatedAt

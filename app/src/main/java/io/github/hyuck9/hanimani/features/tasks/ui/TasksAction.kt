@@ -10,4 +10,6 @@ sealed class TasksAction {
 	data class ChangeTaskName(val name: TextFieldValue) : TasksAction()
 	data class OnToggleStatus(val task: ToDoTask) : TasksAction()
 	data class Delete(val task: ToDoTask) : TasksAction()
+	data class ReplaceOrder(val fromTask: ToDoTask, val toTask: ToDoTask) : TasksAction()
+	data class UpdateOrders(val tasks: List<ToDoTask>) : TasksAction()
 }

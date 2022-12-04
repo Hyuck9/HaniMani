@@ -22,4 +22,8 @@ sealed class SettingsFlow(val name: String) {
 	object Settings : SettingsFlow("settings-screen") {
 		val route = name
 	}
+
+	object Theme : SettingsFlow("theme-screen") {
+		val route = name
+	}
 }

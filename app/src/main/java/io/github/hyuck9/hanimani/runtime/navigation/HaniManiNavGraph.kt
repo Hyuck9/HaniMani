@@ -1,6 +1,7 @@
 package io.github.hyuck9.hanimani.runtime.navigation
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.ModalBottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -57,15 +58,16 @@ private fun HaniManiNavHost(
 				currentRoute = currentRoute,
 				onTabSelected = { it.onTabSelected(navController) }
 			)
-		}
+		},
+		modifier = Modifier.statusBarsPadding()
 	) { innerPadding ->
 		NavHost(
 			navController = navController,
 			startDestination = startDestination,
-			modifier = Modifier.padding(innerPadding)
+			modifier = Modifier.padding(top = innerPadding.calculateTopPadding())
 		) {
 			TasksNavHost(navController, bottomSheetConfig)
-			SettingsNavHost(navController)
+			SettingsNavHost(navController, bottomSheetConfig)
 		}
 	}
 }

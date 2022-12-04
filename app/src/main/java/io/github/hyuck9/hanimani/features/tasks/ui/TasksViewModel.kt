@@ -17,7 +17,7 @@ class TasksViewModel @Inject constructor(
 	init {
 		viewModelScope.launch {
 			environment.getTaskList().collect {
-				setState { copy(items = it) }
+				setState { copy(items = it.toMutableList()) }
 			}
 		}
 	}
@@ -32,7 +32,7 @@ class TasksViewModel @Inject constructor(
 			is TasksAction.ClickSubmit -> {
 				viewModelScope.launch {
 					if (state.value.validTaskName) {
-						environment.createTask(state.value.taskName.text.trim())
+						environment.createTask(state.value.taskName.text.trim(), state.value.maxOrder)
 						setState { copy(taskName = TextFieldValue()) }
 
 						val lastIndexProgressItem = state.value.toDoTaskItems.filterIsInstance<ToDoTaskItem.InProgress>().size
@@ -58,6 +58,16 @@ class TasksViewModel @Inject constructor(
 			is TasksAction.OnCompletedTasksDelete -> {
 				viewModelScope.launch {
 					environment.deleteCompleteTasks()
+				}
+			}
+			is TasksAction.ReplaceOrder -> {
+				viewModelScope.launch {
+					environment.replaceOrder(action.fromTask, action.toTask)
+				}
+			}
+			is TasksAction.UpdateOrders -> {
+				viewModelScope.launch {
+					environment.updateOrders(action.tasks)
 				}
 			}
 		}

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "io.github.hyuck9.hanimani.common.data.preference.model";
+option java_multiple_files = true;
+
+message ThemePreference {
+
+  enum ThemeColor {
+    SYSTEM = 0;
+    WALLPAPER = 1;
+    LIGHT = 2;
+    NIGHT = 3;
+  }
+
+  ThemeColor themeColor = 1;
+}

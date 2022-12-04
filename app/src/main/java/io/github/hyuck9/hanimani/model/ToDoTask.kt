@@ -7,6 +7,7 @@ data class ToDoTask(
 	val id: String = UUID.randomUUID().toString(),
 	val name: String = "",
 	val status: ToDoStatus = ToDoStatus.IN_PROGRESS,
+	val order: Int = 0,
 	val completedAt: LocalDateTime? = null,
 	val createdAt: LocalDateTime = LocalDateTime.now(),
 	val updatedAt: LocalDateTime = LocalDateTime.now(),
