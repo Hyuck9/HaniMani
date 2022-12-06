@@ -19,6 +19,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -69,6 +70,7 @@ fun TasksScreen(
 			onCheckboxClick = { viewModel.dispatch(TasksAction.OnToggleStatus(it)) },
 			onSwipeToDelete = { viewModel.dispatch(TasksAction.Delete(it)) },
 			onAllCompleteTasksDelete = { viewModel.dispatch(TasksAction.OnCompletedTasksDelete) },
+			textAlign = state.textAlign.toAlign(),
 			listState = lazyListState
 		)
 	}
@@ -85,6 +87,7 @@ fun TasksContent(
 	onSwipeToDelete: (ToDoTask) -> Unit,
 	onAllCompleteTasksDelete: () -> Unit,
 	color: Color = MaterialTheme.colorScheme.primary,
+	textAlign : TextAlign = TextAlign.Start,
 	listState: LazyListState
 ) {
 	val coroutineScope = rememberCoroutineScope()
@@ -121,6 +124,7 @@ fun TasksContent(
 							checkboxColor = color.copy(alpha = AlphaDisabled),
 							contentPaddingValues = PaddingValues(all = 8.dp),
 							leftIcon = Icons.Rounded.CheckCircle,
+							textAlign = textAlign,
 							textDecoration = TextDecoration.LineThrough,
 							onClick = { onClick(item.toDoTask) },
 							onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
@@ -141,6 +145,7 @@ fun TasksContent(
 							} else {
 								Icons.Rounded.RadioButtonUnchecked
 							},
+							textAlign = textAlign,
 							textDecoration = TextDecoration.None,
 							onClick = { onClick(item.toDoTask) },
 							onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },

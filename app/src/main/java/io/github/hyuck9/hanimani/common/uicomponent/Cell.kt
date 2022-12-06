@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,21 +37,10 @@ fun HmModalCell(
 	leftIcon: @Composable (()-> Unit)? = null,
 	rightIcon: @Composable (()-> Unit)? = null
 ) {
-	val colorAlpha = if (enabled) {
-		AlphaHigh
-	} else {
-		AlphaDisabled
-	}
-	val onClickState = if (enabled) {
-		onClick
-	} else {
-		{}
-	}
-	val indication = if (enabled) {
-		LocalIndication.current
-	} else {
-		null
-	}
+
+	val colorAlpha = if (enabled) { AlphaHigh } else { AlphaDisabled }
+	val onClickState = if (enabled) { onClick } else { {} }
+	val indication = if (enabled) { LocalIndication.current } else { null }
 
 	val shape = MaterialTheme.shapes.medium
 	Surface(
@@ -108,6 +98,7 @@ fun HmToDoItemCell(
 	textDecoration: TextDecoration?,
 	onClick: () -> Unit,
 	onSwipeToDelete: () -> Unit,
+	textAlign : TextAlign = TextAlign.Start,
 	onCheckboxClick: () -> Unit
 ) {
 	SwipeDismiss(
@@ -125,6 +116,7 @@ fun HmToDoItemCell(
 					leftIcon = leftIcon,
 					checkboxColor = checkboxColor,
 					name = name,
+					textAlign = textAlign,
 					textDecoration = textDecoration
 				)
 			}
@@ -142,6 +134,7 @@ private fun ContentRow(
 	leftIcon: ImageVector,
 	checkboxColor: Color,
 	name: String,
+	textAlign : TextAlign,
 	textDecoration: TextDecoration?
 ) {
 	Column(
@@ -163,7 +156,9 @@ private fun ContentRow(
 			}
 
 			Text(
+				modifier = modifier.fillMaxWidth().padding(end = 8.dp),
 				text = name,
+				textAlign = textAlign,
 				style = MaterialTheme.typography.titleSmall.copy(textDecoration = textDecoration),
 			)
 		}
@@ -192,7 +187,7 @@ private fun HmToDoItemCellPreview() {
 	HaniManiTheme {
 		HmToDoItemCell(
 			modifier = Modifier.padding(bottom = 8.dp),
-			name = "동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세\n무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.",
+			name = "동해물과 백두산이",
 			checkboxColor = Color.LightGray,
 			contentPaddingValues = PaddingValues(all = 8.dp),
 			leftIcon = Icons.Rounded.CheckCircle,

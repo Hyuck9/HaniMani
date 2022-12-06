@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.bottomSheet
 import io.github.hyuck9.hanimani.features.settings.ui.SettingsScreen
+import io.github.hyuck9.hanimani.features.settings.ui.SettingsViewModel
 import io.github.hyuck9.hanimani.features.theme.ui.ThemeScreen
 import io.github.hyuck9.hanimani.features.theme.ui.ThemeViewModel
 
@@ -20,7 +21,9 @@ fun NavGraphBuilder.SettingsNavHost(
 ) {
 	navigation(startDestination = SettingsFlow.Settings.route, route = SettingsFlow.Root.route) {
 		composable(SettingsFlow.Settings.route) {
+			val viewModel = hiltViewModel<SettingsViewModel>()
 			SettingsScreen(
+				viewModel = viewModel,
 				onClickTheme = { navController.navigate(SettingsFlow.Theme.route) }
 			)
 		}

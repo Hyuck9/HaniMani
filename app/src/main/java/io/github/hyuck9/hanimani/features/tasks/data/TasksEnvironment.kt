@@ -1,18 +1,22 @@
 package io.github.hyuck9.hanimani.features.tasks.data
 
 import io.github.hyuck9.hanimani.common.data.local.model.TaskEntity
+import io.github.hyuck9.hanimani.common.data.preference.PreferenceManager
 import io.github.hyuck9.hanimani.common.data.repository.TasksRepository
 import io.github.hyuck9.hanimani.common.extension.toTaskEntity
+import io.github.hyuck9.hanimani.model.TaskAlign
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import javax.inject.Inject
 
 class TasksEnvironment @Inject constructor(
-	private val tasksRepository: TasksRepository
+	private val tasksRepository: TasksRepository,
+	private val preferenceManager: PreferenceManager
 ) : ITasksEnvironment {
 
 	override fun getTaskList(): Flow<List<ToDoTask>> = tasksRepository.getTasksStream()
+	override fun getTextAlign(): Flow<TaskAlign> = preferenceManager.getTaskAlign()
 
 	override suspend fun createTask(taskName: String, maxOrder: Int) {
 		tasksRepository.saveTask(

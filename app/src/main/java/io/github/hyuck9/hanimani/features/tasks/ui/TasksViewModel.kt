@@ -15,10 +15,22 @@ class TasksViewModel @Inject constructor(
 ) : BaseViewModel<TasksState, TasksEffect, TasksAction, ITasksEnvironment>(TasksState(), tasksEnvironment) {
 
 	init {
+		initTasks()
+		initTextAlign()
+	}
+
+	private fun initTasks() {
 		viewModelScope.launch {
 			environment.getTaskList().collect {
 				setState { copy(items = it.toMutableList()) }
 			}
+		}
+	}
+
+	private fun initTextAlign() {
+		viewModelScope.launch {
+			environment.getTextAlign()
+				.collect { setState { copy(textAlign = it) } }
 		}
 	}
 

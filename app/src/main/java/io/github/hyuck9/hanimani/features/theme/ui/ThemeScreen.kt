@@ -2,7 +2,6 @@ package io.github.hyuck9.hanimani.features.theme.ui
 
 import android.annotation.SuppressLint
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +29,7 @@ import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.common.theme.LightPrimary
 import io.github.hyuck9.hanimani.common.theme.NightItemBackgroundL2
 import io.github.hyuck9.hanimani.common.theme.NightPrimary
+import io.github.hyuck9.hanimani.common.uicomponent.HmIcon
 import io.github.hyuck9.hanimani.common.uicomponent.HmModalBackHeader
 import io.github.hyuck9.hanimani.common.uicomponent.HmModalCell
 import io.github.hyuck9.hanimani.common.uicomponent.HmModalLayout
@@ -82,9 +81,8 @@ private fun ThemeItem(
 		leftIcon = { LeftIcon(item = item) },
 		rightIcon = if (item.applied) {
 			@Composable {
-				Icon(
+				HmIcon(
 					imageVector = Icons.Rounded.Check,
-					contentDescription = null,
 					modifier = Modifier.size(28.dp)
 				)
 			}
@@ -146,55 +144,4 @@ private fun LeftIconPreview() {
 	HaniManiTheme {
 		LeftIcon(item = themeItem)
 	}
-}
-
-
-private fun mockList(): List<ThemeItem> {
-	val data = mutableListOf<ThemeItem>()
-
-	data.add(
-		ThemeItem(
-			R.string.setting_theme_automatic,
-			Theme.SYSTEM,
-			Brush.linearGradient(
-				colors = listOf(Color.White, NightItemBackgroundL2)
-			),
-			false
-		)
-	)
-
-	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-		data.add(
-			ThemeItem(
-				R.string.setting_theme_wallpaper,
-				Theme.WALLPAPER,
-				Brush.linearGradient(colors = listOf()),
-				false
-			)
-		)
-	}
-
-	data.add(
-		ThemeItem(
-			R.string.setting_theme_light,
-			Theme.LIGHT,
-			Brush.linearGradient(
-				colors = listOf(LightPrimary, Color.White)
-			),
-			false
-		)
-	)
-
-	data.add(
-		ThemeItem(
-			R.string.setting_theme_night,
-			Theme.NIGHT,
-			Brush.linearGradient(
-				colors = listOf(NightPrimary, NightItemBackgroundL2)
-			),
-			true
-		)
-	)
-
-	return data
 }

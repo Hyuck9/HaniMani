@@ -3,12 +3,14 @@ package io.github.hyuck9.hanimani.features.tasks.ui
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
 import io.github.hyuck9.hanimani.common.extension.toToDoTaskItems
+import io.github.hyuck9.hanimani.model.TaskAlign
 import io.github.hyuck9.hanimani.model.ToDoTask
 
 @Immutable
 data class TasksState(
 	val items: List<ToDoTask> = listOf(),
-	val taskName: TextFieldValue = TextFieldValue()
+	val taskName: TextFieldValue = TextFieldValue(),
+	val textAlign: TaskAlign = TaskAlign.START
 ) {
 	val toDoTaskItems = items.toToDoTaskItems()
 	val validTaskName = taskName.text.isNotBlank()
