@@ -17,6 +17,7 @@ class TasksViewModel @Inject constructor(
 	init {
 		initTasks()
 		initTextAlign()
+		initFontSize()
 	}
 
 	private fun initTasks() {
@@ -31,6 +32,13 @@ class TasksViewModel @Inject constructor(
 		viewModelScope.launch {
 			environment.getTextAlign()
 				.collect { setState { copy(textAlign = it) } }
+		}
+	}
+
+	private fun initFontSize() {
+		viewModelScope.launch {
+			environment.getFontSize()
+				.collect { setState { copy(fontSize = it) } }
 		}
 	}
 

@@ -18,6 +18,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -70,6 +71,7 @@ fun TasksScreen(
 			onCheckboxClick = { viewModel.dispatch(TasksAction.OnToggleStatus(it)) },
 			onSwipeToDelete = { viewModel.dispatch(TasksAction.Delete(it)) },
 			onAllCompleteTasksDelete = { viewModel.dispatch(TasksAction.OnCompletedTasksDelete) },
+			textStyle = state.fontSize.toTextStyle(),
 			textAlign = state.textAlign.toAlign(),
 			listState = lazyListState
 		)
@@ -87,13 +89,15 @@ fun TasksContent(
 	onSwipeToDelete: (ToDoTask) -> Unit,
 	onAllCompleteTasksDelete: () -> Unit,
 	color: Color = MaterialTheme.colorScheme.primary,
+	textStyle : TextStyle = MaterialTheme.typography.titleSmall,
 	textAlign : TextAlign = TextAlign.Start,
 	listState: LazyListState
 ) {
 	val coroutineScope = rememberCoroutineScope()
 
 	LazyColumn(
-		modifier = modifier.fillMaxSize()
+		modifier = modifier
+			.fillMaxSize()
 			.background(MaterialTheme.colorScheme.background),
 		state = listState
 	) {
@@ -124,8 +128,7 @@ fun TasksContent(
 							checkboxColor = color.copy(alpha = AlphaDisabled),
 							contentPaddingValues = PaddingValues(all = 8.dp),
 							leftIcon = Icons.Rounded.CheckCircle,
-							textAlign = textAlign,
-							textDecoration = TextDecoration.LineThrough,
+							textStyle = textStyle.copy(textDecoration = TextDecoration.LineThrough, textAlign = textAlign),
 							onClick = { onClick(item.toDoTask) },
 							onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
 							onCheckboxClick = { onCheckboxClick(item.toDoTask) }
@@ -145,8 +148,7 @@ fun TasksContent(
 							} else {
 								Icons.Rounded.RadioButtonUnchecked
 							},
-							textAlign = textAlign,
-							textDecoration = TextDecoration.None,
+							textStyle = textStyle.copy(textDecoration = TextDecoration.None, textAlign = textAlign),
 							onClick = { onClick(item.toDoTask) },
 							onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
 							onCheckboxClick = {

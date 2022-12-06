@@ -1,12 +1,11 @@
 package io.github.hyuck9.hanimani.common.data.preference
 
 import androidx.datastore.core.DataStore
+import io.github.hyuck9.hanimani.common.data.preference.model.FontSizePreference
 import io.github.hyuck9.hanimani.common.data.preference.model.TextAlignPreference
 import io.github.hyuck9.hanimani.common.data.preference.model.ThemePreference
-import io.github.hyuck9.hanimani.common.extension.toTaskAlign
-import io.github.hyuck9.hanimani.common.extension.toTextAlignPreference
-import io.github.hyuck9.hanimani.common.extension.toTheme
-import io.github.hyuck9.hanimani.common.extension.toThemePreference
+import io.github.hyuck9.hanimani.common.extension.*
+import io.github.hyuck9.hanimani.model.FontSize
 import io.github.hyuck9.hanimani.model.TaskAlign
 import io.github.hyuck9.hanimani.model.Theme
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,7 +19,8 @@ import javax.inject.Inject
 class PreferenceManager @Inject constructor(
 	private val ioDispatcher: CoroutineDispatcher,
 	private val themeDataStore: DataStore<ThemePreference>,
-	private val textAlignDataStore: DataStore<TextAlignPreference>
+	private val textAlignDataStore: DataStore<TextAlignPreference>,
+	private val fontSizeDataStore: DataStore<FontSizePreference>
 ) {
 	fun getTheme(): Flow<Theme> = themeDataStore
 		.data.map { it.themeColor.toTheme() }
@@ -30,6 +30,11 @@ class PreferenceManager @Inject constructor(
 	fun getTaskAlign(): Flow<TaskAlign> = textAlignDataStore
 		.data.map { it.taskAlign.toTaskAlign() }
 		.catch { emit(TaskAlign.START) }
+		.flowOn(ioDispatcher)
+
+	fun getFontSize(): Flow<FontSize> = fontSizeDataStore
+		.data.map { it.fontSize.toFontSize() }
+		.catch { emit(FontSize.SMALL) }
 		.flowOn(ioDispatcher)
 
 	suspend fun setTheme(theme: Theme) = withContext(ioDispatcher) {
@@ -48,5 +53,12 @@ class PreferenceManager @Inject constructor(
 		}
 	}
 
+	suspend fun setFontSize(fontSize: FontSize) = withContext(ioDispatcher) {
+		fontSizeDataStore.updateData {
+			it.toBuilder()
+				.setFontSize(fontSize.toFontSizePreference())
+				.build()
+		}
+	}
 
 }

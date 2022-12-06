@@ -4,6 +4,7 @@ import io.github.hyuck9.hanimani.common.data.local.model.TaskEntity
 import io.github.hyuck9.hanimani.common.data.preference.PreferenceManager
 import io.github.hyuck9.hanimani.common.data.repository.TasksRepository
 import io.github.hyuck9.hanimani.common.extension.toTaskEntity
+import io.github.hyuck9.hanimani.model.FontSize
 import io.github.hyuck9.hanimani.model.TaskAlign
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +18,7 @@ class TasksEnvironment @Inject constructor(
 
 	override fun getTaskList(): Flow<List<ToDoTask>> = tasksRepository.getTasksStream()
 	override fun getTextAlign(): Flow<TaskAlign> = preferenceManager.getTaskAlign()
+	override fun getFontSize(): Flow<FontSize> = preferenceManager.getFontSize()
 
 	override suspend fun createTask(taskName: String, maxOrder: Int) {
 		tasksRepository.saveTask(

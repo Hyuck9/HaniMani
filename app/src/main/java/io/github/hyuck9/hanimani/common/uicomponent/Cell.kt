@@ -5,11 +5,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -18,8 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.hyuck9.hanimani.common.theme.AlphaDisabled
@@ -95,10 +94,9 @@ fun HmToDoItemCell(
 	checkboxColor: Color,
 	contentPaddingValues: PaddingValues,
 	leftIcon: ImageVector,
-	textDecoration: TextDecoration?,
+	textStyle : TextStyle,
 	onClick: () -> Unit,
 	onSwipeToDelete: () -> Unit,
-	textAlign : TextAlign = TextAlign.Start,
 	onCheckboxClick: () -> Unit
 ) {
 	SwipeDismiss(
@@ -116,8 +114,7 @@ fun HmToDoItemCell(
 					leftIcon = leftIcon,
 					checkboxColor = checkboxColor,
 					name = name,
-					textAlign = textAlign,
-					textDecoration = textDecoration
+					textStyle = textStyle,
 				)
 			}
 		},
@@ -134,8 +131,7 @@ private fun ContentRow(
 	leftIcon: ImageVector,
 	checkboxColor: Color,
 	name: String,
-	textAlign : TextAlign,
-	textDecoration: TextDecoration?
+	textStyle : TextStyle,
 ) {
 	Column(
 		modifier = modifier
@@ -158,8 +154,7 @@ private fun ContentRow(
 			Text(
 				modifier = modifier.fillMaxWidth().padding(end = 8.dp),
 				text = name,
-				textAlign = textAlign,
-				style = MaterialTheme.typography.titleSmall.copy(textDecoration = textDecoration),
+				style = textStyle
 			)
 		}
 		Divider(
@@ -191,7 +186,7 @@ private fun HmToDoItemCellPreview() {
 			checkboxColor = Color.LightGray,
 			contentPaddingValues = PaddingValues(all = 8.dp),
 			leftIcon = Icons.Rounded.CheckCircle,
-			textDecoration = TextDecoration.None,
+			textStyle = MaterialTheme.typography.titleSmall,
 			onClick = {},
 			onSwipeToDelete = {},
 			onCheckboxClick = {}

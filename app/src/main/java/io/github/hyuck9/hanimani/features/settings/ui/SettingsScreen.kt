@@ -21,10 +21,12 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.extension.alignIcon
+import io.github.hyuck9.hanimani.common.extension.toTextStyle
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.common.theme.MediumRadius
 import io.github.hyuck9.hanimani.common.uicomponent.HmIcon
 import io.github.hyuck9.hanimani.common.uicomponent.HmIconButton
+import io.github.hyuck9.hanimani.model.FontSize
 import io.github.hyuck9.hanimani.model.TaskAlign
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -41,7 +43,9 @@ fun SettingsScreen(
 		DesignCard(
 			onClickTheme = onClickTheme,
 			aligns = state.taskAligns,
-			onClickTextAlign = { viewModel.dispatch(SettingsAction.SelectTaskAlign(it)) }
+			sizes = state.fontSizes,
+			onAlignClick = { viewModel.dispatch(SettingsAction.SelectTaskAlign(it)) },
+			onSizeClick = { viewModel.dispatch(SettingsAction.SelectFontSize(it)) }
 		)
 	}
 }
@@ -52,7 +56,9 @@ fun DesignCard(
 	modifier: Modifier = Modifier,
 	onClickTheme: () -> Unit,
 	aligns: List<TaskAlignItem>,
-	onClickTextAlign: (TaskAlignItem) -> Unit
+	sizes: List<FontSizeItem>,
+	onAlignClick: (TaskAlignItem) -> Unit,
+	onSizeClick: (FontSizeItem) -> Unit
 ) {
 	Column(
 		modifier = modifier
@@ -68,11 +74,14 @@ fun DesignCard(
 			shape = RoundedCornerShape(topStart = MediumRadius, topEnd = MediumRadius),
 			onClick = onClickTheme
 		)
-		SettingsRow(settingName = stringResource(id = R.string.setting_font_size), onClick = {})
+		FontSizeSettingsRow(
+			sizes = sizes,
+			onClick = onSizeClick
+		)
 		TextAlignSettingsRow(
 			shape = RoundedCornerShape(bottomStart = MediumRadius, bottomEnd = MediumRadius),
 			aligns = aligns,
-			onClick = onClickTextAlign
+			onClick = onAlignClick
 		)
 	}
 }
@@ -130,7 +139,38 @@ private fun TextAlignSettingsRow(
 					)
 				}
 			}
-		})
+		}
+	)
+}
+
+@Composable
+private fun FontSizeSettingsRow(
+	shape: Shape = RectangleShape,
+	sizes: List<FontSizeItem>,
+	onClick: (FontSizeItem) -> Unit
+) {
+	TextSettingsRow(
+		shape = shape,
+		settingName = stringResource(id = R.string.setting_font_size),
+		content = {
+			items(sizes) {
+				HmIconButton(
+					onClick = { onClick(it) },
+					color = Color.Transparent
+				) {
+					Text(
+						text = "a",
+						style = it.fontSize.toTextStyle(),
+						color = if (it.applied) {
+							MaterialTheme.colorScheme.primary
+						} else {
+							MaterialTheme.colorScheme.surfaceVariant
+						}
+					)
+				}
+			}
+		}
+	)
 }
 
 @Composable
@@ -177,9 +217,17 @@ private fun SettingsRowPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun TextSettingsRowPreview() {
+private fun TextAlignSettingsRowPreview() {
 	HaniManiTheme {
-		TextAlignSettingsRow(aligns = mockData, onClick = {})
+		TextAlignSettingsRow(aligns = mockTaskAligns(), onClick = {})
+	}
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun FontSizeSettingsRowPreview() {
+	HaniManiTheme {
+		FontSizeSettingsRow(sizes = mockFontSizes(), onClick = {})
 	}
 }
 
@@ -194,15 +242,23 @@ private fun DesignCardPreview() {
 		) {
 			DesignCard(
 				onClickTheme = {},
-				aligns = mockData,
-				onClickTextAlign = {}
+				aligns = mockTaskAligns(),
+				sizes = mockFontSizes(),
+				onAlignClick = {},
+				onSizeClick = {}
 			)
 		}
 	}
 }
 
-private val mockData = listOf(
+private fun mockTaskAligns() = listOf(
 	TaskAlignItem(TaskAlign.START, false),
 	TaskAlignItem(TaskAlign.CENTER, true),
 	TaskAlignItem(TaskAlign.END, false)
+)
+
+private fun mockFontSizes() = listOf(
+	FontSizeItem(FontSize.SMALL, true),
+	FontSizeItem(FontSize.MEDIUM, false),
+	FontSizeItem(FontSize.LARGE, false),
 )
