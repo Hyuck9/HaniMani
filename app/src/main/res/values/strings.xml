@@ -33,6 +33,14 @@
     <string name="setting_theme_night">Midnight</string>
 
     <string name="setting_font_size">글자 크기</string>
-
     <string name="setting_font_align">글자 정렬</string>
+
+    <string name="noti_content_title">클릭하여 앱 실행</string>
+    <string name="noti_content_text">안정적인 실행을 위해 알림 표시 중</string>
+
+    <string name="dialog_title">권한 요청</string>
+    <string name="dialog_message">안정적인 실행을 위해 권한을 허용해 주세요. \n\n구글 정책으로 인해 다른앱 위에 그리기 권한이 필수로 필요합니다.</string>
+    <string name="dialog_ok">확인</string>
+
+
 </resources>
