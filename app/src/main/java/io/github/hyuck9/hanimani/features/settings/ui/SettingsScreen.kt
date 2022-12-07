@@ -1,5 +1,6 @@
 package io.github.hyuck9.hanimani.features.settings.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
@@ -47,6 +48,12 @@ fun SettingsScreen(
 			onAlignClick = { viewModel.dispatch(SettingsAction.SelectTaskAlign(it)) },
 			onSizeClick = { viewModel.dispatch(SettingsAction.SelectFontSize(it)) }
 		)
+
+		FunctionCard(
+			modifier = Modifier.padding(top = 16.dp),
+			isAutorunCheck = state.isAutorun,
+			onAutorunCheckedChange = { viewModel.dispatch(SettingsAction.OnAutorunCheckedChange(it)) }
+		)
 	}
 }
 
@@ -60,29 +67,64 @@ fun DesignCard(
 	onAlignClick: (TaskAlignItem) -> Unit,
 	onSizeClick: (FontSizeItem) -> Unit
 ) {
+
+	SettingsCard(
+		modifier = modifier,
+		titleResId = R.string.setting_title_design,
+		content = {
+			SettingsRow(
+				settingName = stringResource(id = R.string.setting_theme),
+				shape = RoundedCornerShape(topStart = MediumRadius, topEnd = MediumRadius),
+				onClick = onClickTheme
+			)
+			FontSizeSettingsRow(
+				sizes = sizes,
+				onClick = onSizeClick
+			)
+			TextAlignSettingsRow(
+				shape = RoundedCornerShape(bottomStart = MediumRadius, bottomEnd = MediumRadius),
+				aligns = aligns,
+				onClick = onAlignClick
+			)
+		})
+}
+
+@Composable
+fun FunctionCard(
+	modifier: Modifier = Modifier,
+	isAutorunCheck: Boolean,
+	onAutorunCheckedChange: (Boolean) -> Unit,
+) {
+
+	SettingsCard(
+		modifier = modifier,
+		titleResId = R.string.setting_title_function,
+		content = {
+			SwitchSettingsRow(
+				settingName = stringResource(id = R.string.setting_function_autorun),
+				shape = RoundedCornerShape(MediumRadius),
+				isChecked = isAutorunCheck,
+				onCheckedChange = onAutorunCheckedChange
+			)
+		})
+}
+
+@Composable
+private fun SettingsCard(
+	modifier: Modifier = Modifier,
+	@StringRes titleResId: Int,
+	content: @Composable ColumnScope.() -> Unit,
+) {
 	Column(
 		modifier = modifier
 			.fillMaxWidth()
 	) {
 		Text(
-			text = stringResource(id = R.string.setting_title_design),
+			text = stringResource(id = titleResId),
 			style = MaterialTheme.typography.titleMedium
 		)
 		Spacer(Modifier.height(16.dp))
-		SettingsRow(
-			settingName = stringResource(id = R.string.setting_theme),
-			shape = RoundedCornerShape(topStart = MediumRadius, topEnd = MediumRadius),
-			onClick = onClickTheme
-		)
-		FontSizeSettingsRow(
-			sizes = sizes,
-			onClick = onSizeClick
-		)
-		TextAlignSettingsRow(
-			shape = RoundedCornerShape(bottomStart = MediumRadius, bottomEnd = MediumRadius),
-			aligns = aligns,
-			onClick = onAlignClick
-		)
+		content()
 	}
 }
 
@@ -206,6 +248,39 @@ private fun TextSettingsRow(
 	}
 }
 
+@Composable
+private fun SwitchSettingsRow(
+	settingName: String,
+	isChecked: Boolean,
+	onCheckedChange: (Boolean) -> Unit,
+	shape: Shape = RectangleShape
+) {
+	Surface(
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(bottom = 1.dp),
+		shadowElevation = 5.dp,
+		shape = shape
+	) {
+		Row(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(horizontal = 16.dp),
+			verticalAlignment = Alignment.CenterVertically,
+			horizontalArrangement = Arrangement.SpaceBetween
+		) {
+			Text(
+				modifier = Modifier
+					.padding(vertical = 16.dp),
+				text = settingName,
+				style = MaterialTheme.typography.bodyLarge
+			)
+
+			Switch(checked = isChecked, onCheckedChange = onCheckedChange)
+		}
+	}
+}
+
 
 @Preview(showBackground = true)
 @Composable
@@ -231,6 +306,14 @@ private fun FontSizeSettingsRowPreview() {
 	}
 }
 
+@Preview(showBackground = true)
+@Composable
+private fun SwitchSettingsRowPreview() {
+	HaniManiTheme {
+		SwitchSettingsRow(settingName = stringResource(id = R.string.setting_function_autorun), isChecked = true, onCheckedChange = { })
+	}
+}
+
 
 @Preview(showBackground = true)
 @Composable
@@ -246,6 +329,23 @@ private fun DesignCardPreview() {
 				sizes = mockFontSizes(),
 				onAlignClick = {},
 				onSizeClick = {}
+			)
+		}
+	}
+}
+
+
+@Preview(showBackground = true)
+@Composable
+private fun FunctionCardPreview() {
+	HaniManiTheme {
+		Column(
+			modifier = Modifier
+				.padding(16.dp)
+		) {
+			FunctionCard(
+				isAutorunCheck = true,
+				onAutorunCheckedChange = {},
 			)
 		}
 	}

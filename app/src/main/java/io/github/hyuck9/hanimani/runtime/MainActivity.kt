@@ -10,16 +10,26 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.hyuck9.hanimani.R
+import io.github.hyuck9.hanimani.common.data.preference.PreferencesConstants.AUTO_RUN
+import io.github.hyuck9.hanimani.common.data.preference.readBoolean
+import io.github.hyuck9.hanimani.common.data.preference.writeBoolean
 import io.github.hyuck9.hanimani.features.host.ui.HostScreen
+import io.github.hyuck9.hanimani.runtime.ServiceActions.START_FOREGROUND
+import io.github.hyuck9.hanimani.runtime.ServiceActions.STOP_FOREGROUND
 import io.github.hyuck9.hanimani.runtime.navigation.HaniManiNavGraph
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
@@ -27,19 +37,24 @@ class MainActivity : ComponentActivity() {
 
 		setContent {
 			HaniManiApp()
+
+			val collectAsState = readBoolean(AUTO_RUN, true).collectAsState(initial = true)
+			Timber.i("collectAsState : ${collectAsState.value}")
+			checkPermissions(collectAsState.value)
 		}
+
 	}
 
-	override fun onStart() {
-		checkPermissions()
-		super.onStart()
-	}
 
-	private fun checkPermissions() {
-		if (Settings.canDrawOverlays(applicationContext).not()) {
-			requestPermissionDialog()
+	private fun checkPermissions(isAutorun: Boolean) {
+		if (isAutorun) {
+			if (Settings.canDrawOverlays(applicationContext).not()) {
+				requestPermissionDialog()
+			} else {
+				startService(Intent(this, HaniManiService::class.java).apply { action = START_FOREGROUND })
+			}
 		} else {
-			startForegroundService(Intent(this, HaniManiService::class.java))
+			startService(Intent(this, HaniManiService::class.java).apply { action = STOP_FOREGROUND })
 		}
 	}
 
@@ -56,8 +71,16 @@ class MainActivity : ComponentActivity() {
 
 	private val startForResult = registerForActivityResult(
 		ActivityResultContracts.StartActivityForResult()
-	) { result ->
-		Timber.i("startForResult - $result")
+	) {
+		// 앱 위에 그리기 권한 설정에 대한 응답 중
+		if (Settings.canDrawOverlays(applicationContext)) {
+			// 앱 위에 그리기 허용한 경우 포그라운드 서비스 실행
+			startService(Intent(this, HaniManiService::class.java).apply { action = START_FOREGROUND })
+		} else {
+			// 앱 위에 그리기 허용 안한 경우 서비스 내리고, AUTU_RUN 설정 false로 변경
+			startService(Intent(this, HaniManiService::class.java).apply { action = STOP_FOREGROUND })
+			CoroutineScope(Dispatchers.IO).launch { writeBoolean(AUTO_RUN, false) }
+		}
 	}
 
 	private fun checkGoOverlay() {

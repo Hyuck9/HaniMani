@@ -68,6 +68,7 @@ dependencies {
 
     // Proto DataStore
     implementation "androidx.datastore:datastore:$dataStoreVersion"
+    implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
     implementation  "com.google.protobuf:protobuf-javalite:$protobufVersion"
 
     // Jetpack Compose

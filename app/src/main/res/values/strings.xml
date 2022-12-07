@@ -24,9 +24,10 @@
     <string name="title_activity_main">MainActivity</string>
 
 
-    <string name="setting_title_design">Design</string>
+    <string name="setting_title_design">디자인</string>
+    <string name="setting_title_function">기능</string>
 
-    <string name="setting_theme">Themes</string>
+    <string name="setting_theme">테마 변경</string>
     <string name="setting_theme_automatic">Automatic</string>
     <string name="setting_theme_wallpaper" translatable="false">Wallpaper</string>
     <string name="setting_theme_light">Daylight</string>
@@ -34,6 +35,8 @@
 
     <string name="setting_font_size">글자 크기</string>
     <string name="setting_font_align">글자 정렬</string>
+
+    <string name="setting_function_autorun">자동 실행</string>
 
     <string name="noti_content_title">클릭하여 앱 실행</string>
     <string name="noti_content_text">안정적인 실행을 위해 알림 표시 중</string>

@@ -7,7 +7,8 @@ import io.github.hyuck9.hanimani.model.TaskAlign
 @Immutable
 data class SettingsState(
 	val taskAligns: List<TaskAlignItem> = listOf(),
-	val fontSizes: List<FontSizeItem> = listOf()
+	val fontSizes: List<FontSizeItem> = listOf(),
+	val isAutorun: Boolean = true
 )
 
 data class TaskAlignItem(

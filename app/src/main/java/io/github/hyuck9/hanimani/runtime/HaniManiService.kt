@@ -10,6 +10,8 @@ import android.content.IntentFilter
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import io.github.hyuck9.hanimani.R
+import io.github.hyuck9.hanimani.runtime.ServiceActions.START_FOREGROUND
+import io.github.hyuck9.hanimani.runtime.ServiceActions.STOP_FOREGROUND
 
 class HaniManiService : Service() {
 
@@ -23,7 +25,19 @@ class HaniManiService : Service() {
 	}
 
 	override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+
+		when (intent.action) {
+			START_FOREGROUND -> startForegroundService()
+			STOP_FOREGROUND -> stopForegroundService()
+		}
+
+		return START_STICKY
+	}
+
+	private fun startForegroundService() {
 		val channel = NotificationChannel(CHANNEL_ID, "HaniMani Service Channel", NotificationManager.IMPORTANCE_LOW)
+		channel.setShowBadge(false)
+
 		val notiManager = (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
 		notiManager.createNotificationChannel(channel)
 
@@ -36,8 +50,11 @@ class HaniManiService : Service() {
 
 		notiManager.notify(CHANNEL_ID.hashCode(), builder.build())
 		startForeground(CHANNEL_ID.hashCode(), builder.build())
+	}
 
-		return super.onStartCommand(intent, flags, startId)
+	private fun stopForegroundService() {
+		stopForeground(STOP_FOREGROUND_REMOVE)
+		stopSelf()
 	}
 
 	private fun setScreenOnReceiver() {
