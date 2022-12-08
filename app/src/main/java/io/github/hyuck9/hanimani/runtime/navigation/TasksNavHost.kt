@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.bottomSheet
+import io.github.hyuck9.hanimani.features.edittask.ui.EditTaskScreen
+import io.github.hyuck9.hanimani.features.edittask.ui.EditTaskViewModel
 import io.github.hyuck9.hanimani.features.tasks.ui.TaskCreator
 import io.github.hyuck9.hanimani.features.tasks.ui.TasksScreen
 import io.github.hyuck9.hanimani.features.tasks.ui.TasksViewModel
@@ -22,7 +24,8 @@ fun NavGraphBuilder.TasksNavHost(
 			val viewModel = hiltViewModel<TasksViewModel>()
 			TasksScreen(
 				viewModel = viewModel,
-				onAddTaskClick = { navController.navigate(TasksFlow.CreateTask.route) }
+				onAddTaskClick = { navController.navigate(TasksFlow.CreateTask.route) },
+				onItemClick = { task -> navController.navigate(EditTaskFlow.EditTaskScreen.route(task.id))  }
 			)
 		}
 		TasksBottomSheetNavHost(
@@ -48,5 +51,18 @@ private fun NavGraphBuilder.TasksBottomSheetNavHost(
 		}
 		bottomSheetConfig.value = NoScrimSmallShapeMainBottomSheetConfig
 		TaskCreator(viewModel = viewModel)
+	}
+
+	bottomSheet(
+		route = EditTaskFlow.EditTaskScreen.route,
+		arguments = EditTaskFlow.EditTaskScreen.arguments
+	) {
+		val viewModel = hiltViewModel<EditTaskViewModel>()
+		bottomSheetConfig.value = DefaultMainBottomSheetConfig
+		EditTaskScreen(
+			viewModel = viewModel,
+			onCancelClick = { navController.navigateUp() },
+			onSaveClick = { navController.navigateUp() }
+		)
 	}
 }

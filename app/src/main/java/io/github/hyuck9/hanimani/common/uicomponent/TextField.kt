@@ -1,15 +1,13 @@
 package io.github.hyuck9.hanimani.common.uicomponent
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddTask
 import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -132,8 +130,69 @@ fun HmTodoCreator(
 	}
 }
 
-
-
+@Composable
+fun HmTodoEditor(
+	modifier: Modifier = Modifier,
+	value: TextFieldValue,
+	isValid: Boolean,
+	placeholder: String,
+	onValueChange: (TextFieldValue) -> Unit,
+	onSaveClick: () -> Unit,
+	onBackClick: () -> Unit,
+	onCopyClick: () -> Unit
+) {
+	HmModalColumnLayout(
+		title = {
+			HmModalBackHeader(
+				text = stringResource(id = R.string.modify),
+				onClickBack = onBackClick,
+				rightIcon = {
+					HmModalButton(
+						onClick = onCopyClick,
+						imageVector = Icons.Rounded.ContentCopy
+					)
+				}
+			)
+		},
+		content = {
+			HmTextField(
+				value = value,
+				onValueChange = onValueChange,
+				placeholderValue = placeholder,
+				shape = MaterialTheme.shapes.large,
+				keyboardOptions = KeyboardOptions.Default.copy(
+					imeAction = ImeAction.None,
+					capitalization = KeyboardCapitalization.Sentences
+				),
+				modifier = modifier
+					.heightIn(min = 50.dp, max = 150.dp)
+					.fillMaxWidth()
+					.padding(horizontal = 16.dp),
+				trailingIcon = {
+					HmIconButton(
+						onClick = onSaveClick,
+						enabled = isValid,
+						color = if (isValid) {
+							MaterialTheme.colorScheme.primaryContainer
+						} else {
+							MaterialTheme.colorScheme.surfaceVariant
+						},
+						modifier = Modifier.size(42.dp)
+					) {
+						HmIcon(
+							imageVector = Icons.Rounded.ArrowUpward,
+							tint = if (isValid) {
+								LocalContentColor.current
+							} else {
+								LocalContentColor.current.copy(alpha = AlphaDisabled)
+							}
+						)
+					}
+				}
+			)
+		}
+	)
+}
 
 
 @Preview(showBackground = true)
@@ -143,7 +202,7 @@ private fun HmTextFieldPreview(@PreviewParameter(SampleBooleanProvider::class) i
 		value = TextFieldValue(),
 		onValueChange = {},
 		placeholderValue = stringResource(id = R.string.hint_add_task),
-		modifier = Modifier.height( 50.dp),
+		modifier = Modifier.height(50.dp),
 		shape = MaterialTheme.shapes.large,
 		textStyle = MaterialTheme.typography.titleSmall,
 		trailingIcon = {
@@ -188,6 +247,22 @@ private fun HmTodoCreatorPreview() {
 			placeholder = stringResource(id = R.string.hint_add_task),
 			onValueChange = {},
 			onSubmit = {}
+		)
+	}
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HmTodoEditorPreview() {
+	HaniManiTheme {
+		HmTodoEditor(
+			value = TextFieldValue(),
+			isValid = true,
+			placeholder = stringResource(id = R.string.hint_add_task),
+			onValueChange = {},
+			onSaveClick = {},
+			onBackClick = {},
+			onCopyClick = {}
 		)
 	}
 }

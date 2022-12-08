@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
-import io.github.hyuck9.hanimani.runtime.navigation.SettingsFlow
+import io.github.hyuck9.hanimani.runtime.navigation.EditTaskFlow
 import io.github.hyuck9.hanimani.runtime.navigation.TasksFlow
 
 @Composable
@@ -54,7 +54,8 @@ fun HaniManiTabBar(
 private fun getTabPage(currentRoute: String): TabPage {
 	return when (currentRoute) {
 		TasksFlow.TasksScreen.route,
-		TasksFlow.CreateTask.route -> {
+		TasksFlow.CreateTask.route,
+		EditTaskFlow.EditTaskScreen.route -> {
 			TabPage.Tasks
 		}
 		else -> {

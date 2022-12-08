@@ -10,11 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HmModalLayout(
+fun HmModalLazyLayout(
 	title: @Composable () -> Unit,
 	modifier: Modifier = Modifier,
 	content: LazyListScope.() -> Unit
@@ -35,6 +34,21 @@ fun HmModalLayout(
 }
 
 @Composable
+fun HmModalColumnLayout(
+	modifier: Modifier = Modifier,
+	title: @Composable () -> Unit,
+	content: @Composable ColumnScope.() -> Unit
+) {
+	HmModalColumn(modifier) {
+		Spacer(Modifier.height(24.dp))
+		title()
+		Spacer(Modifier.height(24.dp))
+		content()
+		Spacer(Modifier.height(16.dp))
+	}
+}
+
+@Composable
 fun HmModalLazyColumn(
 	modifier: Modifier = Modifier,
 	shape: Shape = RectangleShape,
@@ -47,6 +61,27 @@ fun HmModalLazyColumn(
 		)
 	) {
 		LazyColumn(
+			modifier = modifier
+				.navigationBarsPadding()
+				.imePadding(),
+			content = content
+		)
+	}
+}
+
+@Composable
+fun HmModalColumn(
+	modifier: Modifier = Modifier,
+	shape: Shape = RectangleShape,
+	content: @Composable ColumnScope.() -> Unit
+) {
+	Box(
+		modifier = Modifier.background(
+			color = MaterialTheme.colorScheme.background,
+			shape = shape
+		)
+	) {
+		Column(
 			modifier = modifier
 				.navigationBarsPadding()
 				.imePadding(),

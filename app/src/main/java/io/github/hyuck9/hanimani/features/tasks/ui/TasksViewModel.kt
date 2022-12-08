@@ -43,7 +43,7 @@ class TasksViewModel @Inject constructor(
 	}
 
 	override fun dispatch(action: TasksAction) {
-		when(action) {
+		when (action) {
 			is TasksAction.OnShow -> {
 				viewModelScope.launch {
 					setState { copy(taskName = taskName.copy(selection = TextRange(taskName.text.length))) }

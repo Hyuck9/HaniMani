@@ -1,7 +1,6 @@
 package io.github.hyuck9.hanimani.features.theme.ui
 
 import android.annotation.SuppressLint
-import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -27,12 +26,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.common.theme.LightPrimary
-import io.github.hyuck9.hanimani.common.theme.NightItemBackgroundL2
-import io.github.hyuck9.hanimani.common.theme.NightPrimary
 import io.github.hyuck9.hanimani.common.uicomponent.HmIcon
 import io.github.hyuck9.hanimani.common.uicomponent.HmModalBackHeader
 import io.github.hyuck9.hanimani.common.uicomponent.HmModalCell
-import io.github.hyuck9.hanimani.common.uicomponent.HmModalLayout
+import io.github.hyuck9.hanimani.common.uicomponent.HmModalLazyLayout
 import io.github.hyuck9.hanimani.model.Theme
 
 
@@ -44,7 +41,7 @@ fun ThemeScreen(
 ) {
 	val state by viewModel.state.collectAsStateWithLifecycle()
 
-	HmModalLayout(
+	HmModalLazyLayout(
 		title = {
 			HmModalBackHeader(
 				text = stringResource(id = R.string.setting_theme),

@@ -39,6 +39,9 @@ interface TasksDao {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	suspend fun updateTasks(tasks: List<TaskEntity>)
 
+	@Query("UPDATE Tasks SET taskName = :name, updatedAt = :updatedAt WHERE taskId = :taskId")
+	suspend fun updateTaskName(taskId: String, name: String, updatedAt: LocalDateTime)
+
 	@Query("DELETE FROM Tasks WHERE taskId = :taskId")
 	suspend fun deleteTaskById(taskId: String)
 

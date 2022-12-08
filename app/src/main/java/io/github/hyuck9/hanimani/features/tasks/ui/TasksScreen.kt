@@ -43,6 +43,7 @@ import kotlinx.coroutines.launch
 fun TasksScreen(
 	viewModel: TasksViewModel,
 	onAddTaskClick: () -> Unit,
+	onItemClick: (ToDoTask) -> Unit
 ) {
 	val state by viewModel.state.collectAsStateWithLifecycle()
 	val lazyListState = rememberLazyListState()
@@ -67,7 +68,7 @@ fun TasksScreen(
 		TasksContent(
 			modifier = Modifier.padding(bottom = padding.calculateBottomPadding()),
 			tasks = state.toDoTaskItems,
-			onClick = {},
+			onClick = onItemClick,
 			onCheckboxClick = { viewModel.dispatch(TasksAction.OnToggleStatus(it)) },
 			onSwipeToDelete = { viewModel.dispatch(TasksAction.Delete(it)) },
 			onAllCompleteTasksDelete = { viewModel.dispatch(TasksAction.OnCompletedTasksDelete) },

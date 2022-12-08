@@ -2,7 +2,6 @@ package io.github.hyuck9.hanimani.common.data.repository
 
 import io.github.hyuck9.hanimani.common.data.local.TasksDao
 import io.github.hyuck9.hanimani.common.data.local.model.Result
-import io.github.hyuck9.hanimani.common.data.local.model.Result.Error
 import io.github.hyuck9.hanimani.common.data.local.model.Result.Success
 import io.github.hyuck9.hanimani.common.data.local.model.TaskEntity
 import io.github.hyuck9.hanimani.common.extension.toTaskEntity
@@ -21,36 +20,15 @@ class DefaultTasksRepository(
 	private val ioDispatcher: CoroutineDispatcher
 ) : TasksRepository {
 
-	override fun getTasksStream(): Flow<List<ToDoTask>> {
+	override fun getTasks(): Flow<List<ToDoTask>> {
 		return tasksDao.observeTasks().map {
 			it.toToDoTasks()
 		}
 	}
 
-	override suspend fun getTasks(): Result<List<ToDoTask>> = withContext(ioDispatcher) {
-		return@withContext try {
-			Success(tasksDao.getTasks().toToDoTasks())
-		} catch (e: Exception) {
-			Error(e)
-		}
-	}
-
-	override fun getTaskStream(taskId: String): Flow<Result<ToDoTask>> {
+	override fun getTaskById(taskId: String): Flow<ToDoTask> {
 		return tasksDao.observeTaskById(taskId).map {
-			Success(it.toToDoTask())
-		}
-	}
-
-	override suspend fun getTask(taskId: String): Result<ToDoTask> = withContext(ioDispatcher) {
-		return@withContext try {
-			val task = tasksDao.getTaskById(taskId)
-			if (task != null) {
-				Success(task.toToDoTask())
-			} else {
-				Error(Exception("Task not found!"))
-			}
-		} catch (e: Exception) {
-			Error(e)
+			it.toToDoTask()
 		}
 	}
 
@@ -68,6 +46,10 @@ class DefaultTasksRepository(
 
 	override suspend fun updateTasks(tasks: List<TaskEntity>) = withContext(ioDispatcher) {
 		tasksDao.updateTasks(tasks)
+	}
+
+	override suspend fun updateTaskName(taskId: String, name: String, updatedAt: LocalDateTime) {
+		tasksDao.updateTaskName(taskId, name, updatedAt)
 	}
 
 	override suspend fun deleteTaskById(taskId: String) = withContext(ioDispatcher) {

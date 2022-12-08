@@ -1,6 +1,8 @@
 package io.github.hyuck9.hanimani.common.uicomponent
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -10,9 +12,10 @@ import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 
 @Composable
 fun HmModalBackHeader(
+	modifier: Modifier = Modifier,
 	text: String,
 	onClickBack: () -> Unit,
-	modifier: Modifier = Modifier
+	rightIcon: @Composable (()-> Unit)? = null
 ) {
 	Row(
 		modifier = modifier,
@@ -23,7 +26,7 @@ fun HmModalBackHeader(
 				.padding(start = 16.dp)
 				.weight(0.2F)
 		) {
-			HmModalBackButton(
+			HmModalButton(
 				onClick = onClickBack
 			)
 		}
@@ -33,11 +36,22 @@ fun HmModalBackHeader(
 			modifier = Modifier.weight(0.6F)
 		)
 
-		Spacer(
-			Modifier
-				.size(0.dp)
-				.weight(0.2F)
-		)
+		if (rightIcon != null) {
+			Box(
+				modifier = Modifier
+					.padding(end = 16.dp)
+					.weight(0.2F),
+				contentAlignment = Alignment.CenterEnd
+			) {
+				rightIcon()
+			}
+		} else {
+			Spacer(
+				Modifier
+					.size(0.dp)
+					.weight(0.2F)
+			)
+		}
 	}
 }
 
@@ -47,7 +61,13 @@ private fun HmModalBackHeaderPreview() {
 	HaniManiTheme {
 		HmModalBackHeader(
 			text = "Themes",
-			onClickBack = {}
+			onClickBack = {},
+			rightIcon = {
+				HmModalButton(
+					onClick = { },
+					imageVector = Icons.Rounded.ContentCopy
+				)
+			}
 		)
 	}
 }

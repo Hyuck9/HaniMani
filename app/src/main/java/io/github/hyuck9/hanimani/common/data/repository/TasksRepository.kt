@@ -9,13 +9,10 @@ import java.time.LocalDateTime
 
 interface TasksRepository {
 
-	fun getTasksStream(): Flow<List<ToDoTask>>
+	fun getTasks(): Flow<List<ToDoTask>>
 
-	suspend fun getTasks(): Result<List<ToDoTask>>
+	fun getTaskById(taskId: String): Flow<ToDoTask>
 
-	fun getTaskStream(taskId: String): Flow<Result<ToDoTask>>
-
-	suspend fun getTask(taskId: String): Result<ToDoTask>
 
 	suspend fun saveTask(task: ToDoTask)
 
@@ -32,6 +29,12 @@ interface TasksRepository {
 		updatedAt: LocalDateTime
 	)
 	suspend fun updateTasks(tasks: List<TaskEntity>)
+
+	suspend fun updateTaskName(
+		taskId: String,
+		name: String,
+		updatedAt: LocalDateTime
+	)
 
 	suspend fun deleteTaskById(taskId: String)
 	suspend fun deleteAllTasks()

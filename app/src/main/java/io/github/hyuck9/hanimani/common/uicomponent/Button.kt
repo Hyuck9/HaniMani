@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HmModalBackButton(
+fun HmModalButton(
 	onClick: () -> Unit,
 	imageVector: ImageVector = Icons.Rounded.KeyboardArrowLeft
 ) {

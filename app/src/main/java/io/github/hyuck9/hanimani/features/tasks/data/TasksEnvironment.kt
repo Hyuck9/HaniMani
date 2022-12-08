@@ -16,7 +16,7 @@ class TasksEnvironment @Inject constructor(
 	private val preferenceManager: PreferenceManager
 ) : ITasksEnvironment {
 
-	override fun getTaskList(): Flow<List<ToDoTask>> = tasksRepository.getTasksStream()
+	override fun getTaskList(): Flow<List<ToDoTask>> = tasksRepository.getTasks()
 	override fun getTextAlign(): Flow<TaskAlign> = preferenceManager.getTaskAlign()
 	override fun getFontSize(): Flow<FontSize> = preferenceManager.getFontSize()
 
