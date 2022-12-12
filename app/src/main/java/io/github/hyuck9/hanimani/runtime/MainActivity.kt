@@ -25,7 +25,6 @@ import io.github.hyuck9.hanimani.runtime.navigation.HaniManiNavGraph
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -39,7 +38,6 @@ class MainActivity : ComponentActivity() {
 			HaniManiApp()
 
 			val collectAsState = readBoolean(AUTO_RUN, true).collectAsState(initial = true)
-			Timber.i("collectAsState : ${collectAsState.value}")
 			checkPermissions(collectAsState.value)
 		}
 

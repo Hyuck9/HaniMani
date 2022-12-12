@@ -1,6 +1,7 @@
 package io.github.hyuck9.hanimani.features.tasks.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -33,10 +35,12 @@ import io.github.hyuck9.hanimani.common.preview.SampleBooleanProvider
 import io.github.hyuck9.hanimani.common.theme.AlphaDisabled
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.common.uicomponent.*
+import io.github.hyuck9.hanimani.model.ToDoStatus
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.burnoutcrew.reorderable.*
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -46,13 +50,17 @@ fun TasksScreen(
 	onItemClick: (ToDoTask) -> Unit
 ) {
 	val state by viewModel.state.collectAsStateWithLifecycle()
-	val lazyListState = rememberLazyListState()
+	val reorderState = rememberReorderableLazyListState(
+		onMove = { from, to -> viewModel.dispatch(TasksAction.ReplaceOrder(from, to)) },
+		canDragOver = { draggedOver, _ -> state.canDragOver(draggedOver) },
+		onDragEnd = { _, _ -> viewModel.dispatch(TasksAction.DragEnd) }
+	)
 
 	HandleEffect(viewModel) {
 		when (it) {
 			is TasksEffect.ScrollTo -> {
 				val position = it.position
-				lazyListState.animateScrollToItem(position)
+				reorderState.listState.animateScrollToItem(position)
 			}
 		}
 	}
@@ -60,7 +68,7 @@ fun TasksScreen(
 	Scaffold(
 		floatingActionButton = {
 			AddTaskButton(
-				extended = lazyListState.isScrollingUp(),
+				extended = reorderState.listState.isScrollingUp(),
 				onClick = onAddTaskClick
 			)
 		}
@@ -74,7 +82,7 @@ fun TasksScreen(
 			onAllCompleteTasksDelete = { viewModel.dispatch(TasksAction.OnCompletedTasksDelete) },
 			textStyle = state.fontSize.toTextStyle(),
 			textAlign = state.textAlign.toAlign(),
-			listState = lazyListState
+			state = reorderState
 		)
 	}
 }
@@ -92,15 +100,16 @@ fun TasksContent(
 	color: Color = MaterialTheme.colorScheme.primary,
 	textStyle : TextStyle = MaterialTheme.typography.titleSmall,
 	textAlign : TextAlign = TextAlign.Start,
-	listState: LazyListState
+	state: ReorderableLazyListState
 ) {
 	val coroutineScope = rememberCoroutineScope()
 
 	LazyColumn(
 		modifier = modifier
 			.fillMaxSize()
-			.background(MaterialTheme.colorScheme.background),
-		state = listState
+			.background(MaterialTheme.colorScheme.background)
+			.reorderable(state),
+		state = state.listState
 	) {
 		if (tasks.isEmpty()) {
 			item {
@@ -115,58 +124,88 @@ fun TasksContent(
 				items = tasks,
 				key = { item -> item.identifier() }
 			) { item ->
-				when (item) {
-					is ToDoTaskItem.CompleteHeader -> {
-						CompleteHeader(
-							color = color,
-							onAllCompleteTasksDelete = onAllCompleteTasksDelete
-						)
-					}
-					is ToDoTaskItem.Complete -> {
-						HmToDoItemCell(
-							modifier = Modifier.animateItemPlacement(),
-							name = item.toDoTask.name,
-							checkboxColor = color.copy(alpha = AlphaDisabled),
-							contentPaddingValues = PaddingValues(all = 8.dp),
-							leftIcon = Icons.Rounded.CheckCircle,
-							textStyle = textStyle.copy(textDecoration = TextDecoration.LineThrough, textAlign = textAlign),
-							onClick = { onClick(item.toDoTask) },
-							onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
-							onCheckboxClick = { onCheckboxClick(item.toDoTask) }
-						)
-					}
-					is ToDoTaskItem.InProgress -> {
-						var isChecked by remember { mutableStateOf(false) }
-						var debounceJob: Job? by remember { mutableStateOf(null) }
+				ReorderableItem(state, item.identifier()) { isDragging ->
+					val elevation = animateDpAsState(if (isDragging) 8.dp else 0.dp)
 
-						HmToDoItemCell(
-							modifier = Modifier.animateItemPlacement(),
-							name = item.toDoTask.name,
-							checkboxColor = color,
-							contentPaddingValues = PaddingValues(vertical = 24.dp, horizontal = 8.dp),
-							leftIcon = if (isChecked) {
-								Icons.Rounded.CheckCircle
-							} else {
-								Icons.Rounded.RadioButtonUnchecked
-							},
-							textStyle = textStyle.copy(textDecoration = TextDecoration.None, textAlign = textAlign),
-							onClick = { onClick(item.toDoTask) },
-							onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
-							onCheckboxClick = {
-								isChecked = !isChecked
-								debounceJob?.cancel()
-								if (isChecked) {
-									debounceJob = coroutineScope.launch {
-										delay(300)
-										onCheckboxClick(item.toDoTask)
+					when (item) {
+						is ToDoTaskItem.TaskHeader -> {
+							TaskHeader(color = color)
+						}
+						is ToDoTaskItem.CompleteHeader -> {
+							CompleteHeader(
+								color = color,
+								onAllCompleteTasksDelete = onAllCompleteTasksDelete
+							)
+						}
+						is ToDoTaskItem.Complete -> {
+							HmToDoItemCell(
+								modifier = Modifier.animateItemPlacement(),
+								name = item.toDoTask.name,
+								checkboxColor = color.copy(alpha = AlphaDisabled),
+								contentPaddingValues = PaddingValues(all = 8.dp),
+								leftIcon = Icons.Rounded.CheckCircle,
+								textStyle = textStyle.copy(textDecoration = TextDecoration.LineThrough, textAlign = textAlign),
+								onClick = { onClick(item.toDoTask) },
+								onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
+								onCheckboxClick = { onCheckboxClick(item.toDoTask) }
+							)
+						}
+						is ToDoTaskItem.InProgress -> {
+							var isChecked by remember { mutableStateOf(false) }
+							var debounceJob: Job? by remember { mutableStateOf(null) }
+
+							HmToDoItemCell(
+								modifier = Modifier.animateItemPlacement()
+									.detectReorderAfterLongPress(state)
+									.shadow(elevation.value),
+								name = item.toDoTask.name,
+								checkboxColor = color,
+								contentPaddingValues = PaddingValues(vertical = 24.dp, horizontal = 8.dp),
+								leftIcon = if (isChecked) {
+									Icons.Rounded.CheckCircle
+								} else {
+									Icons.Rounded.RadioButtonUnchecked
+								},
+								textStyle = textStyle.copy(textDecoration = TextDecoration.None, textAlign = textAlign),
+								onClick = { onClick(item.toDoTask) },
+								onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
+								onCheckboxClick = {
+									isChecked = !isChecked
+									debounceJob?.cancel()
+									if (isChecked) {
+										debounceJob = coroutineScope.launch {
+											delay(300)
+											onCheckboxClick(item.toDoTask)
+										}
 									}
 								}
-							}
-						)
+							)
+						}
 					}
 				}
 			}
 		}
+	}
+}
+
+@Composable
+private fun TaskHeader(
+	modifier: Modifier = Modifier,
+	color: Color = MaterialTheme.colorScheme.primary
+) {
+	Spacer(Modifier.height(16.dp))
+	Row(
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.SpaceBetween,
+		modifier = modifier
+			.padding(horizontal = 16.dp)
+			.fillMaxWidth()
+	) {
+		Text(
+			text = stringResource(R.string.header_tasks),
+			style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+			color = color
+		)
 	}
 }
 

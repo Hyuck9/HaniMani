@@ -14,9 +14,13 @@ fun List<ToDoTask>.toToDoTaskItems(): List<ToDoTaskItem> {
 		.toMutableList()
 
 	val firstCompleteIndex = tasks.indexOfFirst { it is ToDoTaskItem.Complete }
+	val firstTaskIndex = tasks.indexOfFirst { it is ToDoTaskItem.InProgress }
 
 	if (firstCompleteIndex != -1) {
 		tasks.add(firstCompleteIndex, ToDoTaskItem.CompleteHeader())
+	}
+	if (firstTaskIndex != -1) {
+		tasks.add(firstTaskIndex, ToDoTaskItem.TaskHeader())
 	}
 
 	return tasks

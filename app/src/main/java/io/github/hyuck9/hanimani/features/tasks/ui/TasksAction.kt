@@ -2,6 +2,7 @@ package io.github.hyuck9.hanimani.features.tasks.ui
 
 import androidx.compose.ui.text.input.TextFieldValue
 import io.github.hyuck9.hanimani.model.ToDoTask
+import org.burnoutcrew.reorderable.ItemPosition
 
 sealed class TasksAction {
 	object OnShow : TasksAction()
@@ -10,6 +11,6 @@ sealed class TasksAction {
 	data class ChangeTaskName(val name: TextFieldValue) : TasksAction()
 	data class OnToggleStatus(val task: ToDoTask) : TasksAction()
 	data class Delete(val task: ToDoTask) : TasksAction()
-	data class ReplaceOrder(val fromTask: ToDoTask, val toTask: ToDoTask) : TasksAction()
-	data class UpdateOrders(val tasks: List<ToDoTask>) : TasksAction()
+	data class ReplaceOrder(val from: ItemPosition, val to: ItemPosition) : TasksAction()
+	object DragEnd : TasksAction()
 }

@@ -1,7 +1,6 @@
 package io.github.hyuck9.hanimani.runtime.navigation
 
 import androidx.navigation.navArgument
-import timber.log.Timber
 
 sealed class TasksFlow(val name: String) {
 	object Root : TasksFlow("tasks-root") {
@@ -28,7 +27,6 @@ sealed class EditTaskFlow(val name: String) {
 		val route = "$name?$ARG_TASK_ID={$ARG_TASK_ID}"
 
 		fun route(taskId: String): String {
-			Timber.tag("TEST").i("taskId : $taskId")
 			return "$name?$ARG_TASK_ID=$taskId"
 		}
 	}

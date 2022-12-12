@@ -82,12 +82,20 @@ class TasksViewModel @Inject constructor(
 			}
 			is TasksAction.ReplaceOrder -> {
 				viewModelScope.launch {
-					environment.replaceOrder(action.fromTask, action.toTask)
+					setState {
+						copy(
+							items = items.toMutableList().apply {
+								val fromIndex = if (action.from.index <= 0) 0 else action.from.index - 1
+								val toIndex = if (action.to.index <= 0) 0 else action.to.index - 1
+								add(toIndex, removeAt(fromIndex))
+							}
+						)
+					}
 				}
 			}
-			is TasksAction.UpdateOrders -> {
+			is TasksAction.DragEnd -> {
 				viewModelScope.launch {
-					environment.updateOrders(action.tasks)
+					environment.updateOrders(state.value.items)
 				}
 			}
 		}

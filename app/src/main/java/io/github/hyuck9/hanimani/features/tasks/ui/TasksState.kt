@@ -5,7 +5,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import io.github.hyuck9.hanimani.common.extension.toToDoTaskItems
 import io.github.hyuck9.hanimani.model.FontSize
 import io.github.hyuck9.hanimani.model.TaskAlign
+import io.github.hyuck9.hanimani.model.ToDoStatus
 import io.github.hyuck9.hanimani.model.ToDoTask
+import org.burnoutcrew.reorderable.ItemPosition
 
 @Immutable
 data class TasksState(
@@ -16,6 +18,7 @@ data class TasksState(
 ) {
 	val toDoTaskItems = items.toToDoTaskItems()
 	val validTaskName = taskName.text.isNotBlank()
+	fun canDragOver(draggedOver: ItemPosition) = items.getOrNull(draggedOver.index - 1)?.status == ToDoStatus.IN_PROGRESS
 
 	val maxOrder = items.maxWithOrNull(Comparator.comparingInt { lastTask ->
 		lastTask.order
@@ -23,6 +26,7 @@ data class TasksState(
 }
 
 sealed class ToDoTaskItem {
+	data class TaskHeader(val id: String = "TaskHeader") : ToDoTaskItem()
 	data class CompleteHeader(val id: String = "CompleteHeader") : ToDoTaskItem()
 
 	data class Complete(

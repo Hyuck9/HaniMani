@@ -12,6 +12,7 @@
 
     <string name="hint_add_task">할일을 입력하세요!</string>
 
+    <string name="header_tasks">할일 목록!</string>
     <string name="header_task_completed">완료한 일들!</string>
 
     <string name="empty_history_text">추가한 태스크가 없습니다.</string>
