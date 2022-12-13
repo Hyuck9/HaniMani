@@ -156,7 +156,8 @@ fun TasksContent(
 							var debounceJob: Job? by remember { mutableStateOf(null) }
 
 							HmToDoItemCell(
-								modifier = Modifier.animateItemPlacement()
+								modifier = Modifier
+									.animateItemPlacement()
 									.detectReorderAfterLongPress(state)
 									.shadow(elevation.value),
 								name = item.toDoTask.name,
@@ -185,6 +186,13 @@ fun TasksContent(
 					}
 				}
 			}
+
+			item {
+				EmptyTaskTipText(
+					modifier = Modifier
+						.padding(vertical = 100.dp)
+				)
+			}
 		}
 	}
 }
@@ -194,15 +202,15 @@ private fun TaskHeader(
 	modifier: Modifier = Modifier,
 	color: Color = MaterialTheme.colorScheme.primary
 ) {
-	Spacer(Modifier.height(16.dp))
 	Row(
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.SpaceBetween,
 		modifier = modifier
-			.padding(horizontal = 16.dp)
+			.background(MaterialTheme.colorScheme.surface)
 			.fillMaxWidth()
 	) {
 		Text(
+			modifier = Modifier.padding(all = 16.dp),
 			text = stringResource(R.string.header_tasks),
 			style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
 			color = color
@@ -216,15 +224,15 @@ private fun CompleteHeader(
 	onAllCompleteTasksDelete: () -> Unit,
 	color: Color = MaterialTheme.colorScheme.primary
 ) {
-	Spacer(Modifier.height(16.dp))
 	Row(
 		verticalAlignment = Alignment.CenterVertically,
 		horizontalArrangement = Arrangement.SpaceBetween,
 		modifier = modifier
-			.padding(horizontal = 16.dp)
+			.background(MaterialTheme.colorScheme.surface)
 			.fillMaxWidth()
 	) {
 		Text(
+			modifier = Modifier.padding(horizontal = 16.dp),
 			text = stringResource(R.string.header_task_completed),
 			style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
 			color = color
