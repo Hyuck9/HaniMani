@@ -1,16 +1,12 @@
 package io.github.hyuck9.hanimani.features.settings.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -25,8 +21,7 @@ import io.github.hyuck9.hanimani.common.extension.alignIcon
 import io.github.hyuck9.hanimani.common.extension.toTextStyle
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.common.theme.MediumRadius
-import io.github.hyuck9.hanimani.common.uicomponent.HmIcon
-import io.github.hyuck9.hanimani.common.uicomponent.HmIconButton
+import io.github.hyuck9.hanimani.common.uicomponent.*
 import io.github.hyuck9.hanimani.model.FontSize
 import io.github.hyuck9.hanimani.model.TaskAlign
 
@@ -110,53 +105,6 @@ fun FunctionCard(
 }
 
 @Composable
-private fun SettingsCard(
-	modifier: Modifier = Modifier,
-	@StringRes titleResId: Int,
-	content: @Composable ColumnScope.() -> Unit,
-) {
-	Column(
-		modifier = modifier
-			.fillMaxWidth()
-	) {
-		Text(
-			text = stringResource(id = titleResId),
-			style = MaterialTheme.typography.titleMedium
-		)
-		Spacer(Modifier.height(16.dp))
-		content()
-	}
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun SettingsRow(
-	settingName: String,
-	shape: Shape = RectangleShape,
-	onClick: () -> Unit
-) {
-	Surface(
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(bottom = 1.dp),
-		shadowElevation = 5.dp,
-		shape = shape,
-		onClick = onClick
-	) {
-		Row(
-			modifier = Modifier
-				.fillMaxWidth()
-				.padding(16.dp)
-		) {
-			Text(
-				text = settingName,
-				style = MaterialTheme.typography.bodyLarge
-			)
-		}
-	}
-}
-
-@Composable
 private fun TextAlignSettingsRow(
 	shape: Shape = RectangleShape,
 	aligns: List<TaskAlignItem>,
@@ -215,80 +163,7 @@ private fun FontSizeSettingsRow(
 	)
 }
 
-@Composable
-private fun TextSettingsRow(
-	settingName: String,
-	shape: Shape = RectangleShape,
-	content: LazyListScope.() -> Unit
-) {
-	Surface(
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(bottom = 1.dp),
-		shadowElevation = 5.dp,
-		shape = shape
-	) {
-		Row(
-			modifier = Modifier
-				.fillMaxWidth()
-				.padding(horizontal = 16.dp),
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.SpaceBetween
-		) {
-			Text(
-				modifier = Modifier
-					.padding(vertical = 16.dp),
-				text = settingName,
-				style = MaterialTheme.typography.bodyLarge
-			)
 
-			LazyRow(content = content)
-
-		}
-	}
-}
-
-@Composable
-private fun SwitchSettingsRow(
-	settingName: String,
-	isChecked: Boolean,
-	onCheckedChange: (Boolean) -> Unit,
-	shape: Shape = RectangleShape
-) {
-	Surface(
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(bottom = 1.dp),
-		shadowElevation = 5.dp,
-		shape = shape
-	) {
-		Row(
-			modifier = Modifier
-				.fillMaxWidth()
-				.padding(horizontal = 16.dp),
-			verticalAlignment = Alignment.CenterVertically,
-			horizontalArrangement = Arrangement.SpaceBetween
-		) {
-			Text(
-				modifier = Modifier
-					.padding(vertical = 16.dp),
-				text = settingName,
-				style = MaterialTheme.typography.bodyLarge
-			)
-
-			Switch(checked = isChecked, onCheckedChange = onCheckedChange)
-		}
-	}
-}
-
-
-@Preview(showBackground = true)
-@Composable
-private fun SettingsRowPreview() {
-	HaniManiTheme {
-		SettingsRow(settingName = stringResource(id = R.string.setting_theme), onClick = {})
-	}
-}
 
 @Preview(showBackground = true)
 @Composable
@@ -306,13 +181,6 @@ private fun FontSizeSettingsRowPreview() {
 	}
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun SwitchSettingsRowPreview() {
-	HaniManiTheme {
-		SwitchSettingsRow(settingName = stringResource(id = R.string.setting_function_autorun), isChecked = true, onCheckedChange = { })
-	}
-}
 
 
 @Preview(showBackground = true)
