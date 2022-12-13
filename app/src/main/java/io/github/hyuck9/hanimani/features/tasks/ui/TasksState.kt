@@ -3,11 +3,11 @@ package io.github.hyuck9.hanimani.features.tasks.ui
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
 import io.github.hyuck9.hanimani.common.extension.toToDoTaskItems
+import io.github.hyuck9.hanimani.common.uicomponent.reorder.ItemPosition
 import io.github.hyuck9.hanimani.model.FontSize
 import io.github.hyuck9.hanimani.model.TaskAlign
 import io.github.hyuck9.hanimani.model.ToDoStatus
 import io.github.hyuck9.hanimani.model.ToDoTask
-import org.burnoutcrew.reorderable.ItemPosition
 
 @Immutable
 data class TasksState(

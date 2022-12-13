@@ -17,7 +17,6 @@ import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.extension.requestFocusImeAware
 import io.github.hyuck9.hanimani.common.uicomponent.HmTodoEditor
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable

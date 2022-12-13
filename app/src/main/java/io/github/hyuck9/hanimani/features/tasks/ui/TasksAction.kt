@@ -1,8 +1,8 @@
 package io.github.hyuck9.hanimani.features.tasks.ui
 
 import androidx.compose.ui.text.input.TextFieldValue
+import io.github.hyuck9.hanimani.common.uicomponent.reorder.ItemPosition
 import io.github.hyuck9.hanimani.model.ToDoTask
-import org.burnoutcrew.reorderable.ItemPosition
 
 sealed class TasksAction {
 	object OnShow : TasksAction()
