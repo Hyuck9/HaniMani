@@ -39,29 +39,30 @@ val AuroraBackgroundL2 = Color(0xFF283E37)
 val AuroraItemBackgroundL2 = Color(0xFF3D514A)
 val AuroraOn = Color(0xFFD0E0CF)
 
+val PinkPrimary = Color(0xFFF48FB1)
+val PinkBackgroundL1 = Color(0xFFFCE4EC)
+val PinkItemBackgroundL1 = Color(0xFFFAFAFA)
+val PinkBackgroundL2 = Color(0xFFFCE4EC)
+val PinkItemBackgroundL2 = Color(0xFFC9B2BA)
+val PinkOn = Color(0xFF560027)
+val PinkError = Color(0xFFEC407A)
+
+val PurplePrimary = Color(0xFF6750a4)
+val PurpleBackgroundL1 = Color(0xFFe9ddff)
+val PurpleItemBackgroundL1 = Color(0xFFCCC2DC)
+val PurpleBackgroundL2 = Color(0xFFe9ddff)
+val PurpleItemBackgroundL2 = Color(0xFFC0B3C2)
+val PurpleOn = Color(0xFF12005E)
+val PurpleError = Color(0xFFba1a1a)
+
+val BluePrimary = Color(0xFFE3F2FD)
+val BluePrimaryContainer = Color(0xFF004BA0)
+val BlueBackgroundL1 = Color(0xFF315da8)
+val BlueItemBackgroundL1 = Color(0xFF63A4FF)
+val BlueBackgroundL2 = Color(0xFF315da8)
+val BlueItemBackgroundL2 = Color(0xFFB1BFCA)
+val BlueOn = Color(0xFF12005E)
+val BlueError = Color(0xFF690005)
+
+
 val CommonError = Color(0xFFB00020)
-
-
-val PinkPrimary = Color(0xFFF48FB1)			// Pink 200 Primary
-val PinkBackgroundL1 = Color(0xFFFCE4EC)		// Pink 50 Primary
-val PinkItemBackgroundL1 = Color(0xFFFAFAFA)	// Gray 50 Primary
-val PinkBackgroundL2 = Color(0xFFFEEFF2)		// Pink 50 Primary modify
-val PinkItemBackgroundL2 = Color(0xFFC9B2BA)	// Pink 50 Dark
-val PinkOn = Color(0xFF560027)				// Pink 900 Dark
-val PinkError = Color(0xFFEC407A)				// Pink 400 Primary
-
-val PurplePrimary = Color(0xFFCE93D8)			// Purple 200 P
-val PurpleBackgroundL1 = Color(0xFFF3E5F5)	// Pruple 50 P
-val PurpleItemBackgroundL1 = Color(0xFFCCC2DC) //
-val PurpleBackgroundL2 = Color(0xFFF9EFFB)	// Pruple 50 P m
-val PurpleItemBackgroundL2 = Color(0xFFC0B3C2) // Purple 50 D
-val PurpleOn = Color(0xFF12005E)				// Pruple 900 D
-val PurpleError = Color(0xFF790E8B)			// Pruple 400 P
-
-val BluePrimary = Color(0xFFE3F2FD)			// Blue 50 P
-val BluePrimaryContainer = Color(0xFF004BA0)	// Blue 700 D
-val BlueBackgroundL1 = Color(0xFF1976D2)		// Blue 700 P
-val BlueItemBackgroundL1 = Color(0xFF63A4FF) 	// Blue 700 L
-val BlueBackgroundL2 = Color(0xFF1e88e5)		// Blue 50 P m
-val BlueItemBackgroundL2 = Color(0xFFB1BFCA) 	// Blue 50 D
-val BlueOn = Color(0xFF12005E)				// Blue 900 D

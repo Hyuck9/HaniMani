@@ -142,11 +142,11 @@ val BlueColorPalette = lightColorScheme(
 	background = BlueBackgroundL2,
 	surface = BlueBackgroundL1,
 	surfaceVariant = BlueItemBackgroundL2,
-	error = CommonError,
+	error = BlueError,
 	onPrimary = Color.White,
 	onPrimaryContainer = Color.White,
 	onBackground = Color.White,
-	onSurface = Color.White,
+	onSurface = BlueOn,
 	onSurfaceVariant = BlueOn,
 )
 

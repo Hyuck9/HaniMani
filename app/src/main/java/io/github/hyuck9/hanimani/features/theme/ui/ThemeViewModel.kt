@@ -60,17 +60,6 @@ class ThemeViewModel @Inject constructor(
 			)
 		)
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-			data.add(
-				ThemeItem(
-					R.string.setting_theme_wallpaper,
-					Theme.WALLPAPER,
-					Brush.linearGradient(colors = listOf()),
-					false
-				)
-			)
-		}
-
 		data.add(
 			ThemeItem(
 				R.string.setting_theme_light,
@@ -176,6 +165,17 @@ class ThemeViewModel @Inject constructor(
 				false
 			)
 		)
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+			data.add(
+				ThemeItem(
+					R.string.setting_theme_wallpaper,
+					Theme.WALLPAPER,
+					Brush.linearGradient(colors = listOf()),
+					false
+				)
+			)
+		}
 
 		return data
 	}

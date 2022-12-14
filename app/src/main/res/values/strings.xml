@@ -29,8 +29,8 @@
     <string name="setting_title_function">기능</string>
 
     <string name="setting_theme">테마 변경</string>
-    <string name="setting_theme_automatic">시스템 테마</string>
-    <string name="setting_theme_wallpaper" translatable="false">Material3</string>
+    <string name="setting_theme_automatic">기본 테마</string>
+    <string name="setting_theme_wallpaper" translatable="false">다이나믹 테마</string>
     <string name="setting_theme_light">밝은 낮</string>
     <string name="setting_theme_twilight">해질녘</string>
     <string name="setting_theme_night">깊은 밤</string>
