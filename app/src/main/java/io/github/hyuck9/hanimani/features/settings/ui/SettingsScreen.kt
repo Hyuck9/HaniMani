@@ -47,7 +47,9 @@ fun SettingsScreen(
 		FunctionCard(
 			modifier = Modifier.padding(top = 16.dp),
 			isAutorunCheck = state.isAutorun,
-			onAutorunCheckedChange = { viewModel.dispatch(SettingsAction.OnAutorunCheckedChange(it)) }
+			isHideCompleteTasks = state.isHideCompleteTasks,
+			onAutorunCheckedChange = { viewModel.dispatch(SettingsAction.OnAutorunCheckedChange(it)) },
+			onHideCompleteTasksChange = { viewModel.dispatch(SettingsAction.OnHideCompleteTasksChange(it)) }
 		)
 	}
 }
@@ -88,7 +90,9 @@ fun DesignCard(
 fun FunctionCard(
 	modifier: Modifier = Modifier,
 	isAutorunCheck: Boolean,
+	isHideCompleteTasks: Boolean,
 	onAutorunCheckedChange: (Boolean) -> Unit,
+	onHideCompleteTasksChange: (Boolean) -> Unit,
 ) {
 
 	SettingsCard(
@@ -97,9 +101,15 @@ fun FunctionCard(
 		content = {
 			SwitchSettingsRow(
 				settingName = stringResource(id = R.string.setting_function_autorun),
-				shape = RoundedCornerShape(MediumRadius),
+				shape = RoundedCornerShape(topStart = MediumRadius, topEnd = MediumRadius),
 				isChecked = isAutorunCheck,
 				onCheckedChange = onAutorunCheckedChange
+			)
+			SwitchSettingsRow(
+				settingName = stringResource(id = R.string.setting_function_hide_complete_tasks),
+				shape = RoundedCornerShape(bottomStart = MediumRadius, bottomEnd = MediumRadius),
+				isChecked = isHideCompleteTasks,
+				onCheckedChange = onHideCompleteTasksChange
 			)
 		})
 }
@@ -213,7 +223,9 @@ private fun FunctionCardPreview() {
 		) {
 			FunctionCard(
 				isAutorunCheck = true,
+				isHideCompleteTasks = false,
 				onAutorunCheckedChange = {},
+				onHideCompleteTasksChange = {},
 			)
 		}
 	}

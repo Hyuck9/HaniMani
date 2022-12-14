@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HaniMani</string>
+    <string name="app_name">하니마니</string>
 
     <string name="tab_title_tasks">할일</string>
     <string name="tab_title_settings">설정</string>
@@ -38,6 +38,7 @@
     <string name="setting_font_align">글자 정렬</string>
 
     <string name="setting_function_autorun">자동 실행</string>
+    <string name="setting_function_hide_complete_tasks">완료 목록 감추기</string>
 
     <string name="noti_content_title">클릭하여 앱 실행</string>
     <string name="noti_content_text">안정적인 실행을 위해 알림 표시 중</string>

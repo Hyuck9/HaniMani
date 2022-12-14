@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.hyuck9.hanimani.common.base.BaseViewModel
 import io.github.hyuck9.hanimani.common.data.preference.PreferencesConstants.AUTO_RUN
+import io.github.hyuck9.hanimani.common.data.preference.PreferencesConstants.HIDE_COMPLETE_TASKS
 import io.github.hyuck9.hanimani.common.data.preference.readBoolean
 import io.github.hyuck9.hanimani.common.data.preference.writeBoolean
 import io.github.hyuck9.hanimani.common.extension.select
@@ -26,6 +27,7 @@ class SettingsViewModel @Inject constructor(
 		initTaskAlign()
 		initFontSize()
 		initAutorun()
+		initHideCompleteTasks()
 	}
 
 	override fun dispatch(action: SettingsAction) {
@@ -33,6 +35,7 @@ class SettingsViewModel @Inject constructor(
 			is SettingsAction.SelectTaskAlign -> applyTaskAlign(action.selected)
 			is SettingsAction.SelectFontSize -> applyFontSize(action.selected)
 			is SettingsAction.OnAutorunCheckedChange -> autorunCheckedChange(action.isAutorun)
+			is SettingsAction.OnHideCompleteTasksChange -> hideCompleteTasksChange(action.isHide)
 		}
 	}
 
@@ -66,6 +69,14 @@ class SettingsViewModel @Inject constructor(
 				}
 		}
 	}
+	private fun initHideCompleteTasks() {
+		viewModelScope.launch {
+			context.readBoolean(HIDE_COMPLETE_TASKS, false)
+				.collect {
+					setState { copy(isHideCompleteTasks = it) }
+				}
+		}
+	}
 
 	private fun applyTaskAlign(item: TaskAlignItem) {
 		viewModelScope.launch {
@@ -82,6 +93,12 @@ class SettingsViewModel @Inject constructor(
 	private fun autorunCheckedChange(isAutorun: Boolean) {
 		viewModelScope.launch {
 			context.writeBoolean(AUTO_RUN, isAutorun)
+		}
+	}
+
+	private fun hideCompleteTasksChange(isHide: Boolean) {
+		viewModelScope.launch {
+			context.writeBoolean(HIDE_COMPLETE_TASKS, isHide)
 		}
 	}
 
