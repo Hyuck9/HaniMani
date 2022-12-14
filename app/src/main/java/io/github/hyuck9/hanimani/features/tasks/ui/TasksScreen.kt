@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.hyuck9.hanimani.R
+import io.github.hyuck9.hanimani.common.data.preference.PreferencesConstants.HIDE_COMPLETE_TASKS
+import io.github.hyuck9.hanimani.common.data.preference.readBoolean
 import io.github.hyuck9.hanimani.common.extension.*
 import io.github.hyuck9.hanimani.common.preview.SampleBooleanProvider
 import io.github.hyuck9.hanimani.common.theme.AlphaDisabled
@@ -56,6 +59,7 @@ fun TasksScreen(
 		canDragOver = { draggedOver, _ -> state.canDragOver(draggedOver) },
 		onDragEnd = { _, _ -> viewModel.dispatch(TasksAction.DragEnd) }
 	)
+	val hideState = LocalContext.current.readBoolean(HIDE_COMPLETE_TASKS, false).collectAsState(initial = false)
 
 	HandleEffect(viewModel) {
 		when (it) {
@@ -83,7 +87,8 @@ fun TasksScreen(
 			onAllCompleteTasksDelete = { viewModel.dispatch(TasksAction.OnCompletedTasksDelete) },
 			textStyle = state.fontSize.toTextStyle(),
 			textAlign = state.textAlign.toAlign(),
-			state = reorderState
+			state = reorderState,
+			isHideCompleteTasks = hideState.value
 		)
 	}
 }
@@ -101,7 +106,8 @@ fun TasksContent(
 	color: Color = MaterialTheme.colorScheme.primary,
 	textStyle : TextStyle = MaterialTheme.typography.titleSmall,
 	textAlign : TextAlign = TextAlign.Start,
-	state: ReorderableLazyListState
+	state: ReorderableLazyListState,
+	isHideCompleteTasks: Boolean = false
 ) {
 	val coroutineScope = rememberCoroutineScope()
 
@@ -133,23 +139,27 @@ fun TasksContent(
 							TaskHeader(color = color)
 						}
 						is ToDoTaskItem.CompleteHeader -> {
-							CompleteHeader(
-								color = color,
-								onAllCompleteTasksDelete = onAllCompleteTasksDelete
-							)
+							if (isHideCompleteTasks.not()) {
+								CompleteHeader(
+									color = color,
+									onAllCompleteTasksDelete = onAllCompleteTasksDelete
+								)
+							}
 						}
 						is ToDoTaskItem.Complete -> {
-							HmToDoItemCell(
-								modifier = Modifier.animateItemPlacement(),
-								name = item.toDoTask.name,
-								checkboxColor = color.copy(alpha = AlphaDisabled),
-								contentPaddingValues = PaddingValues(all = 8.dp),
-								leftIcon = Icons.Rounded.CheckCircle,
-								textStyle = textStyle.copy(textDecoration = TextDecoration.LineThrough, textAlign = textAlign),
-								onClick = { onClick(item.toDoTask) },
-								onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
-								onCheckboxClick = { onCheckboxClick(item.toDoTask) }
-							)
+							if (isHideCompleteTasks.not()) {
+								HmToDoItemCell(
+									modifier = Modifier.animateItemPlacement(),
+									name = item.toDoTask.name,
+									checkboxColor = color.copy(alpha = AlphaDisabled),
+									contentPaddingValues = PaddingValues(all = 8.dp),
+									leftIcon = Icons.Rounded.CheckCircle,
+									textStyle = textStyle.copy(textDecoration = TextDecoration.LineThrough, textAlign = textAlign),
+									onClick = { onClick(item.toDoTask) },
+									onSwipeToDelete = { onSwipeToDelete(item.toDoTask) },
+									onCheckboxClick = { onCheckboxClick(item.toDoTask) }
+								)
+							}
 						}
 						is ToDoTaskItem.InProgress -> {
 							var isChecked by remember { mutableStateOf(false) }
