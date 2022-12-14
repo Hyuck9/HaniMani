@@ -9,7 +9,13 @@ message ThemePreference {
     SYSTEM = 0;
     WALLPAPER = 1;
     LIGHT = 2;
-    NIGHT = 3;
+    TWILIGHT = 3;
+    NIGHT = 4;
+    SUNRISE = 5;
+    AURORA = 6;
+    PINK = 7;
+    PURPLE = 8;
+    BLUE = 9;
   }
 
   ThemeColor themeColor = 1;

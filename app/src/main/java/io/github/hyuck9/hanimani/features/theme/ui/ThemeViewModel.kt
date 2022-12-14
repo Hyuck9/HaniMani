@@ -8,9 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.base.BaseViewModel
 import io.github.hyuck9.hanimani.common.extension.select
-import io.github.hyuck9.hanimani.common.theme.LightPrimary
-import io.github.hyuck9.hanimani.common.theme.NightItemBackgroundL2
-import io.github.hyuck9.hanimani.common.theme.NightPrimary
+import io.github.hyuck9.hanimani.common.theme.*
 import io.github.hyuck9.hanimani.features.theme.data.IThemeEnvironment
 import io.github.hyuck9.hanimani.model.Theme
 import kotlinx.coroutines.launch
@@ -86,10 +84,94 @@ class ThemeViewModel @Inject constructor(
 
 		data.add(
 			ThemeItem(
+				R.string.setting_theme_twilight,
+				Theme.TWILIGHT,
+				Brush.linearGradient(
+					colors = listOf(
+						TwilightPrimary,
+						TwilightItemBackgroundL1
+					)
+				),
+				false
+			)
+		)
+
+		data.add(
+			ThemeItem(
 				R.string.setting_theme_night,
 				Theme.NIGHT,
 				Brush.linearGradient(
 					colors = listOf(NightPrimary, NightItemBackgroundL2)
+				),
+				false
+			)
+		)
+
+		data.add(
+			ThemeItem(
+				R.string.setting_theme_sunrise,
+				Theme.SUNRISE,
+				Brush.linearGradient(
+					colors = listOf(
+						SunrisePrimary,
+						SunriseItemBackgroundL2
+					)
+				),
+				false
+			)
+		)
+
+		data.add(
+			ThemeItem(
+				R.string.setting_theme_aurora,
+				Theme.AURORA,
+				Brush.linearGradient(
+					colors = listOf(
+						AuroraPrimary,
+						AuroraItemBackgroundL2
+					)
+				),
+				false
+			)
+		)
+
+		data.add(
+			ThemeItem(
+				R.string.setting_theme_pink,
+				Theme.PINK,
+				Brush.linearGradient(
+					colors = listOf(
+						PinkPrimary,
+						PinkItemBackgroundL2
+					)
+				),
+				false
+			)
+		)
+
+		data.add(
+			ThemeItem(
+				R.string.setting_theme_purple,
+				Theme.PURPLE,
+				Brush.linearGradient(
+					colors = listOf(
+						PurplePrimary,
+						PurpleItemBackgroundL2
+					)
+				),
+				false
+			)
+		)
+
+		data.add(
+			ThemeItem(
+				R.string.setting_theme_blue,
+				Theme.BLUE,
+				Brush.linearGradient(
+					colors = listOf(
+						BluePrimary,
+						BlueItemBackgroundL2
+					)
 				),
 				false
 			)

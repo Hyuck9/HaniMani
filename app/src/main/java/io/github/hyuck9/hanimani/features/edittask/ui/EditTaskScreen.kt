@@ -14,7 +14,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.hyuck9.hanimani.R
-import io.github.hyuck9.hanimani.common.extension.requestFocusImeAware
+import io.github.hyuck9.hanimani.common.uiextension.requestFocusImeAware
 import io.github.hyuck9.hanimani.common.uicomponent.HmTodoEditor
 import kotlinx.coroutines.launch
 

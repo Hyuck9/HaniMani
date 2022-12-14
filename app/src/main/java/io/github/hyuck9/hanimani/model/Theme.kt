@@ -4,5 +4,11 @@ enum class Theme {
 	SYSTEM,
 	WALLPAPER,
 	LIGHT,
-	NIGHT
+	TWILIGHT,
+	NIGHT,
+	SUNRISE,
+	AURORA,
+	PINK,
+	PURPLE,
+	BLUE
 }

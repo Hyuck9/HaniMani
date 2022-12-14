@@ -41,6 +41,7 @@ import io.github.hyuck9.hanimani.common.uicomponent.*
 import io.github.hyuck9.hanimani.common.uicomponent.reorder.ReorderableItem
 import io.github.hyuck9.hanimani.common.uicomponent.reorder.ReorderableLazyListState
 import io.github.hyuck9.hanimani.common.uicomponent.reorder.rememberReorderableLazyListState
+import io.github.hyuck9.hanimani.common.uiextension.requestFocusImeAware
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

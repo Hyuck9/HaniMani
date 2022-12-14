@@ -16,7 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
-import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
+import io.github.hyuck9.hanimani.common.uiextension.rememberBottomSheetNavigator
 import io.github.hyuck9.hanimani.features.common.HaniManiTabBar
 
 @OptIn(ExperimentalMaterialNavigationApi::class)

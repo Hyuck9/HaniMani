@@ -1,3 +1,5 @@
+@file:Suppress("KDocUnresolvedReference")
+
 package io.github.hyuck9.hanimani.common.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,30 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import io.github.hyuck9.hanimani.model.Theme
 
-//private val DarkColorScheme = darkColorScheme(
-//	primary = Purple80,
-//	secondary = PurpleGrey80,
-//	tertiary = Pink80
-//)
-//
-//private val LightColorScheme = lightColorScheme(
-//	primary = Purple40,
-//	secondary = PurpleGrey40,
-//	tertiary = Pink40
-//
-//	/* Other default colors to override
-//    background = Color(0xFFFFFBFE),
-//    surface = Color(0xFFFFFBFE),
-//    onPrimary = Color.White,
-//    onSecondary = Color.White,
-//    onTertiary = Color.White,
-//    onBackground = Color(0xFF1C1B1F),
-//    onSurface = Color(0xFF1C1B1F),
-//    */
-//)
-
-
-/*******************************************************************************
+/* *****************************************************************************
  * ColorScheme 속성값
  *******************************************************************************
  * [primary] - 화면의 구성요소에서 가장 자주 표시되는 기본 색상
@@ -58,42 +37,117 @@ import io.github.hyuck9.hanimani.model.Theme
  * [onError] error color 위에 표시되는 텍스트 및 아이콘에 사용되는 색상
  *******************************************************************************/
 
-val LightColorPalette = lightColorScheme(
-	primary = LightPrimary,
-	primaryContainer = LightPrimary,
-	secondary = LightItemBackgroundL1,
-	secondaryContainer = LightItemBackgroundL1,
-	background = LightBackgroundL2,
-	surface = LightBackgroundL1,
-	surfaceVariant = LightItemBackgroundL2,
-	error = LightError,
-	onPrimary = Color.White,
-	onPrimaryContainer = Color.White,
-	onSecondary = LightOn,
-	onSecondaryContainer = LightOn,
-	onBackground = LightOn,
-	onSurface = LightOn,
-	onSurfaceVariant = LightOn,
-	onError = Color.White
+private val LightColorPalette = lightColorScheme(
+	primary = LightPrimary,						// 탭 text/icon 및 테두리 			| Task 체크박스 							| Task 우측Swipe 배경색 (완료) 	| 완료 헤더 등
+	primaryContainer = LightPrimary,			// fab 버튼색 						| Task 추가 버튼 색						|								|
+	secondary = LightItemBackgroundL1,			// Task Swipe 기본 배경색 			| Task 추가 text 입력창 배경색				|								|
+	background = LightBackgroundL2,				// 기본 앱 배경색 					| 할일 목록 배경색 						| BottomSheet 배경색				|
+	surface = LightBackgroundL1,				// 탭 표면색 						| Task item 표면색 						| setting item 표면색			|
+	surfaceVariant = LightItemBackgroundL2,		// Task 추가 버튼 색 (비활성) 			| Themes Item 표면색 (미체크) 			| BottomSheet Back 버튼 표면색	|
+	error = LightError,							// Task 좌측Swipe 배경색 (삭제) 		| Complete Header Delete Button 글자색	|								|
+	onPrimary = Color.White,					// fab text/icon 색 				| Themes Item 글자색 (체크)				|								|
+	onBackground = LightOn,						// Task 글자색 						| Setting subtitle 글자색 				| setting item 글자색 			| Themes BottomSheet title 글자색
+	onSurface = LightOn,						// Task 추가 글자색 					| 도움말 글자색 							| Task item 구분선 				| Complete Header Delete Button 클릭 이펙트
+	onSurfaceVariant = LightOn,					// Task 추가 submit 버튼 아이콘 tint 	| Themes Item 글자색 (미체크)				|								|
 )
 
-val NightColorPalette = darkColorScheme(
+val TwilightColorPalette = lightColorScheme(
+	primary = TwilightPrimary,
+	primaryContainer = TwilightPrimary,
+	secondary = TwilightItemBackgroundL1,
+	background = TwilightBackgroundL2,
+	surface = TwilightBackgroundL1,
+	surfaceVariant = TwilightItemBackgroundL2,
+	error = CommonError,
+	onPrimary = TwilightOn,
+	onBackground = TwilightOn,
+	onSurface = TwilightOn,
+	onSurfaceVariant = TwilightOn,
+)
+
+private val NightColorPalette = darkColorScheme(
 	primary = NightPrimary,
 	primaryContainer = NightPrimary,
 	secondary = NightItemBackgroundL1,
-	secondaryContainer = NightItemBackgroundL1,
 	background = NightBackgroundL2,
 	surface = NightBackgroundL1,
 	surfaceVariant = NightItemBackgroundL2,
-	error = Error,
+	error = CommonError,
 	onPrimary = NightOn,
-	onPrimaryContainer = NightOn,
-	onSecondary = NightOn,
-	onSecondaryContainer = NightOn,
 	onBackground = NightOn,
 	onSurface = NightOn,
 	onSurfaceVariant = NightOn,
-	onError = Color.White
+)
+
+val SunriseColorPalette = darkColorScheme(
+	primary = SunrisePrimary,
+	primaryContainer = SunrisePrimary,
+	secondary = SunriseItemBackgroundL1,
+	background = SunriseBackgroundL2,
+	surface = SunriseBackgroundL1,
+	surfaceVariant = SunriseItemBackgroundL2,
+	error = SunriseError,
+	onPrimary = SunriseOn,
+	onBackground = SunriseOn,
+	onSurface = SunriseOn,
+	onSurfaceVariant = SunriseOn,
+)
+
+val AuroraColorPalette = darkColorScheme(
+	primary = AuroraPrimary,
+	primaryContainer = AuroraPrimary,
+	secondary = AuroraItemBackgroundL1,
+	background = AuroraBackgroundL2,
+	surface = AuroraBackgroundL1,
+	surfaceVariant = AuroraItemBackgroundL2,
+	error = CommonError,
+	onPrimary = AuroraOn,
+	onBackground = AuroraOn,
+	onSurface = AuroraOn,
+	onSurfaceVariant = AuroraOn,
+)
+
+val PinkColorPalette = lightColorScheme(
+	primary = PinkPrimary,
+	primaryContainer = PinkPrimary,
+	secondary = PinkItemBackgroundL1,
+	background = PinkBackgroundL2,
+	surface = PinkBackgroundL1,
+	surfaceVariant = PinkItemBackgroundL2,
+	error = PinkError,
+	onPrimary = Color.White,
+	onBackground = PinkOn,
+	onSurface = PinkOn,
+	onSurfaceVariant = PinkOn,
+)
+
+val PurpleColorPalette = lightColorScheme(
+	primary = PurplePrimary,
+	primaryContainer = PurplePrimary,
+	secondary = PurpleItemBackgroundL1,
+	background = PurpleBackgroundL2,
+	surface = PurpleBackgroundL1,
+	surfaceVariant = PurpleItemBackgroundL2,
+	error = PurpleError,
+	onPrimary = Color.White,
+	onBackground = PurpleOn,
+	onSurface = PurpleOn,
+	onSurfaceVariant = PurpleOn,
+)
+
+val BlueColorPalette = lightColorScheme(
+	primary = BluePrimary,
+	primaryContainer = BluePrimaryContainer,
+	secondary = BlueItemBackgroundL1,
+	background = BlueBackgroundL2,
+	surface = BlueBackgroundL1,
+	surfaceVariant = BlueItemBackgroundL2,
+	error = CommonError,
+	onPrimary = Color.White,
+	onPrimaryContainer = Color.White,
+	onBackground = Color.White,
+	onSurface = Color.White,
+	onSurfaceVariant = BlueOn,
 )
 
 
@@ -124,9 +178,15 @@ fun HaniManiTheme(
 			}
 		}
 		Theme.LIGHT -> LightColorPalette
+		Theme.TWILIGHT -> TwilightColorPalette
 		Theme.NIGHT -> NightColorPalette
+		Theme.SUNRISE -> SunriseColorPalette
+		Theme.AURORA -> AuroraColorPalette
+		Theme.PINK -> PinkColorPalette
+		Theme.PURPLE -> PurpleColorPalette
+		Theme.BLUE -> BlueColorPalette
 	}
-	val darkIcons = colors == LightColorPalette || (theme == Theme.WALLPAPER && isDarkTheme.not())
+	val darkIcons = colors == LightColorPalette || (theme == Theme.WALLPAPER && isDarkTheme.not()) || colors == SunriseColorPalette
 	val systemUiController = rememberSystemUiController()
 
 	SideEffect {
