@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.hyuck9.hanimani.R
+import io.github.hyuck9.hanimani.common.icon.TaskAlt
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.runtime.navigation.EditTaskFlow
 import io.github.hyuck9.hanimani.runtime.navigation.TasksFlow
@@ -39,7 +39,7 @@ fun HaniManiTabBar(
 		}
 	) {
 		HaniManiTab(
-			icon = Icons.Default.TaskAlt,
+			icon = TaskAlt,
 			title = stringResource(id = R.string.tab_title_tasks),
 			onClick = { onTabSelected(TabPage.Tasks) }
 		)
@@ -139,7 +139,7 @@ private fun HaniManiTabIndicator(
 fun HaniManiTabPreview() {
 	HaniManiTheme {
 		HaniManiTab(
-			icon = Icons.Default.TaskAlt,
+			icon = TaskAlt,
 			title = stringResource(id = R.string.tab_title_tasks),
 			onClick = {}
 		)
