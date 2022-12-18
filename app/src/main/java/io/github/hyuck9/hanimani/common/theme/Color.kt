@@ -41,10 +41,10 @@ val AuroraOn = Color(0xFFD0E0CF)
 
 val PinkPrimary = Color(0xFFF48FB1)
 val PinkBackgroundL1 = Color(0xFFFCE4EC)
-val PinkItemBackgroundL1 = Color(0xFFFAFAFA)
+val PinkItemBackgroundL1 = Color(0xFFE0D7D7)
 val PinkBackgroundL2 = Color(0xFFFCE4EC)
 val PinkItemBackgroundL2 = Color(0xFFC9B2BA)
-val PinkOn = Color(0xFF560027)
+val PinkOn = Color(0xFF7A5159)
 val PinkError = Color(0xFFEC407A)
 
 val PurplePrimary = Color(0xFF6750a4)

@@ -49,7 +49,7 @@ private fun NavGraphBuilder.TasksBottomSheetNavHost(
 		} else {
 			hiltViewModel()
 		}
-		bottomSheetConfig.value = NoScrimSmallShapeMainBottomSheetConfig
+		bottomSheetConfig.value = DefaultMainBottomSheetConfig
 		TaskCreator(viewModel = viewModel)
 	}
 

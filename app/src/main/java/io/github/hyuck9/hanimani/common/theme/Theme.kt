@@ -186,7 +186,7 @@ fun HaniManiTheme(
 		Theme.PURPLE -> PurpleColorPalette
 		Theme.BLUE -> BlueColorPalette
 	}
-	val darkIcons = colors == LightColorPalette || (theme == Theme.WALLPAPER && isDarkTheme.not()) || colors == SunriseColorPalette
+	val darkIcons = colors == LightColorPalette || (theme == Theme.WALLPAPER && isDarkTheme.not()) || colors == SunriseColorPalette || colors == PinkColorPalette
 	val systemUiController = rememberSystemUiController()
 
 	SideEffect {

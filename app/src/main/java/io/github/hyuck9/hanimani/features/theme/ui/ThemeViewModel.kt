@@ -158,7 +158,7 @@ class ThemeViewModel @Inject constructor(
 				Theme.BLUE,
 				Brush.linearGradient(
 					colors = listOf(
-						BluePrimary,
+						BluePrimaryContainer,
 						BlueItemBackgroundL2
 					)
 				),
