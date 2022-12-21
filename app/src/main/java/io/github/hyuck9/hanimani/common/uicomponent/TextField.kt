@@ -103,7 +103,7 @@ fun HmTodoCreator(
 				capitalization = KeyboardCapitalization.Sentences
 			),
 			modifier = modifier
-				.heightIn(min = 50.dp, max = 150.dp)
+				.heightIn(min = 50.dp, max = 200.dp)
 				.weight(0.6f),
 			trailingIcon = {
 				HmIconButton(
@@ -165,7 +165,7 @@ fun HmTodoEditor(
 					capitalization = KeyboardCapitalization.Sentences
 				),
 				modifier = modifier
-					.heightIn(min = 50.dp, max = 150.dp)
+					.heightIn(min = 50.dp, max = 200.dp)
 					.fillMaxWidth()
 					.padding(horizontal = 16.dp),
 				trailingIcon = {
