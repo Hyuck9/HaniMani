@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.hyuck9.hanimani.R
-import io.github.hyuck9.hanimani.common.base.BaseViewModel
+import io.github.hyuck9.hanimani.features.base.BaseViewModel
 import io.github.hyuck9.hanimani.common.extension.select
 import io.github.hyuck9.hanimani.common.theme.*
 import io.github.hyuck9.hanimani.features.theme.data.IThemeEnvironment

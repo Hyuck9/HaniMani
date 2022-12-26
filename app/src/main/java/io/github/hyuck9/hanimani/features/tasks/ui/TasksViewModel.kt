@@ -4,7 +4,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.hyuck9.hanimani.common.base.BaseViewModel
+import io.github.hyuck9.hanimani.features.base.BaseViewModel
 import io.github.hyuck9.hanimani.features.tasks.data.ITasksEnvironment
 import kotlinx.coroutines.launch
 import javax.inject.Inject

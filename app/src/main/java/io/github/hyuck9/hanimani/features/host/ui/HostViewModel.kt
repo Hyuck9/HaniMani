@@ -2,7 +2,7 @@ package io.github.hyuck9.hanimani.features.host.ui
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.hyuck9.hanimani.common.base.BaseViewModel
+import io.github.hyuck9.hanimani.features.base.BaseViewModel
 import io.github.hyuck9.hanimani.features.host.data.IHostEnvironment
 import kotlinx.coroutines.launch
 import javax.inject.Inject

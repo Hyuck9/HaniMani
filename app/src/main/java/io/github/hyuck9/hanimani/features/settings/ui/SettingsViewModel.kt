@@ -3,7 +3,7 @@ package io.github.hyuck9.hanimani.features.settings.ui
 import android.app.Application
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.hyuck9.hanimani.common.base.BaseViewModel
+import io.github.hyuck9.hanimani.features.base.BaseViewModel
 import io.github.hyuck9.hanimani.common.data.preference.PreferencesConstants.AUTO_RUN
 import io.github.hyuck9.hanimani.common.data.preference.PreferencesConstants.HIDE_COMPLETE_TASKS
 import io.github.hyuck9.hanimani.common.data.preference.readBoolean

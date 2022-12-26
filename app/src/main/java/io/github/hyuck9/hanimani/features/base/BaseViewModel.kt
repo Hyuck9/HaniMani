@@ -1,4 +1,4 @@
-package io.github.hyuck9.hanimani.common.base
+package io.github.hyuck9.hanimani.features.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

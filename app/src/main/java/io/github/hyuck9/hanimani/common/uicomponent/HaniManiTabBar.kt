@@ -1,4 +1,4 @@
-package io.github.hyuck9.hanimani.features.common
+package io.github.hyuck9.hanimani.common.uicomponent
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDp
@@ -20,11 +20,25 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import io.github.hyuck9.hanimani.R
 import io.github.hyuck9.hanimani.common.icon.TaskAlt
 import io.github.hyuck9.hanimani.common.theme.HaniManiTheme
 import io.github.hyuck9.hanimani.runtime.navigation.EditTaskFlow
+import io.github.hyuck9.hanimani.runtime.navigation.SettingsFlow
 import io.github.hyuck9.hanimani.runtime.navigation.TasksFlow
+import io.github.hyuck9.hanimani.runtime.navigation.navigateSingleTopTo
+
+enum class TabPage {
+	Tasks, Settings;
+
+	fun onTabSelected(navController: NavHostController) {
+		when (this) {
+			Tasks -> { navController.navigateSingleTopTo(TasksFlow.Root.route) }
+			Settings -> { navController.navigateSingleTopTo(SettingsFlow.Root.route) }
+		}
+	}
+}
 
 @Composable
 fun HaniManiTabBar(

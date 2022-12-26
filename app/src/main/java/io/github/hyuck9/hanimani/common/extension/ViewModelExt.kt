@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.github.hyuck9.hanimani.common.base.BaseViewModel
+import io.github.hyuck9.hanimani.features.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
