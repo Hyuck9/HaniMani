@@ -13,7 +13,7 @@
     <img src="https://github.com/Hyuck9/HaniMani/blob/master/art/hanimani_cover.png?raw=true"/>
 </p>
 
-## Screens
+## Screenshot 📷
 |                                   Change Tab                                    |                                    Input Task                                     |                                    Change Theme                                     |
 |:-------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------:|
 | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/1_move_tab.gif?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/2_input_task.gif?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/3_change_theme.gif?raw=true) |
@@ -21,3 +21,31 @@
 |                                  Change Text Align                                  |                               LongClick Reorder                                |                                  Complete And Delete                                   |
 |:-----------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------:|
 | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/4_change_align.gif?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/5_reorder.gif?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/6_complete_delete.gif?raw=true) |
+
+## Features 👓
+하니마니의 기본 기능은 다음과 같으며, 삭제된 Task 관리 및 통계 등 여러 기능들을 추가 구현할 예정입니다.
+- Jetpack Compose UI 기반 Single Activity Design
+- Broadcast receiver 를 통한 Screen On/Off 감지
+- Screen On 자동실행 기능의 안정적 수행을 위한 Foreground Service
+- Theme 및 Typography 등 실시간 변경 (Proto DataStore)
+- Simple To-Do List
+- URL 저장소 등으로도 활용할 수 있도록 Task 문구 복사 기능
+- Swipe Complete/Delete 및 LongClick Reordering
+
+## Libraries and tools 🔧
+- [Kotlin](https://kotlinlang.org/)
+- [Coroutines](https://developer.android.com/kotlin/coroutines)
+- [Flow](https://developer.android.com/kotlin/flow)
+- [Jetpack Compose UI Toolkit](https://developer.android.com/jetpack/compose)
+- [Accompanist](https://chrisbanes.github.io/accompanist/)
+- [Material3](https://m3.material.io/)
+- [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
+- [Room Database](https://developer.android.com/topic/libraries/architecture/room)
+- [Navigation Compose](https://developer.android.com/jetpack/compose/navigation)
+- [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
+
+- [Lottie Compose](https://github.com/airbnb/lottie/blob/master/android-compose.md)
+- [Timber](https://github.com/JakeWharton/timber)
+
+## Developed By 😎
+- Hyuck9 - lhg1304@gmail.com
