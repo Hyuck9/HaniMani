@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-✔️ 하니마니 앱은 MVVM + Clean architecture 기반으로 Jetpack Compose, Hilt, Material3, Coroutines, Flows, Room, Proto DataStore 등 Modern Android 기술 스택을 사용하여 구현하였습니다.
+✔️ 하니마니 앱은 MVI 기반으로 Jetpack Compose, Hilt, Material3, Coroutines, Flows, Room, Proto DataStore 등 Modern Android 기술 스택을 사용하여 구현하였습니다.
 </p>
 
 <p align="center">
@@ -21,4 +21,3 @@
 |                                  Change Text Align                                  |                               LongClick Reorder                                |                                  Complete And Delete                                   |
 |:-----------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------:|
 | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/4_change_align.gif?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/5_reorder.gif?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/6_complete_delete.gif?raw=true) |
-
