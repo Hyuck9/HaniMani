@@ -24,11 +24,13 @@ class HaniManiService : Service() {
 		super.onCreate()
 	}
 
-	override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+	override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-		when (intent.action) {
-			START_FOREGROUND -> startForegroundService()
-			STOP_FOREGROUND -> stopForegroundService()
+		if (intent != null) {
+			when (intent.action) {
+				START_FOREGROUND -> startForegroundService()
+				STOP_FOREGROUND -> stopForegroundService()
+			}
 		}
 
 		return START_STICKY
