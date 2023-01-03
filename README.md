@@ -10,6 +10,9 @@
 </p>
 
 <p align="center">
+    <a href="https://play.google.com/store/apps/details?id=io.github.hyuck9.hanimani">
+      <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
+    </a>
     <img src="https://github.com/Hyuck9/HaniMani/blob/master/art/hanimani_cover.png?raw=true"/>
 </p>
 
