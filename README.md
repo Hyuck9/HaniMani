@@ -25,6 +25,14 @@
 |:-----------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------:|
 | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/4_change_align.gif?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/5_reorder.gif?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/6_complete_delete.gif?raw=true) |
 
+|                                    Store 1                                     |                                    Store 2                                     |                                    Store 3                                     |
+|:------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|
+| ![](https://github.com/Hyuck9/HaniMani/blob/master/art/Frame%201.png?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/Frame%202.png?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/Frame%203.png?raw=true) |
+
+|                                    Store 4                                     |                                    Store 5                                     |                                    Store 6                                     |                                    Store 7                                     |
+|:------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|:------------------------------------------------------------------------------:|
+| ![](https://github.com/Hyuck9/HaniMani/blob/master/art/Frame%204.png?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/Frame%205.png?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/Frame%206.png?raw=true) | ![](https://github.com/Hyuck9/HaniMani/blob/master/art/Frame%207.png?raw=true) |
+
 ## Features 👓
 하니마니의 기본 기능은 다음과 같으며, 삭제된 Task 관리 및 통계 등 여러 기능들을 추가 구현할 예정입니다.
 - Jetpack Compose UI 기반 Single Activity Design
