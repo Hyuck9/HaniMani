@@ -14,8 +14,8 @@ android {
         applicationId "io.github.hyuck9.hanimani"
         minSdk rootProject.minSdkVersion
         targetSdk rootProject.targetSdkVersion
-        versionCode 4
-        versionName "1.0.4"
+        versionCode 5
+        versionName "1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
