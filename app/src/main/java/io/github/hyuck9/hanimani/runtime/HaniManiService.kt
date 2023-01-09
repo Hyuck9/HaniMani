@@ -49,6 +49,7 @@ class HaniManiService : Service() {
 			.setContentIntent(pendingIntent)
 			.setContentTitle(resources.getString(R.string.noti_content_title))
 			.setContentText(resources.getString(R.string.noti_content_text))
+			.setOngoing(true)
 
 		notiManager.notify(CHANNEL_ID.hashCode(), builder.build())
 		startForeground(CHANNEL_ID.hashCode(), builder.build())
