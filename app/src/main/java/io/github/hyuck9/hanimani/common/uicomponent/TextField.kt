@@ -144,7 +144,7 @@ fun HmTodoEditor(
 	HmModalColumnLayout(
 		title = {
 			HmModalBackHeader(
-				text = stringResource(id = R.string.modify),
+				text = stringResource(id = R.string.modify_task),
 				onClickBack = onBackClick,
 				rightIcon = {
 					HmModalButton(
