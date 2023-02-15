@@ -50,6 +50,10 @@ class DefaultTasksRepository(
 		tasksDao.updateTaskName(taskId, name, updatedAt)
 	}
 
+	override suspend fun unDoTaskById(taskId: String) = withContext(ioDispatcher) {
+		tasksDao.unDoTaskById(taskId)
+	}
+
 	override suspend fun deleteTaskById(taskId: String) = withContext(ioDispatcher) {
 		tasksDao.deleteTaskById(taskId)
 	}

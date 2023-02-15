@@ -12,13 +12,13 @@ import java.time.LocalDateTime
 @Dao
 interface TasksDao {
 
-	@Query("SELECT * FROM Tasks ORDER BY taskStatus DESC, taskOrder")
+	@Query("SELECT * FROM Tasks WHERE isDelete = 0 ORDER BY taskStatus DESC, taskOrder")
 	fun observeTasks(): Flow<List<TaskEntity>>
 
 	@Query("SELECT * FROM Tasks WHERE taskId = :taskId")
 	fun observeTaskById(taskId: String): Flow<TaskEntity>
 
-	@Query("SELECT * FROM Tasks")
+	@Query("SELECT * FROM Tasks WHERE isDelete = 0")
 	suspend fun getTasks(): List<TaskEntity>
 
 	@Query("SELECT * FROM Tasks WHERE taskId = :taskId")
@@ -42,13 +42,25 @@ interface TasksDao {
 	@Query("UPDATE Tasks SET taskName = :name, updatedAt = :updatedAt WHERE taskId = :taskId")
 	suspend fun updateTaskName(taskId: String, name: String, updatedAt: LocalDateTime)
 
-	@Query("DELETE FROM Tasks WHERE taskId = :taskId")
+	@Query("UPDATE Tasks SET isDelete = 0 WHERE taskId = :taskId")
+	suspend fun unDoTaskById(taskId: String)
+
+	@Query("UPDATE Tasks SET isDelete = 1 WHERE taskId = :taskId")
 	suspend fun deleteTaskById(taskId: String)
 
-	@Query("DELETE FROM tasks")
+	@Query("UPDATE Tasks SET isDelete = 1")
 	suspend fun deleteAllTasks()
 
-	@Query("DELETE FROM tasks WHERE taskStatus = :status")
+	@Query("UPDATE Tasks SET isDelete = 1 WHERE taskStatus = :status")
 	suspend fun deleteTasksByStatus(status: ToDoStatus)
+
+//	@Query("DELETE FROM Tasks WHERE taskId = :taskId")
+//	suspend fun deleteTaskById(taskId: String)
+//
+//	@Query("DELETE FROM tasks")
+//	suspend fun deleteAllTasks()
+//
+//	@Query("DELETE FROM tasks WHERE taskStatus = :status")
+//	suspend fun deleteTasksByStatus(status: ToDoStatus)
 
 }

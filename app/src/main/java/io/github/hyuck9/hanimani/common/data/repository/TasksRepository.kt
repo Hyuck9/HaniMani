@@ -35,6 +35,8 @@ interface TasksRepository {
 		updatedAt: LocalDateTime
 	)
 
+	suspend fun unDoTaskById(taskId: String)
+
 	suspend fun deleteTaskById(taskId: String)
 	suspend fun deleteAllTasks()
 	suspend fun deleteCompletedTasks()
