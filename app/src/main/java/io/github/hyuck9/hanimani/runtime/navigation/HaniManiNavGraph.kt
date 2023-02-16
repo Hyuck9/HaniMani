@@ -2,9 +2,12 @@ package io.github.hyuck9.hanimani.runtime.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.ModalBottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,6 +60,15 @@ private fun HaniManiNavHost(
 			HaniManiTabBar(
 				currentRoute = currentRoute,
 				onTabSelected = { it.onTabSelected(navController) }
+			)
+		},
+		snackbarHost = {
+			SnackbarHost(
+				hostState = remember { SnackbarHostState() },
+				modifier = Modifier.systemBarsPadding(),
+				snackbar = { snackbarData ->
+
+				}
 			)
 		},
 		modifier = Modifier.statusBarsPadding()
