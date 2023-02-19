@@ -55,6 +55,7 @@ private fun HaniManiNavHost(
 	val navController: NavHostController = rememberNavController(bottomSheetNavigator)
 	val currentNavBackStackEntry by navController.currentBackStackEntryAsState()
 	val currentRoute = currentNavBackStackEntry?.destination?.route ?: startDestination
+	val snackbarHostState = remember { SnackbarHostState() }
 	Scaffold(
 		topBar = {
 			HaniManiTabBar(
@@ -64,11 +65,8 @@ private fun HaniManiNavHost(
 		},
 		snackbarHost = {
 			SnackbarHost(
-				hostState = remember { SnackbarHostState() },
+				hostState = snackbarHostState,
 				modifier = Modifier.systemBarsPadding(),
-				snackbar = { snackbarData ->
-
-				}
 			)
 		},
 		modifier = Modifier.statusBarsPadding()
@@ -78,7 +76,7 @@ private fun HaniManiNavHost(
 			startDestination = startDestination,
 			modifier = Modifier.padding(top = innerPadding.calculateTopPadding())
 		) {
-			TasksNavHost(navController, bottomSheetConfig)
+			TasksNavHost(navController, snackbarHostState, bottomSheetConfig)
 			SettingsNavHost(navController, bottomSheetConfig)
 		}
 	}

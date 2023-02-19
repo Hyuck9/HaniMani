@@ -5,6 +5,7 @@ import io.github.hyuck9.hanimani.common.data.local.model.TaskEntity
 import io.github.hyuck9.hanimani.common.extension.toTaskEntity
 import io.github.hyuck9.hanimani.common.extension.toToDoTask
 import io.github.hyuck9.hanimani.common.extension.toToDoTasks
+import io.github.hyuck9.hanimani.common.extension.toTrashEntity
 import io.github.hyuck9.hanimani.model.ToDoStatus
 import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.CoroutineDispatcher
@@ -50,12 +51,14 @@ class DefaultTasksRepository(
 		tasksDao.updateTaskName(taskId, name, updatedAt)
 	}
 
-	override suspend fun unDoTaskById(taskId: String) = withContext(ioDispatcher) {
-		tasksDao.unDoTaskById(taskId)
+	override suspend fun unDoTask(task: ToDoTask) = withContext(ioDispatcher) {
+		tasksDao.deleteTrashById(task.id)
+		tasksDao.saveTask(task.toTrashEntity().toTaskEntity())
 	}
 
-	override suspend fun deleteTaskById(taskId: String) = withContext(ioDispatcher) {
-		tasksDao.deleteTaskById(taskId)
+	override suspend fun deleteTaskById(task: ToDoTask) = withContext(ioDispatcher) {
+		tasksDao.saveTrash(task.toTrashEntity())
+		tasksDao.deleteTaskById(task.id)
 	}
 
 	override suspend fun deleteAllTasks() = withContext(ioDispatcher) {

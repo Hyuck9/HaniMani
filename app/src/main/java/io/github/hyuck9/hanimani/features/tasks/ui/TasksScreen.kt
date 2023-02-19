@@ -46,12 +46,14 @@ import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
 @Composable
 fun TasksScreen(
 	viewModel: TasksViewModel,
 	onAddTaskClick: () -> Unit,
+	snackbarHostState: SnackbarHostState,
 	onItemClick: (ToDoTask) -> Unit
 ) {
 	val state by viewModel.state.collectAsStateWithLifecycle()
@@ -68,8 +70,19 @@ fun TasksScreen(
 				val position = it.position
 				reorderState.listState.animateScrollToItem(position)
 			}
+			is TasksEffect.OnUndoDeleteSnackBar -> {
+				viewModel.dispatch(TasksAction.OnUndoDeleteSnackBar(it.task, snackbarHostState))
+			}
 		}
 	}
+
+//	LaunchedEffect(snackbarHostState) {
+//		Timber.tag("TEST").i("snackbarHostState11 : $snackbarHostState")
+//		state.currentlyDeletedTask?.let {
+//			Timber.tag("TEST").i("LaunchedEffect - currentlyDeletedTask : $it")
+//			viewModel.dispatch(TasksAction.OnUndoDeleteSnackBar(it, snackbarHostState))
+//		}
+//	}
 
 	Scaffold(
 		floatingActionButton = {
@@ -84,7 +97,7 @@ fun TasksScreen(
 			tasks = state.toDoTaskItems,
 			onClick = onItemClick,
 			onCheckboxClick = { viewModel.dispatch(TasksAction.OnToggleStatus(it)) },
-			onSwipeToDelete = { viewModel.dispatch(TasksAction.Delete(it)) },
+			onSwipeToDelete = { viewModel.dispatch(TasksAction.Delete(it, snackbarHostState)) },
 			onAllCompleteTasksDelete = { viewModel.dispatch(TasksAction.OnCompletedTasksDelete) },
 			textStyle = state.fontSize.toTextStyle(),
 			textAlign = state.textAlign.toAlign(),

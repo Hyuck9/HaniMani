@@ -35,9 +35,9 @@ interface TasksRepository {
 		updatedAt: LocalDateTime
 	)
 
-	suspend fun unDoTaskById(taskId: String)
+	suspend fun unDoTask(task: ToDoTask)
 
-	suspend fun deleteTaskById(taskId: String)
+	suspend fun deleteTaskById(task: ToDoTask)
 	suspend fun deleteAllTasks()
 	suspend fun deleteCompletedTasks()
 }

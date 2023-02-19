@@ -1,12 +1,15 @@
 package io.github.hyuck9.hanimani.features.tasks.ui
 
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.hyuck9.hanimani.features.base.BaseViewModel
 import io.github.hyuck9.hanimani.features.tasks.data.ITasksEnvironment
+import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -73,6 +76,20 @@ class TasksViewModel @Inject constructor(
 			is TasksAction.Delete -> {
 				viewModelScope.launch {
 					environment.deleteTask(action.task)
+					setEffect( TasksEffect.OnUndoDeleteSnackBar(action.task) )
+				}
+			}
+			is TasksAction.OnUndoDeleteSnackBar -> {
+				viewModelScope.launch {
+					Timber.tag("TEST").i("OnUndoDeleteSnackBar")
+					val snackbarResult = action.snackbarHostState.showSnackbar(
+						message = "${action.task.name} Deleted",
+						actionLabel = "Undo"
+					)
+
+					if (snackbarResult == SnackbarResult.ActionPerformed) {
+						environment.restoreTask(action.task)
+					}
 				}
 			}
 			is TasksAction.OnCompletedTasksDelete -> {

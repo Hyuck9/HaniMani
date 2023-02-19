@@ -8,9 +8,10 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import io.github.hyuck9.hanimani.common.data.local.model.TaskEntity
+import io.github.hyuck9.hanimani.common.data.local.model.TrashEntity
 
 @Database(
-	entities = [TaskEntity::class],
+	entities = [TaskEntity::class, TrashEntity::class],
 	version = 2,
 	exportSchema = false
 )
@@ -42,7 +43,16 @@ abstract class HaniManiDatabase : RoomDatabase() {
 		private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
 			override fun migrate(database: SupportSQLiteDatabase) {
 				database.execSQL(
-					"ALTER TABLE tasks ADD COLUMN isDelete INTEGER NOT NULL DEFAULT 0"
+//					"ALTER TABLE tasks ADD COLUMN isDelete INTEGER NOT NULL DEFAULT 0"
+					"CREATE TABLE trash (taskId TEXT NOT NULL, " +
+							"taskName TEXT NOT NULL, " +
+							"taskStatus TEXT NOT NULL, " +
+							"taskOrder INTEGER NOT NULL, " +
+							"completedAt INTEGER, " +
+							"createdAt INTEGER NOT NULL, " +
+							"updatedAt INTEGER NOT NULL, " +
+							"deletedAt INTEGER NOT NULL, " +
+							"PRIMARY KEY(taskId))"
 				)
 			}
 		}

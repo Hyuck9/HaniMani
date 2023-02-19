@@ -1,5 +1,6 @@
 package io.github.hyuck9.hanimani.runtime.navigation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -17,6 +18,7 @@ import io.github.hyuck9.hanimani.features.tasks.ui.TasksViewModel
 @Suppress("FunctionName")
 fun NavGraphBuilder.TasksNavHost(
 	navController: NavHostController,
+	snackbarHostState: SnackbarHostState,
 	bottomSheetConfig: MutableState<HaniManiBottomSheetConfig>
 ) {
 	navigation(startDestination = TasksFlow.TasksScreen.route, route = TasksFlow.Root.route) {
@@ -25,6 +27,7 @@ fun NavGraphBuilder.TasksNavHost(
 			TasksScreen(
 				viewModel = viewModel,
 				onAddTaskClick = { navController.navigate(TasksFlow.CreateTask.route) },
+				snackbarHostState = snackbarHostState,
 				onItemClick = { task -> navController.navigate(EditTaskFlow.EditTaskScreen.route(task.id))  }
 			)
 		}

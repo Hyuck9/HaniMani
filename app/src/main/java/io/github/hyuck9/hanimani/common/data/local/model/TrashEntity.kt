@@ -7,8 +7,8 @@ import io.github.hyuck9.hanimani.model.ToDoStatus
 import java.time.LocalDateTime
 import java.util.*
 
-@Entity(tableName = "tasks")
-data class TaskEntity(
+@Entity(tableName = "trash")
+data class TrashEntity(
 	@PrimaryKey
 	@ColumnInfo(name = "taskId")
 	val id: String = UUID.randomUUID().toString(),
@@ -16,8 +16,6 @@ data class TaskEntity(
 	val name: String = "",
 	@ColumnInfo(name = "taskStatus")
 	val status: ToDoStatus,
-//	@ColumnInfo(name = "isDelete")
-//	val isDelete: Boolean = false,
 	@ColumnInfo(name = "taskOrder")
 	val order: Int = 0,
 	@ColumnInfo(name = "completedAt")
@@ -26,4 +24,6 @@ data class TaskEntity(
 	val createdAt: LocalDateTime = LocalDateTime.now(),
 	@ColumnInfo(name = "updatedAt")
 	val updatedAt: LocalDateTime = LocalDateTime.now(),
+	@ColumnInfo(name = "deletedAt")
+	val deletedAt: LocalDateTime = LocalDateTime.now(),
 )
