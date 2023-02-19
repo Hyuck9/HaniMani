@@ -82,9 +82,11 @@ class TasksViewModel @Inject constructor(
 			}
 			is TasksAction.OnUndoDeleteSnackBar -> {
 				viewModelScope.launch {
+					action.snackbarHostState.currentSnackbarData?.dismiss()
 					val snackbarResult = action.snackbarHostState.showSnackbar(
 						message = appStr(R.string.snackbar_undo_delete_ok, action.task.title),
 						actionLabel = appStr(R.string.snackbar_undo_action),
+						withDismissAction = true,
 						duration = SnackbarDuration.Short
 					)
 
