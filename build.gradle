@@ -40,5 +40,6 @@ ext {
     googleMaterialVersion = '1.7.0'
     protobufVersion = '4.0.0-rc-2'
     composeLottieVersion = "5.2.0"
+    splittiesVersion = "3.0.0-rc03"
 
 }

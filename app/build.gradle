@@ -93,6 +93,9 @@ dependencies {
     // Lottie
     implementation "com.airbnb.android:lottie-compose:$composeLottieVersion"
 
+    // Splitties
+    implementation "com.louiscad.splitties:splitties-resources:$splittiesVersion"
+
     // Logging
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
