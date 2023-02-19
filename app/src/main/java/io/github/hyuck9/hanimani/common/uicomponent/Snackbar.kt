@@ -17,7 +17,7 @@ fun HmSnackbar(
 	shape: Shape = MaterialTheme.shapes.medium,
 	containerColor: Color = SnackbarDefaults.color,
 	contentColor: Color = SnackbarDefaults.contentColor,
-	actionColor: Color = MaterialTheme.colorScheme.primary,
+	actionColor: Color = MaterialTheme.colorScheme.error,
 	actionContentColor: Color = MaterialTheme.colorScheme.onPrimary,
 )  {
 	Snackbar(
