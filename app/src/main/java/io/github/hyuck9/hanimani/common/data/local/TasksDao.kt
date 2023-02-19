@@ -21,11 +21,6 @@ interface TasksDao {
 	@Query("SELECT * FROM Tasks WHERE taskId = :taskId")
 	fun observeTaskById(taskId: String): Flow<TaskEntity>
 
-//	@Query("SELECT * FROM Tasks WHERE isDelete = 0")
-//	suspend fun getTasks(): List<TaskEntity>
-	@Query("SELECT * FROM Tasks")
-	suspend fun getTasks(): List<TaskEntity>
-
 	@Query("SELECT * FROM Tasks WHERE taskId = :taskId")
 	suspend fun getTaskById(taskId: String): TaskEntity?
 
@@ -46,18 +41,6 @@ interface TasksDao {
 
 	@Query("UPDATE Tasks SET taskName = :name, updatedAt = :updatedAt WHERE taskId = :taskId")
 	suspend fun updateTaskName(taskId: String, name: String, updatedAt: LocalDateTime)
-
-//	@Query("UPDATE Tasks SET isDelete = 0 WHERE taskId = :taskId")
-//	suspend fun unDoTaskById(taskId: String)
-
-//	@Query("UPDATE Tasks SET isDelete = 1 WHERE taskId = :taskId")
-//	suspend fun deleteTaskById(taskId: String)
-//
-//	@Query("UPDATE Tasks SET isDelete = 1")
-//	suspend fun deleteAllTasks()
-//
-//	@Query("UPDATE Tasks SET isDelete = 1 WHERE taskStatus = :status")
-//	suspend fun deleteTasksByStatus(status: ToDoStatus)
 
 	@Query("DELETE FROM tasks WHERE taskId = :taskId")
 	suspend fun deleteTaskById(taskId: String)

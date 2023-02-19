@@ -46,7 +46,6 @@ import io.github.hyuck9.hanimani.model.ToDoTask
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -75,14 +74,6 @@ fun TasksScreen(
 			}
 		}
 	}
-
-//	LaunchedEffect(snackbarHostState) {
-//		Timber.tag("TEST").i("snackbarHostState11 : $snackbarHostState")
-//		state.currentlyDeletedTask?.let {
-//			Timber.tag("TEST").i("LaunchedEffect - currentlyDeletedTask : $it")
-//			viewModel.dispatch(TasksAction.OnUndoDeleteSnackBar(it, snackbarHostState))
-//		}
-//	}
 
 	Scaffold(
 		floatingActionButton = {

@@ -13,6 +13,7 @@ data class ToDoTask(
 	val updatedAt: LocalDateTime = LocalDateTime.now(),
 ) {
 
+	val title: String = if (name.length > 10) "${name.substring(0, 10).replace("\n", " ")}..." else name.replace("\n", " ")
 
 	suspend fun toggleStatusHandler(
 		currentDate: LocalDateTime,

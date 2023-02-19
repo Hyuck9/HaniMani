@@ -2,12 +2,8 @@ package io.github.hyuck9.hanimani.runtime.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.ModalBottomSheetDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +16,7 @@ import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import io.github.hyuck9.hanimani.common.uicomponent.HaniManiTabBar
+import io.github.hyuck9.hanimani.common.uicomponent.HmSnackbar
 import io.github.hyuck9.hanimani.common.uiextension.rememberBottomSheetNavigator
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
@@ -66,7 +63,7 @@ private fun HaniManiNavHost(
 		snackbarHost = {
 			SnackbarHost(
 				hostState = snackbarHostState,
-				modifier = Modifier.systemBarsPadding(),
+				snackbar = { snackbarData -> HmSnackbar(snackbarData) }
 			)
 		},
 		modifier = Modifier.statusBarsPadding()
