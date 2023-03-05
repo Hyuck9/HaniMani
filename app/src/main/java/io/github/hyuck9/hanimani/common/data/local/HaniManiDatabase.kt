@@ -43,7 +43,6 @@ abstract class HaniManiDatabase : RoomDatabase() {
 		private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
 			override fun migrate(database: SupportSQLiteDatabase) {
 				database.execSQL(
-//					"ALTER TABLE tasks ADD COLUMN isDelete INTEGER NOT NULL DEFAULT 0"
 					"CREATE TABLE trash (taskId TEXT NOT NULL, " +
 							"taskName TEXT NOT NULL, " +
 							"taskStatus TEXT NOT NULL, " +
